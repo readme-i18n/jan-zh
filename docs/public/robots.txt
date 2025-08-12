@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://jan.ai/
+Host: https://jan-zh.readme-i18n.com/
 
 # Sitemaps
-Sitemap: https://jan.ai/sitemap.xml
+Sitemap: https://jan-zh.readme-i18n.com/sitemap.xml
