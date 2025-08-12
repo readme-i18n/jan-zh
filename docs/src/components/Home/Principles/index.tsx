@@ -6,10 +6,10 @@ const Principles = () => {
       <div className="nx-mx-auto nx-flex nx-max-w-[90rem] nx-pl-[max(env(safe-area-inset-left),1.5rem)] nx-pr-[max(env(safe-area-inset-right),1.5rem)]">
         <div className="w-full mx-auto relative pt-8 text-center">
           <h1 className="text-5xl lg:text-7xl !font-normal leading-tight lg:leading-tight mt-2 font-serif">
-            Our Principles
+            我们的原则
           </h1>
           <p className="leading-relaxed mt-2 text-black/60 dark:text-white/60 flex gap-x-2 justify-center">
-            Jan is opinionated software on what AI should be
+            Jan 是一款对 AI 理想形态有明确观点的软件
             <svg
               width="24"
               height="24"
@@ -120,11 +120,10 @@ const Principles = () => {
                   fill="#4377E9"
                 />
               </svg>
-              <h5 className="mt-4 mb-2 text-lg font-semibold">Local-first</h5>
+              <h5 className="mt-4 mb-2 text-lg font-semibold">本地优先</h5>
               <p className="text-black/60 dark:text-white/60 leading-relaxed">
-                {`We believe your conversations and files should remain yours
-                alone. That's why we prioritize local-first AI, running
-                open-source models directly on your computer.`}
+                我们相信你的对话和文件应当只属于你自己。因此，我们优先支持本地
+                AI，直接在你的电脑上运行开源模型。
               </p>
             </div>
             <div className="lg:w-2/5 mx-auto">
@@ -185,11 +184,10 @@ const Principles = () => {
                   fill="#4377E9"
                 />
               </svg>
-              <h5 className="mt-4 mb-2 text-lg font-semibold">User-owned</h5>
+              <h5 className="mt-4 mb-2 text-lg font-semibold">用户拥有</h5>
               <p className="text-black/60 dark:text-white/60 leading-relaxed">
-                Your data, your rules. Jan stores everything on your device in
-                universal formats, giving you total freedom to move your data
-                without tricks or traps.
+                你的数据，由你掌控。Jan
+                将所有内容存储在你的设备上，采用通用格式，让你可以自由迁移数据，没有任何花招或陷阱。
               </p>
             </div>
             <div className="lg:w-2/5 mx-auto">
@@ -274,13 +272,9 @@ const Principles = () => {
                   fill="#4377E9"
                 />
               </svg>
-              <h5 className="mt-4 mb-2 text-lg font-semibold">
-                Fully Customizable
-              </h5>
+              <h5 className="mt-4 mb-2 text-lg font-semibold">完全可定制</h5>
               <p className="text-black/60 dark:text-white/60 leading-relaxed">
-                You can endlessly customize the experience with 3rd party
-                extensions. You can adjust alignment, moderation, and censorship
-                levels to your needs.
+                你可以通过第三方扩展无限定制使用体验。你还可以根据需求调整对齐方式、审核和内容管控等级。
               </p>
             </div>
           </div>

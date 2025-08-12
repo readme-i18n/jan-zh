@@ -50,10 +50,10 @@ const Hero = () => {
           >
             <div className="inline-flex my-2 py-2 pl-2 pr-4 rounded-lg bg-indigo-500 text-white">
               <div className="flex items-center rounded bg-white px-2">
-                <span className="font-bold uppercase text-blue-600">new</span>
+                <span className="font-bold uppercase text-blue-600">新</span>
               </div>
-              &nbsp;✨&nbsp; <b>{lastVersion}</b>&nbsp;is now live on
-              GitHub.&nbsp;Check it out!
+              &nbsp;✨&nbsp; <b>{lastVersion}</b>&nbsp;已经在 GitHub
+              上发布。&nbsp;快去看看！
             </div>
           </Link>
         </div>
@@ -61,7 +61,7 @@ const Hero = () => {
         <div className="relative inline-block mt-20">
           <QuoteIcon />
           <h1 className="text-6xl lg:text-[80px] !font-normal leading-tight lg:leading-tight mt-2 font-serif">
-            Chat with AI <br /> without privacy concerns
+            与 AI 聊天 <br /> 无需担心隐私问题
           </h1>
 
           <div className="py-8 flex justify-center">
@@ -80,7 +80,7 @@ const Hero = () => {
           </div>
 
           <p className="text-xl -mt-1 leading-relaxed text-black/60 dark:text-white/60">
-            Jan is an open source ChatGPT-alternative that runs 100% offline.
+            Jan 是一个开源的 ChatGPT 替代方案，能够 100% 离线运行。
           </p>
         </div>
         <div className="mb-4 mt-8">
@@ -90,7 +90,7 @@ const Hero = () => {
           <span className="text-[#EDA703] font-semibold">
             {totalDownload(release)}+
           </span>
-          &nbsp;downloads | Free & Open Source
+          &nbsp;下载 | 免费且开源
         </p>
         <div className="w-4/5 mx-auto mt-10 relative">
           <ThemeImage

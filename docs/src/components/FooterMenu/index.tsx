@@ -168,12 +168,12 @@ export default function Footer() {
           </div>
           <div className="w-full lg:w-3/4 mt-2">
             <h6 className="text-base text-black dark:text-white">
-              The Soul of a New Machine
+              新机器的灵魂
             </h6>
             <p className="dark:text-gray-400 text-gray-600 mt-2">
-              Subscribe to our newsletter on AI&nbsp;
+              订阅我们的 AI 研究&nbsp;
               <br className="hidden lg:block py-2 h-2 w-full" />
-              research and building Jan:
+              以及 Jan 构建相关的新闻通讯：
             </p>
 
             <div className="mt-4">
@@ -181,7 +181,7 @@ export default function Footer() {
                 <input
                   type="email"
                   className="lg:ml-0.5 w-full h-12 p-4 pr-14 rounded-xl bg-white border dark:border-gray-600 dark:bg-[#252525] border-[#F0F0F0] focus-visible:ring-0"
-                  placeholder="Enter your email"
+                  placeholder="输入你的邮箱"
                   autoComplete="off"
                   {...register('email')}
                 />

@@ -14,11 +14,11 @@ const BuiltWithLove = () => {
       <div className="w-full px-4 xl:w-3/4 mx-auto relative py-8">
         <div className="text-center">
           <h1 className="text-5xl !font-normal leading-tight lg:leading-tight mt-2 font-serif">
-            100% Open Source
+            100% 开源
           </h1>
           <p className="leading-relaxed text-black/60 dark:text-white/60 mt-2">
-            Our core team believes that AI should be open,
-            <br className="hidden lg:block" /> and Jan is built in public
+            我们的核心团队相信 AI 应该是开放的，
+            <br className="hidden lg:block" /> Jan 是在公众视野中构建的
           </p>
         </div>
         <div className="flex flex-col lg:flex-row gap-8 mt-8 items-center justify-center">

@@ -13,25 +13,25 @@ const Statistic = () => {
             <div className="text-center">
               <h1 className="text-4xl font-bold">13</h1>
               <p className="font-medium text-black/60 dark:text-white/60">
-                Core team
+                核心成员
               </p>
             </div>
             <div className="text-center">
               <h1 className="text-4xl font-bold">46+</h1>
               <p className="font-medium text-black/60 dark:text-white/60">
-                Contributors
+                贡献者
               </p>
             </div>
             <div className="text-center">
               <h1 className="text-4xl font-bold">2800+</h1>
               <p className="font-medium text-black/60 dark:text-white/60">
-                Pull Requests
+                代码合并请求
               </p>
             </div>
             <div className="text-center">
               <h1 className="text-4xl font-bold">{totalDownload(release)}+</h1>
               <p className="font-medium text-black/60 dark:text-white/60">
-                Downloads
+                下载
               </p>
             </div>
           </div>

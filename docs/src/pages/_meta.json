@@ -9,7 +9,7 @@
   },
   "docs": {
     "type": "page",
-    "title": "Documentation"
+    "title": "文档"
   },
   "cortex": {
     "type": "page",
@@ -28,14 +28,14 @@
   },
   "changelog": {
     "type": "page",
-    "title": "Changelog",
+    "title": "更新日志",
     "theme": {
       "layout": "raw"
     }
   },
   "blog": {
     "type": "page",
-    "title": "Blog",
+    "title": "博客",
     "theme": {
       "layout": "raw"
     }

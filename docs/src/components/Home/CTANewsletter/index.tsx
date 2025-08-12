@@ -58,10 +58,10 @@ const CTANewsletter = () => {
                 height={800}
               />
               <h1 className="text-5xl lg:text-7xl !font-normal leading-tight lg:leading-tight font-serif mt-8">
-                The Soul of a New Machine
+                新机器的灵魂
               </h1>
               <p className="leading-relaxed text-black/60 dark:text-white/60">
-                Follow our AI research and journey in building Jan
+                关注我们的 AI 研究及打造 Jan 的历程
               </p>
 
               <div className="w-full lg:w-1/2 mt-8 mx-auto">
@@ -77,7 +77,7 @@ const CTANewsletter = () => {
                     type="submit"
                     className="absolute flex p-2 px-4 items-center dark:text-black bg-black text-white dark:bg-white h-12 border border-gray-600 rounded-lg top-1/2 right-3 -translate-y-1/2 font-medium"
                   >
-                    Subscribe
+                    订阅
                   </button>
                 </form>
                 {formMessage && <p className="text-left mt-4">{formMessage}</p>}

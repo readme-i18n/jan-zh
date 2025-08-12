@@ -26,22 +26,22 @@ type GpuInfo = {
 
 const systemsTemplate: SystemType[] = [
   {
-    name: 'Download for Mac',
+    name: 'Mac 版下载',
     logo: FaApple,
     fileFormat: 'Jan_{tag}_universal.dmg',
   },
   {
-    name: 'Download for Windows',
+    name: 'Windows 版下载',
     logo: FaWindows,
     fileFormat: 'Jan_{tag}_x64-setup.exe',
   },
   {
-    name: 'Download for Linux (AppImage)',
+    name: 'Linux (AppImage) 版下载',
     logo: FaLinux,
     fileFormat: 'Jan_{tag}_amd64.AppImage',
   },
   {
-    name: 'Download for Linux (deb)',
+    name: 'Linux (deb) 版下载',
     logo: FaLinux,
     fileFormat: 'Jan_{tag}_amd64.deb',
   },

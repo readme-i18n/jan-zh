@@ -117,10 +117,10 @@ const WallOfLove = ({ transparent }: Props) => {
           </div>
           <div>
             <h1 className="text-5xl !font-normal leading-tight lg:leading-tight mt-2 font-serif">
-              People Say Nice Things
+              大家好评如潮
             </h1>
             <p className="leading-relaxed mt-2 text-black/60 dark:text-white/60 flex gap-x-2 justify-center">
-              ...despite our bugs and fast moving releases&nbsp;
+              ……即使有一些小 bug 和快速的版本更新&nbsp;
               <svg
                 width="24"
                 height="24"

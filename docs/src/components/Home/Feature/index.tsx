@@ -5,46 +5,46 @@ import { twMerge } from 'tailwind-merge'
 
 const features = [
   {
-    title: 'Chat with AI',
+    title: '与 AI 聊天',
     experimantal: false,
     description:
-      'Ask your questions, brainstorm, and learn from the AI running on your device to be more productive.',
+      '在你的设备上运行的 AI，随时回答问题、头脑风暴、学习，让你更高效。',
     image: {
       light: '/assets/images/homepage/features01.png',
       dark: '/assets/images/homepage/features01dark.png',
     },
   },
   {
-    title: 'Model Hub',
+    title: '模型中心',
     experimantal: false,
-    description: `Download and Run powerful models like Llama3, Gemma or Mistral on your computer.`,
+    description: `在你的电脑上下载并运行强大的模型，如 Llama3、Gemma 或 Mistral。`,
     image: {
       light: '/assets/images/homepage/features02.png',
       dark: '/assets/images/homepage/features02dark.png',
     },
   },
   {
-    title: 'Connect to Cloud AIs',
+    title: '连接云端 AI',
     experimantal: false,
-    description: `You can also route to more powerful cloud models, like OpenAI, Groq, Cohere etc., when needed.`,
+    description: `在需要时，你还可以接入更强大的云端模型，如 OpenAI、Groq、Cohere 等。`,
     image: {
       light: '/assets/images/homepage/features03.png',
       dark: '/assets/images/homepage/features03dark.png',
     },
   },
   {
-    title: 'Local API Server',
+    title: '本地 API 服务器',
     experimantal: false,
-    description: `Set up and run your own OpenAI-compatible API server using local models with just one click.`,
+    description: `只需一键即可使用本地模型搭建并运行兼容 OpenAI 的 API 服务器。`,
     image: {
       light: '/assets/images/homepage/features04.png',
       dark: '/assets/images/homepage/features04dark.png',
     },
   },
   {
-    title: 'Chat with your files',
+    title: '与文件对话',
     experimantal: true,
-    description: `Talk to PDFs, notes, and other documents directly to get summaries, answers, or insights.`,
+    description: `直接与 PDF、笔记及其他文档对话，获取摘要、答案或洞察。`,
     image: {
       light: '/assets/images/homepage/features05.png',
       dark: '/assets/images/homepage/features05dark.png',
@@ -62,7 +62,7 @@ const Feature = () => {
           <div className="flex p-4 lg:px-0 lg:justify-between flex-col lg:flex-row items-center">
             <div className="w-full text-center lg:text-left">
               <h1 className="text-5xl lg:text-7xl !font-normal leading-tight lg:leading-tight mt-2 font-serif">
-                Features
+                功能
               </h1>
             </div>
           </div>
