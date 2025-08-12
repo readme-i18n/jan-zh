@@ -1,4 +1,4 @@
-# Jan - Local AI Assistant
+# Jan - 本地AI助手
 
 ![Jan AI](docs/src/pages/docs/_assets/jan-app.png)
 
@@ -19,12 +19,11 @@
   - <a href="https://discord.gg/AsJ8krTT3N">Discord</a>
 </p>
 
-Jan is an AI assistant that can run 100% offline on your device. Download and run LLMs with
-**full control** and **privacy**.
+Jan是一款能在您设备上100%离线运行的AI助手。下载并运行各类大语言模型，享受**完全掌控**与**隐私保护**。
 
-## Installation
+## 安装
 
-The easiest way to get started is by downloading one of the following versions for your respective operating system:
+最简单的入门方式是下载适用于您操作系统的版本：
 
 <table>
   <tr>
@@ -54,30 +53,29 @@ The easiest way to get started is by downloading one of the following versions f
   </tr>
 </table>
 
-Download from [jan.ai](https://jan.ai/) or [GitHub Releases](https://github.com/menloresearch/jan/releases).
+从[jan.ai](https://jan.ai/)或[GitHub Releases](https://github.com/menloresearch/jan/releases)下载。
 
+## 功能特性
 
-## Features
+- **本地AI模型**：从HuggingFace下载并运行各类大语言模型（Llama、Gemma、Qwen等）
+- **云端集成**：连接OpenAI、Anthropic、Mistral、Groq等服务
+- **定制助手**：为特定任务创建专属AI助手
+- **OpenAI兼容API**：本地服务器运行于`localhost:1337`，可供其他应用调用
+- **模型上下文协议**：集成MCP协议增强功能
+- **隐私优先**：所有操作均可按需在本地完成
 
-- **Local AI Models**: Download and run LLMs (Llama, Gemma, Qwen, etc.) from HuggingFace
-- **Cloud Integration**: Connect to OpenAI, Anthropic, Mistral, Groq, and others
-- **Custom Assistants**: Create specialized AI assistants for your tasks
-- **OpenAI-Compatible API**: Local server at `localhost:1337` for other applications
-- **Model Context Protocol**: MCP integration for enhanced capabilities
-- **Privacy First**: Everything runs locally when you want it to
+## 从源码构建
 
-## Build from Source
+适合喜欢折腾的用户：
 
-For those who enjoy the scenic route:
-
-### Prerequisites
+### 环境要求
 
 - Node.js ≥ 20.0.0
 - Yarn ≥ 1.22.0
 - Make ≥ 3.81
-- Rust (for Tauri)
+- Rust（用于Tauri框架）
 
-### Run with Make
+### 使用Make运行
 
 ```bash
 git clone https://github.com/menloresearch/jan
@@ -85,17 +83,18 @@ cd jan
 make dev
 ```
 
-This handles everything: installs dependencies, builds core components, and launches the app.
+一键完成所有操作：安装依赖、构建核心组件并启动应用。
 
-**Available make targets:**
-- `make dev` - Full development setup and launch
-- `make build` - Production build
-- `make test` - Run tests and linting
-- `make clean` - Delete everything and start fresh
+**可用make指令：**
 
-### Run with Mise (easier)
+- `make dev` - 完整开发环境配置并启动
+- `make build` - 生产环境构建
+- `make test` - 运行测试与代码检查
+- `make clean` - 清除所有文件重新开始
 
-You can also run with [mise](https://mise.jdx.dev/), which is a bit easier as it ensures Node.js, Rust, and other dependency versions are automatically managed:
+### 使用Mise运行（更简单）
+
+您也可以使用 [mise](https://mise.jdx.dev/) 运行，这种方式更为简便，因为它能自动管理 Node.js、Rust 和其他依赖项的版本：
 
 ```bash
 git clone https://github.com/menloresearch/jan
@@ -109,14 +108,15 @@ mise install    # installs Node.js, Rust, and other tools
 mise dev        # runs the full development setup
 ```
 
-**Available mise commands:**
-- `mise dev` - Full development setup and launch
-- `mise build` - Production build
-- `mise test` - Run tests and linting
-- `mise clean` - Delete everything and start fresh
-- `mise tasks` - List all available tasks
+**可用的 mise 命令：**
 
-### Manual Commands
+- `mise dev` - 完整的开发环境设置并启动
+- `mise build` - 生产环境构建
+- `mise test` - 运行测试和代码检查
+- `mise clean` - 清除所有内容并重新开始
+- `mise tasks` - 列出所有可用任务
+
+### 手动命令
 
 ```bash
 yarn install
@@ -125,51 +125,50 @@ yarn build:extensions
 yarn dev
 ```
 
-## System Requirements
+## 系统要求
 
-**Minimum specs for a decent experience:**
+**获得良好体验的最低配置：**
 
-- **macOS**: 13.6+ (8GB RAM for 3B models, 16GB for 7B, 32GB for 13B)
-- **Windows**: 10+ with GPU support for NVIDIA/AMD/Intel Arc
-- **Linux**: Most distributions work, GPU acceleration available
+- **macOS**: 13.6+ (3B 模型需 8GB 内存，7B 需 16GB，13B 需 32GB)
+- **Windows**: 10+ 并支持 NVIDIA/AMD/Intel Arc GPU
+- **Linux**: 大多数发行版均可运行，支持 GPU 加速
 
-For detailed compatibility, check our [installation guides](https://jan.ai/docs/desktop/mac).
+详细兼容性信息请查阅我们的[安装指南](https://jan.ai/docs/desktop/mac)。
 
-## Troubleshooting
+## 故障排除
 
-If things go sideways:
+如果出现问题：
 
-1. Check our [troubleshooting docs](https://jan.ai/docs/troubleshooting)
-2. Copy your error logs and system specs
-3. Ask for help in our [Discord](https://discord.gg/FTk2MvZwJH) `#🆘|jan-help` channel
+1. 查看我们的[故障排除文档](https://jan.ai/docs/troubleshooting)
+2. 复制错误日志和系统配置信息
+3. 在我们的 [Discord](https://discord.gg/FTk2MvZwJH) `#🆘|jan-help` 频道寻求帮助
 
+## 参与贡献
 
-## Contributing
+欢迎贡献代码。完整说明请参阅 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
-Contributions welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for the full spiel.
+## 相关链接
 
-## Links
+- [文档](https://jan.ai/docs) - 您应该阅读的手册
+- [API 参考](https://jan.ai/api-reference) - 面向技术人员
+- [更新日志](https://jan.ai/changelog) - 我们修复和破坏的内容
+- [Discord](https://discord.gg/FTk2MvZwJH) - 社区交流平台
 
-- [Documentation](https://jan.ai/docs) - The manual you should read
-- [API Reference](https://jan.ai/api-reference) - For the technically inclined
-- [Changelog](https://jan.ai/changelog) - What we broke and fixed
-- [Discord](https://discord.gg/FTk2MvZwJH) - Where the community lives
+## 联系我们
 
-## Contact
+- **问题反馈**: [GitHub Issues](https://github.com/menloresearch/jan/issues)  
+- **商务合作**: hello@jan.ai  
+- **招聘信息**: hr@jan.ai  
+- **社区讨论**: [Discord](https://discord.gg/FTk2MvZwJH)
 
-- **Bugs**: [GitHub Issues](https://github.com/menloresearch/jan/issues)
-- **Business**: hello@jan.ai
-- **Jobs**: hr@jan.ai
-- **General Discussion**: [Discord](https://discord.gg/FTk2MvZwJH)
+## 许可协议
 
-## License
+Apache 2.0 许可证 - 因为分享即关怀。
 
-Apache 2.0 - Because sharing is caring.
+## 致谢
 
-## Acknowledgements
+站在巨人的肩膀上构建：
 
-Built on the shoulders of giants:
-
-- [Llama.cpp](https://github.com/ggerganov/llama.cpp)
-- [Tauri](https://tauri.app/)
+- [Llama.cpp](https://github.com/ggerganov/llama.cpp)  
+- [Tauri](https://tauri.app/)  
 - [Scalar](https://github.com/scalar/scalar)
