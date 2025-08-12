@@ -1,6 +1,7 @@
 ---
+
 title: Hugging Face
-description: Learn how to integrate Hugging Face models with Jan using the Router or Inference Endpoints.
+description: 了解如何通过 Router 或 Inference Endpoints 将 Hugging Face 模型集成到 Jan 中。
 keywords:
   [
     Hugging Face,
@@ -19,134 +20,137 @@ import { Settings, Plus } from 'lucide-react'
 
 # Hugging Face
 
-Jan supports Hugging Face models through two methods: the new **HF Router** (recommended) and **Inference Endpoints**. Both methods require a Hugging Face token and **billing to be set up**.
+Jan 支持通过两种方式接入 Hugging Face 模型：全新的 **HF Router**（推荐）和 **Inference Endpoints**。两种方式均需配置 Hugging Face 令牌并**设置付费账户**。
 
 ![HuggingFace Inference Providers](../_assets/hf_providers.png)
 
-## Option 1: HF Router (Recommended)
+## 选项一：HF Router（推荐方案）
 
-The HF Router provides access to models from multiple providers (Replicate, Together AI, SambaNova, Fireworks, Cohere, and more) through a single endpoint.
+HF Router 通过单一端点提供来自多个供应商（Replicate、Together AI、SambaNova、Fireworks、Cohere 等）的模型访问能力。
 
 <Steps>
 
-### Step 1: Get Your HF Token
+### 步骤 1：获取您的 HF 令牌
 
-Visit [Hugging Face Settings > Access Tokens](https://huggingface.co/settings/tokens) and create a token. Make sure you have billing set up on your account.
+访问 [Hugging Face 设置 > 访问令牌](https://huggingface.co/settings/tokens) 并创建令牌。请确保您的账户已设置账单信息。
 
-### Step 2: Configure Jan
+### 步骤 2：配置 Jan
 
-1. Go to **Settings** > **Model Providers** > **HuggingFace**
-2. Enter your HF token
-3. Use this URL: `https://router.huggingface.co/v1`
+1. 前往 **设置** > **模型提供商** > **HuggingFace**
+2. 输入您的 HF 令牌
+3. 使用此 URL: `https://router.huggingface.co/v1`
 
-![Jan HF Setup](../_assets/hf_jan_setup.png)
+![Jan HF 设置](../_assets/hf_jan_setup.png)
 
-You can find out more about the HF Router [here](https://huggingface.co/docs/inference-providers/index).
+您可以在[此处](https://huggingface.co/docs/inference-providers/index)了解更多关于 HF 路由器的信息。
 
-### Step 3: Start Using Models
+### 步骤 3：开始使用模型
 
-Jan comes with three HF Router models pre-configured. Select one and start chatting immediately.
+Jan 预置了三个 HF 路由器模型。选择其中一个即可立即开始对话。
 
 </Steps>
 
 <Callout type='info'>
-The HF Router automatically routes your requests to the best available provider for each model, giving you access to a wide variety of models without managing individual endpoints.
+HF 路由器会自动将您的请求路由至每个模型的最佳可用提供商，让您无需管理独立端点即可访问多种模型。
 </Callout>
 
-## Option 2: HF Inference Endpoints
+## 选项 2：HF 推理端点
 
-For more control over specific models and deployment configurations, you can use Hugging Face Inference Endpoints.
+如需对特定模型和部署配置进行更精细控制，您可以使用 Hugging Face 推理端点。
 
 <Steps>
 
-### Step 1: Navigate to the HuggingFace Model Hub
+### 步骤 1：访问 HuggingFace 模型中心
 
-Visit the [Hugging Face Model Hub](https://huggingface.co/models) (make sure you are logged in) and pick the model you want to use.
+登录后访问 [Hugging Face 模型中心](https://huggingface.co/models)，选择您要使用的模型。
 
-![HuggingFace Model Hub](../_assets/hf_hub.png)
+![HuggingFace 模型中心](../_assets/hf_hub.png)
 
-### Step 2: Configure HF Inference Endpoint and Deploy
+### 步骤 2：配置 HF 推理终端并部署
 
-After you have selected the model you want to use, click on the **Deploy** button and select a deployment method. We will select HF Inference Endpoints for this one.
+选定模型后，点击 **Deploy** 按钮选择部署方式。本示例将选择 HF Inference Endpoints。
 
-![HuggingFace Deployment](../_assets/hf_jan_nano.png)
+![HuggingFace 部署界面](../_assets/hf_jan_nano.png)
 <br/>
 
-This will take you to the deployment set up page. For this example, we will leave the default settings as they are under the GPU tab and click on **Create Endpoint**.
+进入部署设置页面后，本示例保持 GPU 标签页的默认配置，点击 **Create Endpoint**。
 
-![HuggingFace Deployment](../_assets/hf_jan_nano_2.png)
+![HuggingFace 部署设置](../_assets/hf_jan_nano_2.png)
 <br/>
 
-Once your endpoint is ready, test that it works on the **Test your endpoint** tab.
+终端准备就绪后，在 **Test your endpoint** 标签页进行功能测试。
 
-![HuggingFace Deployment](../_assets/hf_jan_nano_3.png)
+![HuggingFace 终端测试](../_assets/hf_jan_nano_3.png)
 <br/>
 
-If you get a response, you can click on **Copy** to copy the endpoint URL and API key.
+收到响应后，点击 **Copy** 复制终端 URL 和 API 密钥。
 
 <Callout type='info'>
-  You will need to be logged into the HuggingFace Inference Endpoints and have a credit card on file to deploy a model.
+  部署模型需登录 HuggingFace Inference Endpoints 并绑定信用卡。
 </Callout>
 
-### Step 3: Configure Jan
+### 步骤 3：配置 Jan
 
-If you do not have an API key you can create one under **Settings** > **Access Tokens** [here](https://huggingface.co/settings/tokens). Once you finish, copy the token and add it to Jan alongside your endpoint URL at **Settings** > **Model Providers** > **HuggingFace**.
+若没有 API 密钥，可通过 **Settings** > **Access Tokens** [此处](https://huggingface.co/settings/tokens) 创建。复制令牌后，在 Jan 的 **Settings** > **Model Providers** > **HuggingFace** 处添加终端 URL 和密钥。
 
-**3.1 HF Token**
-![Get Token](../_assets/hf_jan_nano_5.png)
+**3.1 HF 令牌获取**
+![获取令牌](../_assets/hf_jan_nano_5.png)
 <br/>
 
-**3.2 HF Endpoint URL**
-![Endpoint URL](../_assets/hf_jan_nano_4.png)
+**3.2 HF 终端 URL 配置**
+![终端 URL](../_assets/hf_jan_nano_4.png)
 <br/>
 
-**3.3 Jan Settings**
-![Jan Settings](../_assets/hf_jan_nano_6.png)
+**3.3 Jan 设置界面**
+![Jan 设置](../_assets/hf_jan_nano_6.png)
 
 <Callout type='warning'>
-Make sure to add `/v1/` to the end of your endpoint URL. This is required by the OpenAI API.
+请确保在终端 URL 末尾添加 `/v1/`，这是 OpenAI API 的强制要求。
 </Callout>
 
-**3.4 Add Model Details**
-![Add Model Details](../_assets/hf_jan_nano_7.png)
+**3.4 添加模型详情**
+![添加模型详情](../_assets/hf_jan_nano_7.png)
 
-### Step 4: Start Using the Model
+### 步骤 4：开始使用模型
 
-Now you can start using the model in any chat.
+现在您可以在任意聊天会话中使用该模型。
 
-![Start Using the Model](../_assets/hf_jan_nano_8.png)
+![开始使用模型](../_assets/hf_jan_nano_8.png)
 
-If you want to learn how to use Jan Nano with MCP, check out [the guide here](../jan-models/jan-nano-32).
+如需了解如何搭配 MCP 使用 Jan Nano，请查阅[本指南](../jan-models/jan-nano-32)。
 <br/>
 
 </Steps>
 
-## Available Hugging Face Models
+## 可用的 Hugging Face 模型
 
-**Option 1 (HF Router):** Access to models from multiple providers as shown in the providers image above.
+**选项1 (HF路由服务):** 可访问来自多个供应商的模型，如上图供应商列表所示。
 
-**Option 2 (Inference Endpoints):** You can follow the steps above with a large amount of models on Hugging Face and bring them to Jan. Check out other models in the [Hugging Face Model Hub](https://huggingface.co/models).
+**选项2 (推理终端节点):** 您可以使用Hugging Face上的大量模型按照上述步骤将其接入Jan。查看[Hugging Face模型中心](https://huggingface.co/models)中的其他模型。
 
-## Troubleshooting
+## 故障排除
 
-Common issues and solutions:
+常见问题及解决方案：
 
-**1. Started a chat but the model is not responding**
-- Verify your API_KEY/HF_TOKEN is correct and not expired
-- Ensure you have billing set up on your HF account
-- For Inference Endpoints: Ensure the model you're trying to use is running again since, after a while, they go idle so that you don't get charged when you are not using it
+**1. 已启动聊天但模型无响应**
 
-![Model Running](../_assets/hf_jan_nano_9.png)
+- 确认您的API_KEY/HF_TOKEN正确且未过期
+- 确保您的HF账户已设置账单信息
+- 对于推理终端节点：确保您尝试使用的模型已重新运行，因为一段时间后它们会进入空闲状态以避免未使用时产生费用
 
-**2. Connection Problems**
-- Check your internet connection
-- Verify Hugging Face's system status
-- Look for error messages in [Jan's logs](/docs/troubleshooting#how-to-get-error-logs)
+![运行中的模型](../_assets/hf_jan_nano_9.png)
 
-**3. Model Unavailable**
-- Confirm your API key has access to the model
-- Check if you're using the correct model ID
-- Verify your Hugging Face account has the necessary permissions
+**2. 连接问题**
 
-Need more help? Join our [Discord community](https://discord.gg/FTk2MvZwJH) or check the
-[Hugging Face's documentation](https://docs.huggingface.co/en/inference-endpoints/index).
+- 检查您的网络连接
+- 查看Hugging Face系统状态
+- 在[Jan的日志](/docs/troubleshooting#how-to-get-error-logs)中查找错误信息
+
+**3. 模型不可用**
+
+- 确认您的API密钥有访问该模型的权限
+- 检查是否使用了正确的模型ID
+- 验证您的Hugging Face账户具备必要权限
+
+需要更多帮助？加入我们的[Discord社区](https://discord.gg/FTk2MvZwJH)或查阅
+[Hugging Face官方文档](https://docs.huggingface.co/en/inference-endpoints/index)。

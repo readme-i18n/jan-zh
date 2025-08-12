@@ -1,6 +1,7 @@
 ---
+
 title: Canva MCP
-description: Create and manage designs through natural language commands with Canva's official MCP server.
+description: 通过自然语言命令在Canva官方MCP服务器上创建和管理设计作品
 keywords:
   [
     Jan,
@@ -19,263 +20,286 @@ import { Callout, Steps } from 'nextra/components'
 
 # Canva MCP
 
-[Canva MCP](https://www.canva.com/newsroom/news/deep-research-integration-mcp-server/) gives AI models the ability to create, search, and manage designs directly within Canva. As the first design platform with native MCP integration, it lets you generate presentations, logos, and marketing materials through conversation rather than clicking through design interfaces.
+[Canva MCP](https://www.canva.com/newsroom/news/deep-research-integration-mcp-server/) 赋予AI模型直接在Canva平台内创建、搜索和管理设计作品的能力。作为首个原生集成MCP协议的设计平台，它允许您通过对话而非点击设计界面来生成演示文稿、徽标和营销素材。
 
-The integration provides comprehensive design capabilities without leaving your chat, though actual editing still happens in Canva's interface.
+该集成提供了全面的设计能力而无需离开聊天界面，但实际编辑仍需在Canva的设计界面中完成。
 
-## Available Tools
+## 可用工具
 
 <Callout type="info">
-Canva's MCP tools may change over time as the integration evolves. This list reflects current capabilities.
+Canva的MCP工具可能会随着集成方案的演进发生变化。当前列表反映的是现有功能。
 </Callout>
 
-### Design Operations
-- **generate-design**: Create new designs using AI prompts
-- **search-designs**: Search docs, presentations, videos, whiteboards
-- **get-design**: Get detailed information about a Canva design
-- **get-design-pages**: List pages in multi-page designs
-- **get-design-content**: Extract content from designs
-- **resize-design**: Adapt designs to different dimensions
-- **get-design-resize-status**: Check resize operation status
-- **get-design-generation-job**: Track AI generation progress
+### 设计操作
 
-### Import/Export
-- **import-design-from-url**: Import files from URLs as new designs
-- **get-design-import-from-url**: Check import status
-- **export-design**: Export designs in various formats
-- **get-export-formats**: List available export options
-- **get-design-export-status**: Track export progress
+- **generate-design**: 通过AI提示生成新设计
+- **search-designs**: 搜索文档、演示文稿、视频、白板
+- **get-design**: 获取Canva设计的详细信息  
+- **get-design-pages**: 列出多页设计中的页面
+- **get-design-content**: 从设计中提取内容
+- **resize-design**: 调整设计尺寸以适应不同规格
+- **get-design-resize-status**: 检查尺寸调整操作状态
+- **get-design-generation-job**: 追踪AI生成进度
 
-### Organization
-- **create-folder**: Create folders in Canva
-- **move-item-to-folder**: Organize designs and assets
-- **list-folder-items**: Browse folder contents
+### 导入/导出
 
-### Collaboration
-- **comment-on-design**: Add comments to designs
-- **list-comments**: View design comments
-- **list-replies**: See comment threads
-- **reply-to-comment**: Respond to feedback
+- **import-design-from-url**: 从URL导入文件作为新设计
+- **get-design-import-from-url**: 检查导入状态  
+- **export-design**: 以多种格式导出设计
+- **get-export-formats**: 列出可用导出选项
+- **get-design-export-status**: 追踪导出进度
 
-### Legacy Tools
-- **search**: ChatGPT connector (use search-designs instead)
-- **fetch**: Content retrieval for ChatGPT
+### 组织管理
 
-## Prerequisites
+- **create-folder**: 在Canva中创建文件夹
+- **move-item-to-folder**: 整理设计和资源
+- **list-folder-items**: 浏览文件夹内容
 
-- Jan with MCP enabled
-- Canva account (free or paid)
-- Model with tool calling support
-- Node.js installed
-- Internet connection for Canva API access
+### 协作功能
 
-## Setup
+- **comment-on-design**: 在设计上添加评论
+- **list-comments**: 查看设计评论
+- **list-replies**: 查看评论对话
+- **reply-to-comment**: 回复反馈
 
-### Enable MCP
+### 遗留工具
 
-1. Go to **Settings** > **MCP Servers**
-2. Toggle **Allow All MCP Tool Permission** ON
+- **search**: ChatGPT连接器(建议改用search-designs)
+- **fetch**: 为ChatGPT获取内容
 
-![MCP settings page with toggle enabled](../../_assets/mcp-on.png)
+## 前置条件
 
-### Configure Canva MCP Server
+- 启用 MCP 的 Jan
+- Canva 账户（免费或付费）
+- 支持工具调用的模型
+- 已安装 Node.js
+- 可访问 Canva API 的网络连接
 
-Click `+` in MCP Servers section:
+## 配置
 
-**Configuration:**
-- **Server Name**: `Canva`
-- **Command**: `npx`
-- **Arguments**: `-y mcp-remote@latest https://mcp.canva.com/mcp`
-- **Environment Variables**: Leave empty (authentication handled via OAuth)
+### 启用MCP
 
-![Canva MCP server configuration in Jan](../../_assets/canva.png)
+1. 进入**设置** > **MCP服务器**
+2. 将**允许所有MCP工具权限**切换为开启状态
 
-### Authentication Process
+![已启用切换按钮的MCP设置页面](../../_assets/mcp-on.png)
 
-When you first use Canva tools:
+### 配置 Canva MCP 服务器
 
-1. **Browser Opens Automatically**
-   - Canva authentication page appears in your default browser
-   - Log in with your Canva account
+在MCP服务器区域点击`+`：
 
-![Canva authentication page](../../_assets/canva2.png)
+**配置步骤：**
 
-2. **Team Selection & Permissions**
-   - Select your team (if you have multiple)
-   - Review permissions the AI will have
-   - Click **Allow** to grant access
+- **服务器名称**: `Canva`
+- **命令**: `npx`
+- **参数**: `-y mcp-remote@latest https://mcp.canva.com/mcp`
+- **环境变量**: 留空（通过 OAuth 处理认证）
 
-![Canva team selection and permissions](../../_assets/canva3.png)
+![Jan 中的 Canva MCP 服务器配置](../../_assets/canva.png)
 
-The permissions include:
-- Reading your profile and designs
-- Creating new designs
-- Managing folders and content
-- Accessing team brand templates
-- Commenting on designs
+### 认证流程
 
-### Model Configuration
+首次使用 Canva 工具时：
 
-Use a tool-enabled model:
+1. **浏览器自动打开**
+   - Canva 认证页面会出现在默认浏览器中
+   - 使用您的 Canva 账户登录
+
+![Canva 认证页面](../../_assets/canva2.png)
+
+2. **团队选择与权限**
+   - 选择您的团队（如果有多个）
+   - 查看 AI 将获得的权限
+   - 点击 **允许** 授予访问权限
+
+![Canva 团队选择和权限](../../_assets/canva3.png)
+
+权限包括：
+
+- 读取您的个人资料和设计作品
+- 创建新设计
+- 管理文件夹和内容
+- 访问团队品牌模板
+- 在设计作品上评论
+
+### 模型配置
+
+使用支持工具调用的模型：
 
 - **Anthropic Claude 3.5+ Sonnet**
 - **OpenAI GPT-4o**
 - **Google Gemini Pro**
 
-## Real-World Usage Example
+## 实际使用示例
 
-Here's an actual workflow creating a company logo:
+以下是创建公司标志的实际工作流程：
 
-### Initial Setup Confirmation
+### 初始设置确认
 
 ```
 Are you able to access my projects?
 ```
 
-The AI explains available capabilities:
+AI 解释可用功能：
 
-![AI response about available actions](../../_assets/canva4.png)
+![AI 关于可用操作的响应](../../_assets/canva4.png)
 
-### Design Creation Request
+### 设计创建请求
 
 ```
 Create new designs with AI. Call it "VibeBusiness" and have it be a company focused on superintelligence for the benefit of humanity.
 ```
 
-The AI initiates design generation:
+AI 启动设计生成：
 
-![AI generating design with tool call visible](../../_assets/canva5.png)
+![显示工具调用的 AI 设计生成过程](../../_assets/canva5.png)
 
-### Design Options
+### 设计选项
 
-The AI creates multiple logo variations:
+AI 创建多个徽标变体：
 
-**First Option:**
-![First logo design option](../../_assets/canva6.png)
+**第一选项：**
+![第一个徽标设计方案](../../_assets/canva6.png)
 
-**Selected Design:**
-![Selected logo design](../../_assets/canva7.png)
+**选定设计：**
+![选定的徽标设计](../../_assets/canva7.png)
 
-### Final Result
+### 最终成果
 
-After selection, the AI confirms:
+选择后，AI 确认：
 
-![Final response with design ready](../../_assets/canva8.png)
+![设计就绪的最终响应](../../_assets/canva8.png)
 
-Clicking the design link opens it directly in Canva:
+点击设计链接可直接在 Canva 中打开：
 
-![Design opened in Canva browser tab](../../_assets/canva9.png)
+![在 Canva 浏览器标签页中打开的设计](../../_assets/canva9.png)
 
-## Practical Use Cases
+## 实际用例
 
-### Marketing Campaign Development
+### 营销活动开发
+
 ```
 Create a social media campaign for our new product launch. Generate Instagram posts, Facebook covers, and LinkedIn banners with consistent branding.
 ```
 
-### Presentation Automation
+### 演示文稿自动化
+
 ```
 Search for our Q4 sales presentation and create a simplified 5-slide version for the board meeting.
 ```
 
-### Brand Asset Management
+### 品牌资产管理
+
 ```
 List all designs in our "2025 Marketing" folder and export the approved ones as PDFs.
 ```
 
-### Design Iteration
+### 设计迭代
+
 ```
 Find our company logo designs from last month and resize them for business cards, letterheads, and email signatures.
 ```
 
-### Content Extraction
+### 内容提取
+
 ```
 Extract all text from our employee handbook presentation so I can update it in our documentation.
 ```
 
-### Collaborative Review
+### 协作评审
+
 ```
 Add a comment to the new website mockup asking the design team about the color scheme choices.
 ```
 
-## Workflow Tips
+## 工作流程技巧
 
-### Effective Design Generation
-- **Be specific**: "Create a minimalist tech company logo with blue and silver colors"
-- **Specify format**: "Generate an Instagram story template for product announcements"
-- **Include context**: "Design a professional LinkedIn banner for a AI research company"
-- **Request variations**: Ask for multiple options to choose from
+### 高效设计生成
 
-### Organization Best Practices
-- Create folders before generating multiple designs
-- Use descriptive names for easy searching later
-- Move designs to appropriate folders immediately
-- Export important designs for backup
+- **具体说明**："创建一个采用蓝银配色的极简科技公司徽标"
+- **指定格式**："生成用于产品公告的 Instagram 故事模板"
+- **包含背景**："为 AI 研究公司设计专业的 LinkedIn 横幅"
+- **请求变体**：要求提供多个选项以供选择
 
-### Integration Patterns
-- Generate designs → Review options → Select preferred → Open in Canva for fine-tuning
-- Search existing designs → Extract content → Generate new versions
-- Create templates → Resize for multiple platforms → Export all variants
+### 组织最佳实践
 
-## Limitations and Considerations
+- 生成多个设计前先创建文件夹
+- 使用描述性名称以便后续搜索
+- 立即将设计移至相应文件夹
+- 导出重要设计作为备份
 
-**Design Editing**: While the MCP can create and manage designs, actual editing requires opening Canva's interface.
+### 集成模式
 
-**Project Access**: The integration may not access all historical projects immediately, focusing on designs created or modified after connection.
+- 生成设计 → 查看选项 → 选择偏好方案 → 在Canva中打开进行微调
+- 搜索现有设计 → 提取内容 → 生成新版本
+- 创建模板 → 为多平台调整尺寸 → 导出所有变体
 
-**Generation Time**: AI design generation takes a few moments. The tool provides job IDs to track progress.
+## 限制与注意事项
 
-**Team Permissions**: Access depends on your Canva team settings and subscription level.
+**设计编辑**：虽然MCP可以创建和管理设计，实际编辑仍需通过Canva界面操作。
 
-## Troubleshooting
+**项目访问**：集成可能无法立即访问所有历史项目，主要聚焦连接后创建或修改的设计。
 
-**Authentication Issues:**
-- Clear browser cookies for Canva
-- Try logging out and back into Canva
-- Ensure pop-ups aren't blocked for OAuth flow
-- Check team admin permissions if applicable
+**生成时间**：AI设计生成需要数秒时间，工具会提供任务ID用于追踪进度。
 
-**Design Generation Failures:**
-- Verify you have creation rights in selected team
-- Check Canva subscription limits
-- Try simpler design prompts first
-- Ensure stable internet connection
+**团队权限**：访问权限取决于Canva团队设置和订阅等级。
 
-**Tool Availability:**
-- Some tools require specific Canva plans
-- Team features need appropriate permissions
-- Verify MCP server is showing as active
-- Restart Jan after authentication
+## 故障排除
 
-**Search Problems:**
-- Use search-designs (not the legacy search tool)
-- Be specific with design types and names
-- Check folder permissions for team content
-- Allow time for new designs to index
+**认证问题**：
+
+- 清除Canva的浏览器cookie
+- 尝试退出并重新登录Canva
+- 确保OAuth流程未被弹窗拦截
+- 如适用请检查团队管理员权限
+
+**设计生成失败**：
+
+- 确认在所选团队中拥有创建权限
+- 检查Canva订阅限制
+- 先尝试更简单的设计提示词
+- 确保网络连接稳定
+
+**工具可用性**：
+
+- 部分工具需要特定的 Canva 订阅计划
+- 团队功能需要相应权限
+- 确认 MCP 服务器显示为活跃状态
+- 认证后需重启 Jan
+
+**搜索问题排查：**
+
+- 使用 search-designs（而非旧版搜索工具）
+- 明确指定设计类型和名称
+- 检查团队内容的文件夹权限
+- 新设计需要时间完成索引
 
 <Callout type="warning">
-Design generation uses Canva's AI capabilities and may be subject to usage limits based on your account type.
+设计生成功能使用 Canva 的 AI 能力，可能受限于您的账户类型存在使用限额。
 </Callout>
 
-## Advanced Workflows
+## 高级工作流
 
-### Batch Operations
+### 批量操作
+
 ```
 Create 5 variations of our product announcement banner, then resize all of them for Twitter, LinkedIn, and Facebook.
 ```
 
-### Content Migration
+### 内容迁移
+
 ```
 Import all designs from [URLs], organize them into a "2025 Campaign" folder, and add review comments for the team.
 ```
 
-### Automated Reporting
+### 自动化报告
+
 ```
 Search for all presentation designs created this month, extract their content, and summarize the key themes.
 ```
 
-## Next Steps
+## 后续步骤
 
-Canva MCP bridges the gap between conversational AI and visual design. Instead of describing what you want and then manually creating it, you can generate professional designs directly through natural language commands.
+Canva MCP 架起了对话式 AI 与视觉设计之间的桥梁。您无需先描述需求再手动创建，而是可以直接通过自然语言指令生成专业设计。
 
-The real power emerges when combining multiple tools - searching existing assets, generating new variations, organizing content, and collaborating with teams, all within a single conversation flow.
+当组合使用多个工具时——搜索现有素材、生成新变体、组织内容并与团队协作——全部可在单一对话流中完成，此时才能真正展现其强大能力。

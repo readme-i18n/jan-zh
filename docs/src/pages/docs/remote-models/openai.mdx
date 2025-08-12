@@ -1,87 +1,87 @@
 ---
+
 title: OpenAI API
-description: A step-by-step guide on integrating Jan with Azure OpenAI.
+description: 关于将 Jan 与 Azure OpenAI 集成的分步指南
 keywords:
   [
     Jan,
-    Customizable Intelligence, LLM,
-    local AI,
-    privacy focus,
-    free and open source,
-    private and offline,
-    conversational AI,
-    no-subscription fee,
-    large language models,
-    integration,
-    Azure OpenAI Service,
+    可定制智能, LLM,
+    本地AI,
+    隐私优先,
+    免费开源,
+    私有离线,
+    对话式AI,
+    无订阅费,
+    大语言模型,
+    集成,
+    Azure OpenAI 服务,
   ]
 ---
+
 import { Callout, Steps } from 'nextra/components'
 import { Settings, Plus } from 'lucide-react'
 
 # OpenAI
 
-Jan supports most [OpenAI](https://openai.com/) as well as the many OpenAI-compatible APIs out there,
-allowing you to use all models from OpenAI (GPT-4o, o3 and even those from Together AI, DeepSeek, Fireworks
-and more) through Jan's interface.
+Jan 支持大多数 [OpenAI](https://openai.com/) 以及众多 OpenAI 兼容的 API，使您可以通过 Jan 的界面使用所有 OpenAI 模型（GPT-4o、o3 甚至来自 Together AI、DeepSeek、Fireworks 等平台的模型）。
 
-## Integrate OpenAI API with Jan
+## 将 OpenAI API 与 Jan 集成
 
 <Steps>
 
-### Step 1: Get Your API Key
-1. Visit the [OpenAI Platform](https://platform.openai.com/api-keys) and sign in
-2. Create & copy a new API key or copy your existing one
+### 步骤 1：获取 API 密钥
+1. 访问 [OpenAI 平台](https://platform.openai.com/api-keys) 并登录
+2. 创建并复制新的 API 密钥或复制现有密钥
 
 <Callout type='info'>
-Ensure your API key has sufficient credits
+确保您的 API 密钥有足够的额度
 </Callout>
 
-### Step 2: Configure Jan
+### 步骤 2：配置 Jan
 
-1. Navigate to the Settings page (<Settings width={16} height={16} style={{display:"inline"}}/>)
-2. Under Remote Engines, select OpenAI
-3. Insert your API Key
+1. 导航至设置页面 (<Settings width={16} height={16} style={{display:"inline"}}/>)
+2. 在远程引擎下选择 OpenAI
+3. 输入您的 API 密钥
 
 <br/>
 ![OpenAI](../_assets/openai.png)
 <br/>
 
-### Step 3: Start Using OpenAI's Models
+### 步骤 3：开始使用 OpenAI 模型
 
-In any existing Threads or create a new one
-Select an OpenAI model from model selector
-Start chatting
+在任何现有会话中或创建新会话
+从模型选择器中选择 OpenAI 模型
+开始聊天
 
 </Steps>
 
-## Available OpenAI Models
+## 可用的 OpenAI 模型
 
-Jan automatically includes popular OpenAI models. In case you want to use a specific model that you
-cannot find in Jan, follow instructions in [Add Cloud Models](/docs/manage-models#add-models-1):
-- See list of available models in [OpenAI Platform](https://platform.openai.com/docs/models/overview).
-- The id property must match the model name in the list. For example, if you want to use the
-[GPT-4.5](https://platform.openai.com/docs/models/), you must set the id property
-to respective one.
+Jan 已自动包含流行的 OpenAI 模型。如需使用 Jan 中未提供的特定模型，请按照[添加云端模型](/docs/manage-models#add-models-1)的说明操作：
 
-## Troubleshooting
+- 查看 [OpenAI 平台](https://platform.openai.com/docs/models/overview)上的可用模型列表
+- id 属性必须与列表中的模型名称匹配。例如，若需使用 [GPT-4.5](https://platform.openai.com/docs/models/)，必须将 id 属性设置为对应的值
 
-Common issues and solutions:
+## 故障排除
 
-1. API Key Issues
-- Verify your API key is correct and not expired
-- Check if you have billing set up on your OpenAI account
-- Ensure you have access to the model you're trying to use
+常见问题及解决方案：
 
-2. Connection Problems
-- Check your internet connection
-- Verify OpenAI's [system status](https://status.openai.com)
-- Look for error messages in [Jan's logs](/docs/troubleshooting#how-to-get-error-logs)
+1. API 密钥问题
 
-3. Model Unavailable
-- Confirm your API key has access to the model
-- Check if you're using the correct model ID
-- Verify your OpenAI account has the necessary permissions
+- 确认 API 密钥正确且未过期
+- 检查 OpenAI 账户是否已设置账单
+- 确保您有权访问尝试使用的模型
 
-Need more help? Join our [Discord community](https://discord.gg/FTk2MvZwJH) or check the
-[OpenAI documentation](https://platform.openai.com/docs).
+2. 连接问题
+
+- 检查网络连接
+- 查看 OpenAI 的[系统状态](https://status.openai.com)
+- 在 [Jan 日志](/docs/troubleshooting#how-to-get-error-logs)中查找错误信息
+
+3. 模型不可用
+
+- 确认 API 密钥具有该模型的访问权限
+- 检查是否使用了正确的模型 ID
+- 验证 OpenAI 账户是否具备必要权限
+
+需要更多帮助？加入我们的 [Discord 社区](https://discord.gg/FTk2MvZwJH)或查阅 [OpenAI 文档](https://platform.openai.com/docs)。

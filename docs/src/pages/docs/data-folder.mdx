@@ -1,21 +1,22 @@
 ---
-title: Jan Data Folder
-description: A guide to Jan's data structure.
+
+title: Jan 数据文件夹
+description: Jan 数据结构指南
 sidebar_position: 2
 keywords:
   [
     Jan,
-    Customizable Intelligence, LLM,
-    local AI,
-    privacy focus,
-    free and open source,
-    private and offline,
-    conversational AI,
-    no-subscription fee,
-    large language models,
-    quickstart,
-    getting started,
-    using AI model,
+    可定制智能, LLM,
+    本地AI,
+    隐私优先,
+    免费开源,
+    私有离线,
+    对话式AI,
+    无订阅费,
+    大语言模型,
+    快速入门,
+    开始使用,
+    使用AI模型,
   ]
 ---
 
@@ -23,21 +24,24 @@ import { Tabs } from 'nextra/components'
 import { Callout, Steps } from 'nextra/components'
 import { Settings, FolderOpen } from 'lucide-react'
 
+# Jan 数据文件夹
 
-# Jan Data Folder
-Jan stores your data locally in JSON format. Your data is yours alone.
+Jan 以 JSON 格式将您的数据存储在本地。您的数据仅属于您个人。
 
-## Open Jan Data Folder
+## 打开 Jan 数据文件夹
 
-Via Jan:
-1. Settings (<Settings width={16} height={16} style={{display:"inline"}}/>) > Advanced Settings
-2. Click <FolderOpen width={16} height={16} style={{display:"inline"}}/>
+通过 Jan 界面：
+
+1. 设置 (<Settings width={16} height={16} style={{display:"inline"}}/>) > 高级设置
+2. 点击 <FolderOpen width={16} height={16} style={{display:"inline"}}/>
 
 <br/>
-![Open Jan Data Folder](./_assets/settings-11.png)
+
+![打开 Jan 数据文件夹](./_assets/settings-11.png)
+
 <br/>
 
-Via Terminal:
+通过终端：
 
 ```bash
 # Windows
@@ -51,10 +55,10 @@ cd $XDG_CONFIG_HOME/Jan/data  # Custom install
 cd ~/.config/Jan/data         # Default install
 ```
 
-## Directory Structure
+## 目录结构
 
 <Callout type="info">
-Root directory: `~/jan`
+根目录: `~/jan`
 </Callout>
 
 ```sh
@@ -90,7 +94,8 @@ Root directory: `~/jan`
 ```
 
 ### `assistants/`
-Where AI personalities live. The default one (`/assistants/jan/`):
+
+存放 AI 个性配置。默认配置位于 (`/assistants/jan/`)：
 
 ```json
 {
@@ -119,49 +124,55 @@ Where AI personalities live. The default one (`/assistants/jan/`):
 }
 ```
 
-Parameters:
+参数：
 
-| Parameter               | Description                                                  | Type    | Default |
-|------------------------|--------------------------------------------------------------|---------|---------|
-| id                     | Assistant identifier                                         | string  | jan     |
-| avatar                 | Assistant image                                              | string  | None    |
-| object                 | OpenAI API compatibility marker                              | string  | None    |
-| created_at             | Creation timestamp                                          | string  | None    |
-| name                   | Display name                                                | string  | Jan     |
-| description            | Role description                                            | string  | Default |
-| model                  | Allowed models (* = all)                                    | string  | *       |
-| instructions           | Default thread instructions                                 | string  | None    |
-| file_ids              | OpenAI compatibility field                                  | string  | None    |
-| tools                  | Available tools (retrieval only currently)                  | array   | retrieval|
-| type                   | Tool type                                                   | string  | retrieval|
-| enabled               | Tool status                                                 | boolean | true    |
-| useTimeWeightedRetriever| Time-weighted retrieval toggle                            | boolean | false   |
-| settings              | Tool configuration                                          | object  | None    |
-| top_k                 | Max retrieval results                                       | number  | 2       |
-| chunk_size            | Text chunk size                                             | number  | 1024    |
-| chunk_overlap         | Chunk overlap amount                                        | number  | 64      |
-| retrieval_template    | Response format template                                    | string  | None    |
+| 参数                   | 描述                                                  | 类型    | 默认值 |
+|------------------------|-------------------------------------------------------|---------|--------|
+| id                     | 助手标识符                                           | string  | jan    |
+| avatar                 | 助手头像                                             | string  | 无     |
+| object                 | OpenAI API 兼容标记                                  | string  | 无     |
+| created_at             | 创建时间戳                                           | string  | 无     |
+| name                   | 显示名称                                             | string  | Jan    |
+| description            | 角色描述                                             | string  | 默认   |
+| model                  | 允许使用的模型 (* 表示全部)                          | string  | *      |
+| instructions           | 默认线程指令                                         | string  | 无     |
+| file_ids               | OpenAI 兼容字段                                     | string  | 无     |
+| tools                  | 可用工具 (当前仅支持检索功能)                        | array   | retrieval |
+| type                   | 工具类型                                             | string  | retrieval |
+| enabled                | 工具启用状态                                         | boolean | true   |
+| useTimeWeightedRetriever| 时间加权检索开关                                   | boolean | false  |
+| settings               | 工具配置                                             | object  | 无     |
+| top_k                  | 最大检索结果数                                       | number  | 2      |
+| chunk_size             | 文本分块大小                                         | number  | 1024   |
+| chunk_overlap          | 分块重叠量                                           | number  | 64     |
+| retrieval_template     | 响应格式模板                                         | string  | 无     |
 
 ### `extensions/`
-Add-on central. Organization extensions live in `@janhq/`, solo ones in root.
+
+插件中心。组织扩展位于 `@janhq/` 目录下，独立扩展直接存放在根目录。
 
 ### `logs/`
-Debugging headquarters (`/logs/app.txt`):
-- **[APP]**: Core logs
-- **[SERVER]**: API drama
-- **[SPECS]**: Hardware confessions
+
+调试总部 (`/logs/app.txt`)：
+
+- **[APP]**: 核心日志
+- **[SERVER]**: API 运行记录
+- **[SPECS]**: 硬件配置信息
 
 ### `models/`
-The silicon brain collection. Each model has its own `model.json`.
+
+模型仓库。每个模型都有独立的 `model.json` 配置文件。
 
 <Callout type="info">
-Full parameters: [here](/docs/model-parameters)
+完整参数说明：[查看文档](/docs/model-parameters)
 </Callout>
 
 ### `threads/`
-Chat archive. Each thread (`/threads/jan_unixstamp/`) contains:
+
+会话存档。每个线程 (`/threads/jan_unixstamp/`) 包含：
 
 - `messages.jsonl`:
+
 ```json
   {
     "completed_at": 0,
@@ -201,20 +212,18 @@ Chat archive. Each thread (`/threads/jan_unixstamp/`) contains:
 
 - `thread.json`:
 
-| Parameter   | Description                                    |
-|------------|------------------------------------------------|
-| assistants | Assistant configuration clone                  |
-| created    | Creation timestamp                             |
-| id         | Thread identifier                              |
-| metadata   | Additional thread data                         |
-| model      | Active model settings                          |
-| object     | OpenAI compatibility marker                    |
-| title      | Thread name                                    |
-| updated    | Updated timestamp                              |
+| 参数        | 描述                                          |
+|------------|-----------------------------------------------|
+| assistants | 助手配置副本                                  |
+| created    | 创建时间戳                                    |
+| id         | 线程标识符                                    |
+| metadata   | 附加线程数据                                  |
+| model      | 当前模型设置                                  |
+| object     | OpenAI 兼容标记                               |
+| title      | 线程名称                                      |
+| updated    | 更新时间戳                                    |
 
+## 删除 Jan 数据
 
-
-
-## Delete Jan Data
-Uninstall guides: [Mac](/docs/desktop/mac#step-2-clean-up-data-optional),
-[Windows](/docs/desktop/windows#step-2-handle-jan-data), or [Linux](docs/desktop/linux#uninstall-jan).
+卸载指南：[Mac](/docs/desktop/mac#step-2-clean-up-data-optional)、
+[Windows](/docs/desktop/windows#step-2-handle-jan-data) 或 [Linux](docs/desktop/linux#uninstall-jan)。

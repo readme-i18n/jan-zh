@@ -1,6 +1,7 @@
 ---
+
 title: Linux
-description: Get started quickly with Jan, an AI chat application that runs 100% offline on your desktop & mobile (*coming soon*).
+description: 快速开始使用 Jan，这是一款在桌面和移动设备上 100% 离线运行的 AI 聊天应用（*即将推出*）。
 keywords:
   [
     Jan,
@@ -20,18 +21,17 @@ keywords:
   ]
 ---
 
-
 import FAQBox from '@/components/FaqBox'
 import { Tabs, Callout, Steps } from 'nextra/components'
 import { Settings } from 'lucide-react'
 
+# Linux 安装指南
 
+Jan 在 Linux 系统上的安装说明。
 
-# Linux Installation
-Instructions for installing Jan on Linux.
+## 兼容性
 
-## Compatibility
-System requirements:
+系统要求：
 
 <Tabs items={['OS', 'CPU', 'RAM', 'GPU', 'Disk']}>
 
@@ -104,50 +104,50 @@ Minimum 10GB of free disk space required.
 
 </Tabs>
 
-## Install Jan
+## 安装 Jan
 
-Installation steps:
+安装步骤：
 
 <Steps>
 
-### Step 1: Download Application
+### 第一步：下载应用程序
 
-Available releases:
-<Tabs items={['Stable Release', 'Beta Release', 'Nightly Release']}>
+可用版本：
+<Tabs items={['稳定版', '测试版', '开发版']}>
 <Tabs.Tab>
-Stable release:
+稳定版：
   - Ubuntu: [jan.deb](https://app.jan.ai/download/latest/linux-amd64-deb)
-  - Others: [Jan.AppImage](https://app.jan.ai/download/latest/linux-amd64-appimage)
-- Official Website: https://jan.ai/download
+  - 其他系统: [Jan.AppImage](https://app.jan.ai/download/latest/linux-amd64-appimage)
+- 官方网站: https://jan.ai/download
 
 </Tabs.Tab>
 <Tabs.Tab>
 
-Beta release:
+测试版：
   - Ubuntu: [jan.deb](https://app.jan.ai/download/beta/linux-amd64-deb)
-  - Others: [Jan.AppImage](https://app.jan.ai/download/beta/linux-amd64-appimage)
+  - 其他系统: [Jan.AppImage](https://app.jan.ai/download/beta/linux-amd64-appimage)
 
 <Callout type="info">
-May contain bugs. Use with caution.
+可能包含错误，请谨慎使用。
 </Callout>
 </Tabs.Tab>
 <Tabs.Tab>
 
-Development build:
+开发版：
  - Ubuntu: [jan.deb](https://app.jan.ai/download/nightly/linux-amd64-deb)
- - Others: [Jan.AppImage](https://app.jan.ai/download/nightly/linux-amd64-appimage)
+ - 其他系统: [Jan.AppImage](https://app.jan.ai/download/nightly/linux-amd64-appimage)
 
 <Callout type="info">
-Experimental version. Expect instability.
+实验性版本，可能存在不稳定情况。
 </Callout>
 </Tabs.Tab>
 </Tabs>
 
-### Step 2: Install Application
+### 第二步：安装应用程序
 
-Installation commands:
+安装命令：
 
-<Tabs items={['Ubuntu', 'Others']}>
+<Tabs items={['Ubuntu', '其他系统']}>
 <Tabs.Tab>
 
 ##### dpkg
@@ -166,7 +166,7 @@ sudo apt-get install ./jan-linux-amd64-{version}.deb
 
 <Tabs.Tab>
 
-From the terminal, run the following commands:
+在终端运行以下命令：
 
 ```bash
 chmod +x jan-linux-x86_64-{version}.AppImage
@@ -178,10 +178,9 @@ chmod +x jan-linux-x86_64-{version}.AppImage
 
 </Steps>
 
+## 数据文件夹
 
-## Data Folder
-
-Default locations:
+默认位置：
 
 ```bash
 # Custom installation directory
@@ -193,11 +192,12 @@ $XDG_CONFIG_HOME = /home/username/custom_config
 ~/.config/Jan/data
 
 ```
-See [Jan Data Folder](/docs/data-folder) for details.
 
+详情请参阅 [Jan 数据文件夹](/docs/data-folder)。
 
-## GPU Acceleration
-Configuration for GPU support:
+## GPU 加速
+
+GPU 支持配置：
 
 <Tabs items={['NVIDIA GPU', 'AMD GPU', 'Intel Arc GPU']}>
 
@@ -271,9 +271,10 @@ Requires Vulkan support.
 
 </Tabs>
 
-## Uninstall Jan
+## 卸载 Jan
 
-Removal commands:
+卸载命令：
+
 <Tabs items={['Ubuntu', 'Others']}>
 <Tabs.Tab>
 
@@ -294,5 +295,5 @@ rm -rf ~/.config/Jan
 </Tabs>
 
 <Callout type="warning">
-These commands permanently delete application data.
+以下命令将永久删除应用数据。
 </Callout>

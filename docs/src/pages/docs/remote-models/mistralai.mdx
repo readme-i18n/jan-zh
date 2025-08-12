@@ -1,18 +1,19 @@
 ---
+
 title: Mistral AI API
-description: A step-by-step guide on integrating Jan with Mistral AI.
+description: 关于将Jan与Mistral AI集成的分步指南
 keywords:
   [
     Jan,
-    Customizable Intelligence, LLM,
-    local AI,
-    privacy focus,
-    free and open source,
-    private and offline,
-    conversational AI,
-    no-subscription fee,
-    large language models,
-    Mistral integration,
+    可定制智能, LLM,
+    本地AI,
+    隐私优先,
+    免费开源,
+    私有离线,
+    对话式AI,
+    无订阅费,
+    大语言模型,
+    Mistral集成,
   ]
 ---
 
@@ -21,63 +22,64 @@ import { Settings, Plus } from 'lucide-react'
 
 # Mistral AI
 
-Jan supports all models available via the [Mistral AI](https://mistral.ai/) API, allowing you to use Mistral's
-powerful models (Mistral Large, Mistral Medium, Mistral Small and more) through Jan's interface.
+Jan支持通过[Mistral AI](https://mistral.ai/) API提供的所有模型，您可以通过Jan界面使用Mistral的强大模型（包括Mistral Large、Mistral Medium、Mistral Small等）。
 
-## Integrate Mistral AI with Jan
+## 将Mistral AI集成到Jan
 
 <Steps>
 
-### Step 1: Get Your API Key
-1. Visit the [Mistral AI Platform](https://console.mistral.ai/api-keys/) and sign in
-2. Create & copy a new API key or copy your existing one
+### 步骤1：获取API密钥
+1. 访问[Mistral AI平台](https://console.mistral.ai/api-keys/)并登录
+2. 创建并复制新的API密钥，或复制现有密钥
 
 <Callout type='info'>
-Ensure your API key has sufficient credits
+请确保您的API密钥有足够的额度
 </Callout>
 
-### Step 2: Configure Jan
+### 步骤2：配置Jan
 
-1. Navigate to the **Settings** page (<Settings width={16} height={16} style={{display:"inline"}}/>)
-2. Under **Model Providers**, select **Mistral AI**
-3. Insert your **API Key**
+1. 进入**设置**页面 (<Settings width={16} height={16} style={{display:"inline"}}/>)
+2. 在**模型提供商**下选择**Mistral AI**
+3. 输入您的**API密钥**
 
 <br/>
 ![Mistral](../_assets/mistralai.png)
 <br/>
 
-### Step 3: Start Using Mistral's Models
+### 步骤3：开始使用Mistral模型
 
-1. Open any existing **Chat** or create a new one
-2. Select a Mistral model from **model selector**
-3. Start chatting
+1. 打开任意现有**聊天**或创建新聊天
+2. 从**模型选择器**中选择Mistral模型
+3. 开始对话
 </Steps>
 
-## Available Mistral Models
+## 可用的Mistral模型
 
-Jan automatically includes Mistral's available models. In case you want to use a specific Mistral model
-that you cannot find in **Jan**, follow the instructions in [Add Cloud Models](/docs/manage-models#add-models-1):
-- See list of available models in [Mistral AI Documentation](https://docs.mistral.ai/platform/endpoints).
-- The `id` property must match the model name in the list. For example, if you want to use
-Mistral Large, you must set the `id` property to `mistral-large-latest`
+Jan 已自动包含 Mistral 提供的可用模型。如需使用在 **Jan** 中未找到的特定 Mistral 模型，请按照[添加云端模型](/docs/manage-models#add-models-1)的说明操作：
 
-## Troubleshooting
+- 查看[Mistral AI 文档](https://docs.mistral.ai/platform/endpoints)中的可用模型列表
+- `id`属性必须与列表中的模型名称完全匹配。例如要使用 Mistral Large 模型，必须将`id`属性设为`mistral-large-latest`
 
-Common issues and solutions:
+## 故障排除
 
-**1. API Key Issues**
-- Verify your API key is correct and not expired
-- Check if you have billing set up on your Mistral AI account
-- Ensure you have access to the model you're trying to use
+常见问题及解决方案：
 
-**2. Connection Problems**
-- Check your internet connection
-- Verify Mistral AI's system status
-- Look for error messages in [Jan's logs](/docs/troubleshooting#how-to-get-error-logs)
+**1. API 密钥问题**
 
-**3. Model Unavailable**
-- Confirm your API key has access to the model
-- Check if you're using the correct model ID
-- Verify your Mistral AI account has the necessary permissions
+- 确认您的 API 密钥正确且未过期
+- 检查 Mistral AI 账户是否已设置账单信息
+- 确保您有权访问目标模型
 
-Need more help? Join our [Discord community](https://discord.gg/FTk2MvZwJH) or check the [Mistral AI documentation](https://docs.mistral.ai/).
+**2. 连接问题**
+
+- 检查网络连接状态
+- 查看[Mistral AI 系统状态](https://status.mistral.ai/)
+- 在[Jan 的日志文件](/docs/troubleshooting#how-to-get-error-logs)中查找错误信息
+
+**3. 模型不可用**
+
+- 确认 API 密钥具有模型访问权限
+- 检查是否使用了正确的模型 ID
+- 验证 Mistral AI 账户具备必要权限
+
+需要更多帮助？加入我们的[Discord 社区](https://discord.gg/FTk2MvZwJH)或查阅[Mistral AI 文档](https://docs.mistral.ai/)。

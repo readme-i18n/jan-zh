@@ -1,6 +1,7 @@
 ---
+
 title: Windows
-description: Run AI models locally on your Windows machine with Jan. Quick setup guide for local inference and chat.
+description: 在 Windows 设备上通过 Jan 本地运行 AI 模型。本地推理与聊天的快速设置指南。
 keywords:
   [
     Jan,
@@ -24,13 +25,13 @@ import { Tabs, Callout, Steps } from 'nextra/components'
 import FAQBox from '@/components/FaqBox'
 import { Settings } from 'lucide-react'
 
+# Windows 安装指南
 
-# Windows Installation
+## 兼容性要求
 
-## Compatibility
+**系统需求:**
 
-**System requirements:**
-- **Operating System**: Windows 10 or higher.
+- **操作系统**: Windows 10 或更高版本
 - **CPU**
 
 <Tabs items={['Intel', 'AMD']}>
@@ -44,85 +45,85 @@ import { Settings } from 'lucide-react'
 </Tabs>
 
 <Callout type="info">
-Processor must support **AVX2 or newer**. See [full list of supported processors](https://en.wikipedia.org/wiki/Advanced_Vector_Extensions#CPUs_with_AVX2).
-Performance is significantly degraded on AVX-only processors.
+处理器必须支持 **AVX2 或更新指令集**。查看[完整支持的处理器列表](https://en.wikipedia.org/wiki/Advanced_Vector_Extensions#CPUs_with_AVX2)。
+仅支持 AVX 指令集的处理器性能会显著下降。
 </Callout>
 
-**Memory (RAM)**
-- 8GB → up to 3B parameter models (int4)
-- 16GB → up to 7B parameter models (int4)
-- 32GB → up to 13B parameter models (int4)
+**内存 (RAM)**
+
+- 8GB → 最高支持 30亿参数模型(int4量化)
+- 16GB → 最高支持 70亿参数模型(int4量化)
+- 32GB → 最高支持 130亿参数模型(int4量化)
 
 <Callout type="info">
-Newer RAM generations provide better performance.
+新一代内存能提供更好的性能表现。
 </Callout>
 
-**GPU**:
-- 6GB → up to 3B parameter models
-- 8GB → up to 7B parameter models
-- 12GB → up to 13B parameter models
+**GPU 要求:**
+
+- 6GB 显存 → 最高支持 30亿参数模型
+- 8GB 显存 → 最高支持 70亿参数模型
+- 12GB 显存 → 最高支持 130亿参数模型
 
 <Callout type="info">
-Minimum 6GB VRAM recommended for NVIDIA, AMD, or Intel Arc GPUs.
+建议 NVIDIA、AMD 或 Intel Arc 显卡至少配备 6GB 显存。
 </Callout>
 
-**Storage:** 10GB free space minimum for app and models
+**存储空间:** 应用程序和模型至少需要 10GB 可用空间
 
-
-## Install Jan
+## 安装 Jan
 
 <Steps>
 
-### Step 1: Download Application
+### 第一步：下载应用程序
 
-<Tabs items={['Stable Release', 'Beta Release', 'Nightly Release']}>
+<Tabs items={['稳定版', '测试版', '每日构建版']}>
 <Tabs.Tab>
-- [Download Stable Jan](https://app.jan.ai/download/latest/win-x64)
-- Official Website: [Download Jan](https://jan.ai/download)
+- [下载稳定版 Jan](https://app.jan.ai/download/latest/win-x64)
+- 官方网站: [下载 Jan](https://jan.ai/download)
 </Tabs.Tab>
 <Tabs.Tab>
 
-Beta: Contains newer features but may be unstable
+测试版：包含新功能但可能不稳定
 
-[Download Beta Jan](https://app.jan.ai/download/beta/win-x64)
+[下载测试版 Jan](https://app.jan.ai/download/beta/win-x64)
 
 <Callout type="warning">
-May be unstable
+可能存在稳定性问题
 </Callout>
 </Tabs.Tab>
 <Tabs.Tab>
 
-Nightly: Development build with latest features
+每日构建版：包含最新功能的开发版本
 
-[Download Nightly Jan](https://app.jan.ai/download/nightly/win-x64)
+[下载每日构建版 Jan](https://app.jan.ai/download/nightly/win-x64)
 
 <Callout type="warning">
-Unstable development build
+不稳定的开发版本
 </Callout>
 </Tabs.Tab>
 </Tabs>
 
-### Step 2: Install Application
+### 第二步：安装应用程序
 
-1. Run the downloaded `.exe` file
-2. Wait for installation to complete
-3. Launch Jan
+1. 运行下载的 `.exe` 文件
+2. 等待安装完成
+3. 启动 Jan
 
 </Steps>
 
-## Data Folder
+## 数据文件夹
 
-Default installation path:
+默认安装路径：
 
 ```sh
 # Default installation directory
 ~\Users\<YourUsername>\AppData\Roaming\Jan\data
 ```
 
-See [Jan Data Folder](/docs/data-folder) for complete folder structure details.
+完整文件夹结构详情请参阅 [Jan 数据文件夹](/docs/data-folder)
 
-
-## GPU Acceleration
+## GPU 加速
 
 <Tabs items={['NVIDIA GPU', 'AMD GPU', 'Intel Arc GPU']}>
 
@@ -177,29 +178,28 @@ and toggle the **ON** switch if not enabled.
 </Tabs.Tab>
 </Tabs>
 
-
-## Uninstall Jan
+## 卸载 Jan
 
 <Steps>
 
-### Step 1: Remove Application through Control Panel
+### 步骤 1：通过控制面板移除应用程序
 
-1. Open **Control Panels**
-2. Go to **Programs** section
-3. Click **Uninstall Program**
-4. Search for **Jan**
-5. Click the **Three Dots Icon** > **Uninstall**
-6. Click **Uninstall** again to confirm
-7. Click **OK**
+1. 打开 **控制面板**
+2. 进入 **程序** 部分
+3. 点击 **卸载程序**
+4. 搜索 **Jan**
+5. 点击 **三点图标** > **卸载**
+6. 再次点击 **卸载** 确认
+7. 点击 **确定**
 
-### Step 2: Clean Up Remaining Files
+### 步骤 2：清理残留文件
 
-Remove app data:
+移除应用数据：
 
-1. Navigate to `C:\Users\[username]\AppData\Roaming`
-2. Delete Jan folder
+1. 导航至 `C:\Users\[username]\AppData\Roaming`
+2. 删除 Jan 文件夹
 
-or via **Terminal**:
+或通过 **终端** 操作：
 
 ```sh
 cd C:\Users\%USERNAME%\AppData\Roaming
@@ -208,5 +208,5 @@ rmdir /S Jan
 </Steps>
 
 <Callout type="warning">
-Deleted data folders cannot be recovered. Backup important data first.
+已删除的数据文件夹无法恢复。请先备份重要数据。
 </Callout>

@@ -1,37 +1,39 @@
 ---
-title: "Best Settings to Run Qwen3-30B-A3B Locally"
-description: "If you're running Qwen3-30B-A3B locally, don't guess your way through the settings. This guide tells you what actually works based on Qwen's own documentation and what we've seen hold up in practice."
+
+title: "本地运行 Qwen3-30B-A3B 的最佳参数设置"
+description: "若需在本地运行 Qwen3-30B-A3B 模型，不必盲目猜测参数配置。本指南基于官方文档和实践验证，提供切实可行的设置方案。"
 tags: Qwen3, local AI, model settings, Jan, offline AI
 categories: guides
 date: 2025-05-10
 ogImage: assets/images/general/qwen3-30b-settings.jpg
 ---
+
 import { Callout } from 'nextra/components'
 import CTABlog from '@/components/Blog/CTA'
 
-# Best Settings to Run Qwen3-30B-A3B Locally
+# 本地运行 Qwen3-30B-A3B 的最佳参数设置
 
-If you're running Qwen3-30B-A3B locally, don't guess your way through the settings. This guide tells you what actually works based on Qwen's own documentation and what we've seen hold up in practice.
+若需在本地运行 Qwen3-30B-A3B 模型，不必盲目猜测参数配置。本指南基于官方文档和实践验证，提供切实可行的设置方案。
 
 <Callout>
-**Quick Summary:**
-- Qwen3-30B-A3B has two modes: thinking and non-thinking
-- Each mode needs different generation settings
-- Greedy decoding breaks thinking mode - avoid it
-- Don't log &lt;think&gt; blocks in chat history
+**速览要点：**
+- Qwen3-30B-A3B 具备两种模式：思考模式与非思考模式
+- 每种模式需要不同的生成参数
+- 贪心解码会破坏思考模式——务必避免使用
+- 不要在聊天历史中记录 &lt;think&gt; 标记块
 </Callout>
 
-Qwen3 comes with a unique toggle: `enable_thinking`. When it's on, the model "thinks", it breaks down problems, reasons step-by-step, and wraps part of its output in a `<think>...</think>` block. When it's off, the model skips all that and just gives you an answer.
+Qwen3 具有独特的功能开关：`enable_thinking`。启用时，模型会进入"思考"状态——分解问题、逐步推理，并将部分输出包裹在 `<think>...</think>` 标记块中。关闭时，模型将跳过这些步骤直接输出答案。
 
-That changes how you configure it.
+这直接影响您的参数配置方式。
 
 ---
 
-### Thinking mode (`enable_thinking=True`)
+### 思考模式 (`enable_thinking=True`)
 
-This is the mode for reasoning, math, coding, logic — anything that benefits from step-by-step generation.
+该模式适用于需要逐步推导的场景：逻辑推理、数学运算、代码编写等。
 
-**Use these generation settings:**
+**推荐生成参数：**
 
 ```vbnet
 Temperature: 0.6  
@@ -42,21 +44,21 @@ Do not use greedy decoding
 ```
 
 <Callout type="info">
-**Why it matters:**
-Thinking mode is powerful, but greedy decoding kills its output. It'll repeat or get stuck. Stick to sampling, and give it enough token space to finish its thoughts.
+**重要性说明：**
+思维模式虽强大，但贪婪解码会破坏其输出效果。它会导致重复或卡顿。坚持使用采样方式，并预留足够的token空间让其完成思考过程。
 </Callout>
 
 ---
 
-## Quick summary 
+## 快速摘要
 
-![Qwen3 settings](./_assets/qwen3-settings-jan-ai.jpeg)
+![Qwen3设置](./_assets/qwen3-settings-jan-ai.jpeg)
 
-### Non-thinking mode (`enable_thinking=False`)
+### 非思维模式 (`enable_thinking=False`)
 
-This is for fast, general-purpose replies. Instruction following, chat, creative writing — no `<think>` block, no extra steps.
+适用于快速通用回复场景。指令跟随、聊天对话、创意写作等——不生成`<think>`区块，无额外处理步骤。
 
-**Use these settings:**
+**推荐参数设置：**
 
 ```makefile
 Temperature: 0.7  
@@ -65,63 +67,63 @@ TopK: 20
 ```
 
 <Callout type="info">
-Non-thinking mode is faster and more efficient, so the default token length is usually enough. If you're not doing long-form tasks, don't worry about it.
+非思维模式更快速高效，默认token长度通常足够。若非处理长文本任务，无需调整此参数。
 </Callout>
 
 ---
 
-## Soft vs. hard switch
+## 软切换与硬切换
 
-You can toggle thinking dynamically in the prompt using:
+可通过提示词动态切换思维模式：
 
 ```bash
 /think      # turns thinking ON
 /no_think   # turns it OFF
 ```
 
-This works only if `enable_thinking=True` is set in the code. If you set it to False, the soft switch won't do anything.
+注意：仅当代码中设置`enable_thinking=True`时软切换才生效。若设为False，软切换指令将无效。
 
 ---
 
-### What most people miss
+### 常见误区
 
-- **Don't log the `think` block in chat history.** Qwen recommends keeping only the final answer. Otherwise, the next reply gets bloated and off-topic.
-- **Greedy decoding is a trap.** It's tempting to use for consistency, but Qwen3's output gets worse - and sometimes broken - without sampling.
-- **YaRN isn't always needed.** The model supports up to 32k context by default. Use YaRN only if you regularly go beyond that.
+- **不要将`think`区块存入聊天历史**。Qwen建议仅保留最终答案，否则后续回复会变得冗长且偏离主题。
+- **贪婪解码是个陷阱**。虽然能保证一致性，但Qwen3的输出质量会下降——有时甚至会出现错误——必须使用采样方式。
+- **并非总需YaRN扩展**。模型默认支持32k上下文，仅当常规超出该范围时才需启用YaRN。
 
 ---
 
-## Running Qwen3 locally with Jan
+## 在Jan中本地运行Qwen3
 
-The easiest way to run Qwen3-30B-A3B locally is through Jan.
+在本地运行 Qwen3-30B-A3B 最简单的方式是通过 Jan。
 
-1. Download and install [Jan](https://jan.ai)
-2. Open Jan and navigate to Jan Hub
-3. Find `Qwen3` and `Qwen3-30B-A3B` in the model list
-4. Click "Download" to get the model
+1. 下载并安装 [Jan](https://jan.ai)
+2. 打开 Jan 并导航至 Jan Hub
+3. 在模型列表中找到 `Qwen3` 和 `Qwen3-30B-A3B`
+4. 点击"下载"获取模型
 
-### Qwen3 in Jan Hub
+### Jan Hub 中的 Qwen3
 
-You can easily find Qwen3 models in Jan Hub:
+您可以在 Jan Hub 中轻松找到 Qwen3 系列模型：
 
 ![Qwen3 in Jan Hub](./_assets/qwen3-in-jan-hub.jpeg)
 
-Once downloaded, Jan handles all the technical setup, so you can focus on using the model rather than configuring it. The settings we covered in this guide are automatically applied when you use Qwen3 through Jan.
+下载完成后，Jan 会自动处理所有技术配置，您只需专注于使用模型而无需手动设置。本指南中提到的所有配置参数都会在通过 Jan 使用 Qwen3 时自动生效。
 
-### How to customize Qwen3-30B-A3B settings in Jan
+### 如何在 Jan 中自定义 Qwen3-30B-A3B 设置
 
-You can also customize these settings anytime by opening the right panel in Jan and adjusting the parameters to match your needs.
+您随时可以打开 Jan 的右侧面板，根据需要调整参数来自定义设置。
 
 ![Qwen3 settings in Jan app](./_assets/qwen3-settings-in-jan.jpeg)
 
-## Bottom Line
+## 核心建议
 
-If you're running Qwen3-30B-A3B locally, treat it like two models in one. Flip the thinking mode based on the task, adjust the generation settings accordingly, and let it work how it was meant to.
+如果在本地运行 Qwen3-30B-A3B，请将其视为二合一模型。根据任务类型切换思维模式，相应调整生成参数，让其发挥最佳性能。
 
-## Need help?
+## 需要帮助？
 
 <Callout type="info">
-[Join our Discord community](https://discord.gg/Exe46xPMbK) for support and tips on using Jan as your offline ChatGPT alternative.
+[加入我们的 Discord 社区](https://discord.gg/Exe46xPMbK) 获取支持，了解如何将 Jan 作为离线版 ChatGPT 替代方案的使用技巧。
 </Callout>
 
 <CTABlog />

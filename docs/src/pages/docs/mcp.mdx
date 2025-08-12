@@ -1,25 +1,27 @@
 ---
-title: Model Context Protocol
-description: Manage your interaction with AI locally.
+
+title: 模型上下文协议
+description: 本地管理您与AI的交互。
 keywords:
   [
     Jan,
-    Customizable Intelligence, LLM,
-    local AI,
-    privacy focus,
-    free and open source,
-    private and offline,
-    conversational AI,
-    no-subscription fee,
-    large language models,
-    threads,
-    chat history,
-    thread history,
+    可定制智能, LLM,
+    本地AI,
+    隐私优先,
+    免费开源,
+    私有离线,
+    对话式AI,
+    无订阅费,
+    大语言模型,
+    线程,
+    聊天记录,
+    线程历史,
   ]
 ---
+
 import { Callout, Steps } from 'nextra/components'
 
-# Using the Model Context Protocol (MCP) in Jan
+# 在Jan中使用模型上下文协议(MCP)
 
 ```mermaid
 graph TD
@@ -63,139 +65,109 @@ graph TD
     style Templates fill:transparent
 ```
 
+Jan现已支持**模型上下文协议(MCP)**，这是一个开放标准，旨在让语言模型能够与外部工具和数据源进行交互。
 
-Jan now supports the **Model Context Protocol (MCP)**, an open standard designed to allow language models to
-interact with external tools and data sources.
+MCP作为通用接口，标准化了AI模型与外部工具和数据源的交互方式。这使得模型可以连接任何符合MCP标准的工具，而无需进行定制化集成工作。其工作原理是通过客户端和服务器实现的。客户端连接着AI模型和用户描述任务需求的主机。这些托管客户端的应用程序需要连接不同的数据源来完成任务，例如Notion、Google表格甚至自定义API。这些应用程序将连接到包含提示词、工具和数据源的服务器，用于完成任务。
 
-MCPs act as a common interface, standardizing the way an AI model can interact with external tools and data
-sources. This enables a model to connect to any MCP-compliant tool without requiring custom
-integration work. The way this works is via clients and servers. Clients are connected to an AI model and a host
-where a user will describe the task needed to be done. These applications hosting client will want to connect
-to different data sources to accomplish a task, for example, notion, google sheets, or even custom APIs. These
-applications will be connected to a server with prompts, tools, and data sources which will be used to complete
-the task.
+Jan是一个MCP主机，允许您下载不同的客户端和服务器并使用它们来完成任务。
 
-Jan is an MCP host that allows you to download different clients and servers and use them to accomplish a task.
+本文档概述了Jan中MCP的优势、风险及实现方式。
 
-This document outlines the benefits, risks, and implementation of MCPs within Jan.
+## MCP的核心优势
 
-## Core Benefits of MCP
+集成 MCP 为扩展 Jan 中使用的模型能力提供了结构化方案。以下是三大核心优势：
 
-Integrating MCP provides a structured way to extend the capabilities of the models you use in Jan. Here are the three
-
-* **Standardization:** MCP aims to solve the "M x N" integration problem, where every model (M) needs a
-unique connector for every tool (N). By adapting to a single standard, any compliant model can interface with any compliant tool.
-* **Extensibility:** This allows you to augment your models with new abilities. For instance, an AI can be granted
-access to search your local codebase, query a database, or interact with web APIs, all through the same protocol.
-* **Flexibility:** Because the interface is standardized, you can swap out models or tools with minimal friction,
-making your workflows more modular and adaptable over time.
+* **标准化**：MCP 致力于解决 "M x N" 集成难题——即每个模型(M)需要为每个工具(N)开发专属连接器。通过适配统一标准，任何兼容模型都能与兼容工具交互。
+* **可扩展性**：您可为模型赋予新能力。例如通过同一协议，AI 可获得搜索本地代码库、查询数据库或调用 Web API 等能力。
+* **灵活性**：标准化接口使得模型或工具的替换几乎无摩擦，让工作流随时间推移更具模块化和适应性。
 
 <Callout type="warning">
-  Please note that not all models that you can download and use, whether in Jan or other tools, may be good at
-  tool calling or compatible with MCP. Make sure that the model you choose is MCP-compliant before integrating
-  it into your workflows. This might be available in the model card or you may need to implement it yourself to
-  test the capabilities of the model.
+  请注意：并非所有可下载使用的模型（无论是在 Jan 还是其他工具中）都擅长工具调用或兼容 MCP。在将模型集成到工作流前，请确认其符合 MCP 规范。相关信息可能存在于模型卡片中，您也可能需要自行实现功能来测试模型能力。
 </Callout>
 
 <Callout type="info">
-  To use MCP effectively, ensure your AI model supports tool calling capabilities:
-  - For cloud models (like Claude or GPT-4): Verify tool calling is enabled in your API settings
-  - For local models: Enable tool calling in the model parameters [click the edit button in Model Capabilities](/docs/model-parameters#model-capabilities-edit-button)
-  - Check the model's documentation to confirm MCP compatibility
+  要有效使用 MCP，请确保您的 AI 模型支持工具调用功能：
+  - 对于云端模型（如 Claude 或 GPT-4）：在 API 设置中确认已启用工具调用功能
+  - 对于本地模型：在模型参数中启用工具调用 [点击模型能力中的编辑按钮](/docs/model-parameters#model-capabilities-edit-button)
+  - 查阅模型文档以确认 MCP 兼容性
 </Callout>
 
-## Considerations and Risks
+## 注意事项与风险
 
-While powerful, MCP is an evolving standard, and its use requires careful consideration of the following points:
+尽管功能强大，MCP 仍是一项发展中的标准，使用时需谨慎考虑以下要点：
 
-* **Security:** Granting a model access to external tools is a significant security consideration. A compromised
-tool or a malicious prompt could potentially lead to unintended actions or data exposure. Jan's implementation
-focuses on user-managed permissions to mitigate this risk, meaning, you have to turn on the permission for each
-tool individually.
-* **Standard Maturity:** As a relatively new protocol, best practices or sensible defaults are still being
-established. Users should be aware of potential issues like prompt injection, where an input could be crafted to
-misuse a tool's capabilities.
-* **Resource Management:** Active MCP connections may consume a portion of a model's context window, which could
-affect performance (i.e., the more tools the model and the larger the context of the conversation has the longer
-you will need to wait for a response). Efficient management of tools and their outputs is important.
+* **安全性:** 授予模型访问外部工具的权限是一个重要的安全考量。工具被入侵或恶意提示可能导致意外操作或数据泄露。Jan 的实现方案通过用户自主管理权限来降低风险，这意味着您需要为每个工具单独开启权限。
 
+* **标准成熟度:** 作为一个相对较新的协议，最佳实践和合理默认值仍在确立中。用户应注意潜在问题，如提示注入（精心构造的输入可能滥用工具功能）。
 
-## Configure and Use MCPs within Jan
+* **资源管理:** 活跃的 MCP 连接可能会占用模型上下文窗口的一部分，从而影响性能（即模型加载的工具越多、对话上下文越大，等待响应的时间就越长）。高效管理工具及其输出十分重要。
 
-To illustrate how MCPs can be used within Jan, we will walk through an example using the [Browser MCP](https://browsermcp.io/).
+## 在 Jan 中配置和使用 MCP
 
-Before we begin, you will need to enable experimental features at `General` > `Advanced`. Next, go to `Settings` > `MCP Servers`, and toggle
-the `Allow All MCP Tool Permission` switch ON.
+我们将通过 [Browser MCP](https://browsermcp.io/) 示例演示如何在 Jan 中使用 MCP。
 
-![Turn on the MCP Host](./_assets/mcp-on.png)
+开始前，您需要在 `通用` > `高级` 中启用实验性功能。接着前往 `设置` > `MCP 服务器`，将 `允许所有 MCP 工具权限` 开关切换为开启状态。
 
-Please note that you will also need to have **NodeJS** and/or **Python** installed on your machine. In case you don't
-have either, you can download them from the official websites at the links below:
+![启用 MCP 主机](./_assets/mcp-on.png)
+
+请注意，您的机器上需要安装 **NodeJS** 和/或 **Python**。如果尚未安装，可通过以下官方链接下载：
+
 - [Node.js](https://nodejs.org/)
 - [Python](https://www.python.org/)
 
+### 浏览器 MCP 配置
 
-### Browser MCP
+- 点击 MCP 界面右上角的 `+` 按钮。
 
-- Click on the `+` sign on the upper right-hand corner of the MCP box.
+![添加新服务器](./_assets/mcp-setup-1.png)
 
-![Add New Server](./_assets/mcp-setup-1.png)
+- 输入以下配置信息：
+  - **服务器名称**: `browsermcp`
+  - **命令**: `npx`
+  - **参数**: `@browsermcp/mcp`
+  - **环境变量**: 此字段可留空。
 
-- Enter the following details to configure the BrowserMCP:
-  - **Server Name**: `browsermcp`
-  - **Command**: `npx`
-  - **Arguments**: `@browsermcp/mcp`
-  - **Environment Variables**: You can leave this field empty.
+![配置 BrowserMCP](./_assets/mcp-setup-2.png)
 
-![Configure BrowserMCP](./_assets/mcp-setup-2.png)
+- 确认服务器已成功激活。
 
-- Check that the server has been activated successfully.
+![服务器激活确认](./_assets/mcp-setup-3.png)
 
-![Server Confirmation](./_assets/mcp-setup-3.png)
+- 打开您常用的基于 Chromium 的浏览器（如 Google Chrome、Brave、Vivaldi、Microsoft Edge 等），访问 [Browser MCP 扩展页面](https://chromewebstore.google.com/detail/browser-mcp-automate-your/bjfgambnhccakkhmkepdoekmckoijdlc)。
 
-- Open your favorite chrome-based browser (e.g., Google Chrome, Brave, Vivaldi, Microsoft Edge, etc...) and navigate to the
-[Browser MCP Extension Page](https://chromewebstore.google.com/detail/browser-mcp-automate-your/bjfgambnhccakkhmkepdoekmckoijdlc).
+![Browser MCP 扩展](./_assets/mcp-setup-6.png)
 
-![Browser MCP Extension](./_assets/mcp-setup-6.png)
+- 确保启用扩展在隐私窗口运行的权限。由于 Browser Use 将访问您常规浏览器会话中已登录的所有站点，建议为其提供全新的初始环境。
 
-- Make sure to enable the extension to run on private windows. Since Browser Use will have access to all sites you've
-already logged into in your regular browser session, it is best to give it a clean slate to start from.
+![Browser MCP 扩展权限设置](./_assets/mcp-setup-7.png)
 
-![Browser MCP Extension](./_assets/mcp-setup-7.png)
-
-- Enable the extension to run on private windows by clicking on it and Connecting to the Browser MCP server.
+- 通过点击扩展并连接到浏览器 MCP 服务器，启用扩展在隐私窗口中的运行权限。
 
 ![Browser MCP Extension](./_assets/mcp-setup-8.png)
 
-- Go back to Jan and pick a model with good tool use capabilities, for example, Claude 3.7 and 4 Sonnet, or Claude 4 Opus,
-and make sure to enable tool calling via the UI by going to **Model Providers > Anthropic** and, after you have entered your
-API key, enable tool from the **+** button.
+- 返回 Jan 应用，选择一个具备良好工具使用能力的模型，例如 Claude 3.7 和 4 Sonnet，或 Claude 4 Opus，
+并通过界面启用工具调用功能：进入 **Model Providers > Anthropic**，输入 API 密钥后，点击 **+** 按钮启用工具。
 
 ![Browser MCP Extension](./_assets/mcp-setup-9.png)
 
-You can check and see if this was accurate below.
+您可以通过下方内容验证设置是否准确。
 
 ![Browser MCP Extension](./_assets/mcp-setup-10.png)
 
+## 故障排除
 
-## Troubleshooting
+- MCP 服务器无法连接，尽管已将其添加到 MCP 服务器列表？
+  - 确保已安装 NodeJS 和 Python
+  - 检查 MCP 服务器表单中的命令输入是否正确
+  - 确认当前使用的模型已启用工具功能
+  - 重启 Jan 应用
+- 选择的开源模型无法使用已启用的 MCP 功能？
+  - 确认当前模型已启用工具功能
+  - 许多开源模型并非为工具使用设计或兼容性不佳，可能需要尝试其他模型
+  - 所选模型可能支持工具调用，但不支持图像处理，因此无法兼容某些需要网站截图的功能（如 Browser MCP）
 
-- The MCP server won't connect even though I've already added it to my list of MCP Servers?
-  - Make sure you have NodeJS and Python installed
-  - Make sure you typed the commands correctly in the MCP Server form
-  - Make sure the model you are using has tools enabled
-  - Restart Jan
-- The open source model I picked won't use the MCPs I enabled.
-  - Make sure the model you are using has tools enabled
-  - Lots of open source models are not designed to use tools or simply don't work well with them, so you may need to try a different model
-  - The model you have selected might be good at tool calling but it is possible that it does not support images, effectively making it unsuitable for some tools that take screenshots of a website like the Browser MCP
+## 未来潜力
 
-## Future Potential
+该集成是在Jan中创建更强大、更具情境感知能力的AI助手的基础。长期目标是实现更复杂的工作流程，既能安全利用本地环境，又能整合您喜爱的工具。
 
-This integration is the foundation for creating more capable and context-aware AI assistants within Jan. The
-long-term goal is to enable more sophisticated workflows that make use of your local environment securely as
-well as your favorite tools.
-
-For example, an AI could cross-reference information between a local document and a remote API, or use a
-local script toanalyze data and then summarize the findings, all orchestrated through Jan's interface. As
-the MCP ecosystem grows, so will the potential applications within Jan.
+例如，AI可以交叉引用本地文档与远程API之间的信息，或使用本地脚本分析数据后汇总结果，所有这些都通过Jan的界面进行协调。随着MCP生态系统的发展，Jan内部的潜在应用也将不断扩展。

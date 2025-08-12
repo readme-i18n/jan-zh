@@ -1,6 +1,7 @@
 ---
+
 title: Settings
-description: Explore how to adjust Jan's settings to suit your specific requirements.
+description: 了解如何调整 Jan 的设置以满足您的特定需求
 keywords:
   [
     Jan,
@@ -23,210 +24,255 @@ keywords:
 import { Tabs, Steps, Callout } from 'nextra/components'
 import { Settings, EllipsisVertical, Plus, FolderOpen, Pencil } from 'lucide-react'
 
+# 设置
 
-# Settings
+要访问**设置**，请点击 Jan 左下角的 <Settings width={16} height={16} style={{display:"inline"}}/> 图标。
 
-To access the **Settings**, click <Settings width={16} height={16} style={{display:"inline"}}/> icon in the bottom left corner of Jan.
+## 模型管理
 
-## Model Management
+在**设置** > **模型提供商**中管理已安装的 AI 模型：
 
-Manage your installed AI models in **Settings** > **Model Providers**:
+### 导入模型
 
-### Import Models
-- **From Hugging Face:**
-  - Enter a model's Hugging Face ID (e.g., `org/model_name_or_id`) in the Hub's search bar.
-  - **Note:** Some models require a Hugging Face Access Token. Enter your token in **Settings > Model Providers > Hugging Face Access Token**.
-- **From Local Files:**
-  - Click **Import Model** and select your GGUF files.
+- **从 Hugging Face 导入：**
+  - 在 Hub 搜索栏中输入模型的 Hugging Face ID（例如 `org/model_name_or_id`）。
+  - **注意：** 某些模型需要 Hugging Face 访问令牌。请在**设置 > 模型提供商 > Hugging Face 访问令牌**中输入您的令牌。
+- **从本地文件导入：**
+  - 点击**导入模型**并选择您的 GGUF 文件。
 
-### Remove Models
+### 移除模型
 
-- Click the trash icon next to the **Start** button and then click **Delete**.
+- 点击**启动**按钮旁的垃圾桶图标，然后点击**删除**。
 
-### Start Models
+### 启动模型
 
-1. Open a new chat and select the model you want to start.
-2. Click the **Start** button on the **Settings > Model Providers**
+1. 打开一个新聊天并选择您想要启动的模型。
+2. 在**设置 > 模型提供商**中点击**启动**按钮
 
-### Hugging Face Access Token
-To download models from Hugging Face that require authentication, for example, like the llama models from meta:
-1. Get your token from [Hugging Face Tokens](https://huggingface.co/docs/hub/en/security-tokens)
-2. Enter it in **Settings > Model Providers > Hugging Face**.
+### Hugging Face 访问令牌
 
-## Model Settings (Gear Icon)
+要从 Hugging Face 下载需要身份验证的模型，例如 meta 的 llama 模型：
 
-![Model Settings](./_assets/trouble-shooting-04.png)
+1. 从 [Hugging Face Tokens](https://huggingface.co/docs/hub/en/security-tokens) 获取您的令牌
+2. 在 **设置 > 模型提供商 > Hugging Face** 中输入令牌
 
-Click the gear icon next to a model to configure advanced settings:
-- **Context Size**: Maximum prompt context length
-- **GPU Layers**: Number of model layers to offload to GPU. If you have an NVIDIA GPU and notice that your model won't fully load in it, you can reduce this value to load smaller parts of the model and try again.
-- **Temperature**: Controls randomness (higher = more random)
-- **Top K**: Limits token selection to K most likely next tokens (smaller K = more focused responses)
-- **Top P**: Limits token selection to tokens comprising P probability mass (smaller P = more focused responses)
-- **Min P**: Sets a minimum threshold for words the model can select (higher values filter out less likely words)
-- **Repeat Last N**: Determines how many recent words the model checks to avoid repetition
-- **Repeat Penalty**: Controls how strongly the model avoids repeating phrases (higher values reduce repetition)
-- **Presence Penalty**: Discourages reusing words that already appeared in the text (helps with variety)
+## 模型设置（齿轮图标）
 
-_See [Model Parameters](/docs/model-parameters) for a more detailed explanation._
+![模型设置](./_assets/trouble-shooting-04.png)
 
+点击模型旁的齿轮图标可配置高级设置：
 
-## Hardware
+- **上下文长度**：提示词的最大上下文长度
+- **GPU 层数**：卸载到 GPU 的模型层数。若您使用 NVIDIA GPU 且发现模型无法完全加载，可降低此值分批加载模型后重试
+- **温度值**：控制随机性（值越高结果越随机）
+- **Top K**：限定模型仅从 K 个最可能的候选词中选择（K 值越小回答越集中）
+- **Top P**：限定模型从累计概率达 P 的词集中选择（P 值越小回答越集中）
+- **最小概率**：设置词语被选择的最低概率阈值（值越高会过滤更多低概率词）
+- **重复检测窗口**：设定模型检查最近多少个词来避免重复
+- **重复惩罚**：控制模型避免重复短语的强度（值越高重复越少）
+- **存在惩罚**：降低已出现词语的复用概率（增加多样性）
 
-Monitor and manage system resources at **Settings > Hardware**:
-- **CPU, RAM, GPU**: View usage and specs
-- **GPU Acceleration**: Enable/disable and configure GPU settings
+_详见 [模型参数](/docs/model-parameters) 获取完整说明_
 
-<br/>
-![Hardware](./_assets/hardware.png)
-<br/>
+## 硬件
 
-## Preferences
+通过 **设置 > 硬件** 监控和管理系统资源：
 
-### Appearance & Theme
-Control the visual theme of Jan's interface with any color combo you'd like. You can also control the color use in the code blocks.
+- **CPU, RAM, GPU**: 查看使用情况和规格参数
+- **GPU 加速**: 启用/禁用并配置 GPU 设置
 
 <br/>
-![Appearance](./_assets/settings-04.png)
-<br/>
 
-### Spell Check
-Jan includes a built-in spell check feature to help catch typing errors in your messages.
+![硬件](./_assets/hardware.png)
 
 <br/>
-![Spell Check](./_assets/settings-06.png)
+
+## 偏好设置
+
+### 外观与主题
+
+通过自定义配色方案控制 Jan 界面的视觉主题，同时可调整代码块中的色彩显示。
+
 <br/>
 
+![外观](./_assets/settings-04.png)
 
-## Privacy
-At **Settings** (<Settings width={16} height={16} style={{display:"inline"}}/>) > **Privacy**, you can control analytics & logs in Jan:
+<br/>
 
-### Analytics
-Jan is built with privacy at its core. By default, no data is collected. Everything stays local on your device.
-You can help improve Jan by sharing anonymous usage data:
-1. Toggle on **Analytics** to share anonymous data
-2. You can change this setting at any time
+### 拼写检查
+
+Jan 内置拼写检查功能，可帮助识别消息中的输入错误。
+
+<br/>
+
+![拼写检查](./_assets/settings-06.png)
+
+<br/>
+
+## 隐私
+
+在 **设置** (<Settings width={16} height={16} style={{display:"inline"}}/>) > **隐私** 中，可管理 Jan 的分析与日志功能：
+
+### 数据分析
+
+Jan 以隐私保护为核心设计，默认不收集任何数据，所有信息仅存储于您的设备本地。
+您可以通过分享匿名使用数据来帮助改进 Jan：
+
+1. 开启 **数据分析** 以分享匿名数据
+2. 可随时更改此设置
 
 <Callout type="info">
-Read more about that we collect with opt-in users at [Privacy](/docs/privacy).
+详细了解我们为选择加入用户收集的数据，请参阅[隐私政策](/docs/privacy)。
 </Callout>
 
 <br/>
-![Analytics](./_assets/settings-07.png)
-<br/>
 
-### Log Management
-
-**1. View Logs**
-- Logs are stored at:
-  - App log: `~/Library/Application\ Support/jan/data/logs/app.log`
-  - Cortex log: `~/Library/Application\ Support/jan/data/logs/cortex.log`
-- To open logs from Jan's interface: at **Logs**, click <FolderOpen width={16} height={16} style={{display:"inline"}}/> icon to open App Logs & Cortex Logs:
+![数据分析](./_assets/settings-07.png)
 
 <br/>
-![View Logs](./_assets/settings-08.png)
+
+### 日志管理
+
+**1. 查看日志**
+
+- 日志存储位置：
+  - 应用日志：`~/Library/Application\ Support/jan/data/logs/app.log`
+  - 核心日志：`~/Library/Application\ Support/jan/data/logs/cortex.log`
+- 从 Jan 界面打开日志：在 **日志** 页面，点击 <FolderOpen width={16} height={16} style={{display:"inline"}}/> 图标可打开应用日志和核心日志：
+
 <br/>
 
-**2. Clear Logs**
+![查看日志](./_assets/settings-08.png)
 
-Jan retains your logs for only **24 hours**. To remove all logs from Jan, at **Clear Logs**, click the **Clear** button:
+<br/>
+
+**2. 清除日志**
+
+Jan 仅保留 **24 小时** 内的日志。要清除所有日志，在 **清除日志** 处点击 **清除** 按钮：
 
 <Callout type="warning">
-This action cannot be undone.
+此操作不可撤销。
 </Callout>
 
 <br/>
-![Clear Logs](./_assets/settings-09.png)
-<br/>
 
-
-### Jan Data Folder
-Jan stores your data locally in your own filesystem in a universal file format. See detailed [Jan Folder Structure](docs/data-folder#folder-structure).
-
-**1. Open Jan Data Folder**
-
-At **Jan Data Folder**, click <FolderOpen width={16} height={16} style={{display:"inline"}}/> icon to open Jan application's folder:
-<br/>
-![Open Jan Data Folder](./_assets/settings-11.png)
-<br/>
-
-**2. Edit Jan Data Folder**
-
-1. At **Jan Data Folder**, click <Pencil width={16} height={16} style={{display:"inline"}}/> icon to edit Jan application's folder
-2. Choose a new directory & click **Select**, make sure the new folder is empty
-3. Confirmation pop-up shows up:
-
-> Are you sure you want to relocate Jan Data Folder to `new directory`?
-Jan Data Folder will be duplicated into the new location while the original folder remains intact.
-An app restart will be required afterward.
-
-4. Click **Yes, Proceed**
+![清除日志](./_assets/settings-09.png)
 
 <br/>
-![Edit Jan Data Folder](./_assets/settings-12.png)
+
+### Jan 数据文件夹
+
+Jan 以通用文件格式将数据本地存储在您的文件系统中。详见 [Jan 文件夹结构](docs/data-folder#folder-structure)。
+
+**1. 打开 Jan 数据文件夹**
+
+在 **Jan 数据文件夹** 处，点击 <FolderOpen width={16} height={16} style={{display:"inline"}}/> 图标可打开应用文件夹：
+
 <br/>
 
-### HTTPs Proxy
-HTTPS Proxy encrypts data between your browser and the internet, making it hard for outsiders to intercept or read. It also helps you maintain your privacy and security while bypassing regional restrictions on the internet.
+![打开 Jan 数据文件夹](./_assets/settings-11.png)
+
+<br/>
+
+**2. 编辑 Jan 数据文件夹**
+
+1. 在 **Jan 数据文件夹** 处，点击 <Pencil width={16} height={16} style={{display:"inline"}}/> 图标编辑应用文件夹
+2. 选择新目录并点击 **选择**，确保新文件夹为空
+3. 将显示确认弹窗：
+
+> 确定要将 Jan 数据文件夹迁移至 `new directory` 吗？
+Jan 数据文件夹将被复制到新位置，原始文件夹将保持不变。
+操作完成后需要重启应用。
+
+4. 点击 **Yes, Proceed**（是，继续）
+
+<br/>
+
+![编辑 Jan 数据文件夹](./_assets/settings-12.png)
+
+<br/>
+
+### HTTPS 代理
+
+HTTPS 代理会加密浏览器与互联网之间的数据传输，防止外部人员截获或读取。它还能帮助您在绕过地区网络限制的同时保护隐私安全。
 
 <Callout type="info">
-- Model download speeds may be affected due to the encryption/decryption process and your cloud service provider's networking
-- HTTPS Proxy does not affect the remote model usage.
+- 由于加密/解密过程及云服务提供商的网络状况，模型下载速度可能受影响
+- HTTPS 代理不会影响远程模型的使用
 </Callout>
 
-1. **Enable** the proxy toggle
-2. Enter your proxy server details in the following format:
+1. **启用**代理开关
+2. 按以下格式输入代理服务器信息：
+
 ```
 http://<user>:<password>@<domain or IP>:<port>
 ```
-Where:
-- `<user>`: Your proxy username (if authentication is required)
-- `<password>`: Your proxy password (if authentication is required)
-- `<domain or IP>`: Your proxy server's domain name or IP address
-- `<port>`: The port number for the proxy server
+
+其中：
+
+- `<user>`: 代理用户名（如需认证）
+- `<password>`: 代理密码（如需认证）
+- `<domain or IP>`: 代理服务器域名或IP地址
+- `<port>`: 代理服务器端口号
 
 <br/>
-![HTTPs Proxy](./_assets/settings-13.png)
+
+![HTTPS 代理](./_assets/settings-13.png)
+
 <br/>
 
-**Ignore SSL Certificates**
+**忽略 SSL 证书**
 
-This setting allows Jan to accept self-signed or unverified SSL certificates. This may be necessary when:
-- Working with corporate proxies using internal certificates
-- Testing in development environments
-- Connecting through specialized network security setups
+此设置允许 Jan 接受自签名或未经验证的 SSL 证书。适用于以下情况：
+
+- 使用内部证书在企业代理环境下工作
+- 在开发环境中进行测试
+- 通过特殊网络安全配置建立连接
 
 <Callout type="info">
-Only enable this option if you trust your network environment.
+仅当您信任当前网络环境时启用此选项。
 </Callout>
 
 <br/>
-![Ignore SSL Certificates](./_assets/settings-14.png)
+
+![忽略 SSL 证书](./_assets/settings-14.png)
+
 <br/>
 
+### 恢复出厂设置
 
-### Factory Reset
-Reset to Factory Settings restores Jan to its initial state by erasing all user data, including downloaded models and chat history. This action is irreversible and should only be used as a last resort when experiencing serious application issues.
+"恢复出厂设置"会将 Jan 重置到初始状态，清除所有用户数据（包括下载的模型和聊天记录）。此操作不可逆，仅应在遇到严重应用问题时作为最后手段使用。
 
 <Callout type="warning">
-This action cannot be undone. All data will be permanently deleted.
+此操作不可撤销，所有数据将被永久删除。
 </Callout>
 
-Only use factory reset if:
-- The application is corrupted
-- You're experiencing persistent technical issues that other solutions haven't fixed
-- You want to completely start fresh with a clean installation
+仅在以下情况使用恢复出厂设置：
 
-To begin the process:
-1. At  **Reset to Factory Settings**, click **Reset** button
+- 应用程序损坏
+- 遇到其他解决方案无法解决的持续性技术问题
+- 需要全新干净的安装环境
+
+操作步骤：
+
+1. 在 **恢复出厂设置** 处点击 **重置** 按钮
+
 <br/>
-![Jan Quick Ask](./_assets/settings-17.png)
+
+![Jan 快速提问](./_assets/settings-17.png)
+
 <br/>
-2. In the confirmation dialog:
-- Type the word **RESET** to confirm
-- Optionally check **Keep the current app data location** to maintain the same data folder
-- Click **Reset Now**
-3. App restart is required upon confirmation
+
+2. 在确认对话框中：
+
+- 输入 **RESET** 进行确认
+- 可选勾选 **保留当前应用数据位置** 以维持原数据文件夹
+- 点击 **立即重置**
+
+3. 确认后需要重启应用
+
 <br/>
-![Jan Quick Ask](./_assets/settings-18.png)
+
+![Jan 快速提问](./_assets/settings-18.png)
+
 <br/>

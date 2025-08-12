@@ -1,6 +1,7 @@
 ---
-title: Benchmarking NVIDIA TensorRT-LLM
-description: This post compares the performance of TensorRT-LLM and llama.cpp on consumer NVIDIA GPUs, highlighting the trade-offs among speed, resource usage, and convenience.
+
+title: NVIDIA TensorRT-LLM 性能基准测试
+description: 本文对比了 TensorRT-LLM 与 llama.cpp 在消费级 NVIDIA GPU 上的性能表现，重点分析速度、资源占用与易用性之间的权衡关系。
 tags: Nvidia, TensorRT-LLM, llama.cpp, rtx3090, rtx4090, "inference engine"
 categories: research
 ogImage: assets/images/general/og-throughput-benchmark.png
@@ -10,310 +11,313 @@ date: 2024-04-29
 import { Callout } from 'nextra/components'
 import CTABlog from '@/components/Blog/CTA'
 
-# Benchmarking NVIDIA TensorRT-LLM
+# NVIDIA TensorRT-LLM 基准测试
 
-Jan now supports [NVIDIA TensorRT-LLM](https://github.com/NVIDIA/TensorRT-LLM) in addition to [llama.cpp](https://github.com/ggerganov/llama.cpp), making Jan multi-engine and ultra-fast for users with Nvidia GPUs.
+Jan 现已支持 [NVIDIA TensorRT-LLM](https://github.com/NVIDIA/TensorRT-LLM) 和 [llama.cpp](https://github.com/ggerganov/llama.cpp)，使配备 Nvidia GPU 的用户能够享受多引擎支持与极致速度体验。
 
-We've been excited for TensorRT-LLM for a while, and [had a lot of fun implementing it](https://github.com/menloresearch/nitro-tensorrt-llm). As part of the process, we've run some benchmarks, to see how TensorRT-LLM fares on consumer hardware (e.g. [4090s](https://www.nvidia.com/en-us/geforce/graphics-cards/40-series/), [3090s](https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/)) we commonly see in the [Jan's hardware community](https://discord.com/channels/1107178041848909847/1201834752206974996).
+我们长期关注 TensorRT-LLM 的发展，并在[实现过程中收获诸多乐趣](https://github.com/menloresearch/nitro-tensorrt-llm)。作为开发环节的一部分，我们针对消费级硬件（如 [RTX 4090](https://www.nvidia.com/en-us/geforce/graphics-cards/40-series/)、[RTX 3090](https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/)）进行了基准测试，这些设备在 [Jan 硬件社区](https://discord.com/channels/1107178041848909847/1201834752206974996)中较为常见。
 
 <Callout type="info" >
-  **Give it a try!** Jan's [TensorRT-LLM extension](/docs/built-in/tensorrt-llm) is available in Jan v0.4.9 and up ([see more](/docs/built-in/tensorrt-llm)). We precompiled some TensorRT-LLM models for you to try: `Mistral 7b`, `TinyLlama-1.1b`, `TinyJensen-1.1b` 😂
+  **立即体验！** Jan 的 [TensorRT-LLM 扩展](/docs/built-in/tensorrt-llm) 已在 v0.4.9 及以上版本中提供（[了解更多](/docs/built-in/tensorrt-llm)）。我们预编译了部分 TensorRT-LLM 模型供您试用：`Mistral 7b`、`TinyLlama-1.1b`、`TinyJensen-1.1b` 😂
 
-  Bugs or feedback? Let us know on [GitHub](https://github.com/menloresearch/jan) or via [Discord](https://discord.com/channels/1107178041848909847/1201832734704795688).
+  发现错误或有反馈？请通过 [GitHub](https://github.com/menloresearch/jan) 或 [Discord](https://discord.com/channels/1107178041848909847/1201832734704795688) 告知我们。
 </Callout>
 
 <Callout type="info" >
-  **An interesting aside:** Jan actually started out in June 2023 building on [NVIDIA FastTransformer](https://github.com/NVIDIA/FasterTransformer), the precursor library to TensorRT-LLM. TensorRT-LLM was released in September 2023, making it a very young library. We’re excited to see its roadmap develop!
+  **趣闻插曲：** Jan 最初于 2023 年 6 月基于 [NVIDIA FastTransformer](https://github.com/NVIDIA/FasterTransformer) 开发，该库是 TensorRT-LLM 的前身。TensorRT-LLM 于 2023 年 9 月发布，是一个非常年轻的库。我们期待见证它的发展路线！
 </Callout>
 
-## Key Findings
+## 核心发现
 
 ![image](./_assets/throughput_Comparison.png)
 
-TensorRT-LLM was: 
+TensorRT-LLM 表现如下：
 
-- **30-70% faster** than llama.cpp on the same hardware
-- **Consumes less memory on consecutive runs** and **marginally more GPU VRAM utilization** than llama.cpp
-- **20%+ smaller compiled model sizes** than llama.cpp
-- **Less convenient** as models have to be compiled for a specific OS and GPU architecture, vs. llama.cpp's "Compile once, run everywhere" portability
-- **Less accessible** as it does not support older-generation NVIDIA GPUs
+- 在相同硬件上比 llama.cpp **快 30-70%**
+- 连续运行时**内存占用更低**，但**GPU 显存利用率略高于** llama.cpp
+- 编译后的模型体积比 llama.cpp **小 20% 以上**
+- **便捷性较低**，因为模型需针对特定操作系统和 GPU 架构编译，而 llama.cpp 具有"一次编译，随处运行"的可移植性
+- **兼容性较弱**，不支持旧款 NVIDIA GPU
 
-## Why TensorRT-LLM?
+## 为何选择 TensorRT-LLM？
 
-[TensorRT-LLM](https://github.com/NVIDIA/TensorRT-LLM) is Nvidia's open-source inference library that incorporates Nvidia's proprietary optimizations beyond the open-source [cuBLAS](https://developer.nvidia.com/cublas) library. 
+[TensorRT-LLM](https://github.com/NVIDIA/TensorRT-LLM) 是英伟达推出的开源推理库，它在开源 [cuBLAS](https://developer.nvidia.com/cublas) 库的基础上整合了英伟达专有的优化技术。
 
-As compared to [llama.cpp](https://github.com/ggerganov/llama.cpp), which today dominates Desktop AI as a cross-platform inference engine, TensorRT-LLM is highly optimized for Nvidia GPUs. While llama.cpp compiles models into a [single, generalizable CUDA "backend"](https://github.com/ggerganov/llama.cpp/blob/master/ggml-cuda.cu)  that can run on a wide range of Nvidia GPUs, TensorRT-LLM compiles models into a [GPU-specific execution graph](https://www.baseten.co/blog/high-performance-ml-inference-with-nvidia-tensorrt/) that is highly optimized for that specific GPU's Tensor Cores, CUDA cores, VRAM and memory bandwidth.
+与当前主导桌面AI领域的跨平台推理引擎 [llama.cpp](https://github.com/ggerganov/llama.cpp) 相比，TensorRT-LLM 针对英伟达GPU进行了深度优化。llama.cpp 将模型编译为[单一通用化的CUDA后端](https://github.com/ggerganov/llama.cpp/blob/master/ggml-cuda.cu)，可在多种英伟达GPU上运行；而TensorRT-LLM 则将模型编译为[GPU专属执行图](https://www.baseten.co/blog/high-performance-ml-inference-with-nvidia-tensorrt/)，针对特定GPU的张量核心、CUDA核心、显存及内存带宽进行了极致优化。
 
-TensorRT-LLM is typically used in datacenter-grade GPUs, where it produces a [face-melting 10,000 tokens/s](https://nvidia.github.io/TensorRT-LLM/blogs/H100vsA100.html) on [NVIDIA H100 Tensor Core GPUs](https://www.nvidia.com/en-us/data-center/h100/). We were curious for how TensorRT-LLM performs on consumer-grade GPUs, and gave it a spin.
+TensorRT-LLM 通常应用于数据中心级GPU，在 [NVIDIA H100 Tensor Core GPU](https://www.nvidia.com/en-us/data-center/h100/) 上可实现[惊人的每秒10,000 token](https://nvidia.github.io/TensorRT-LLM/blogs/H100vsA100.html) 处理速度。我们对其在消费级GPU上的表现产生了兴趣，并进行了实际测试。
 
 | Llama.cpp                                                                                                                 | TensorRT-LLM                                                                                                                      |
 | ------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| Baseline                                                                                                                  | Blazing fast (30-70% faster)                                                                                                      |
-| Compile once, run cross-platform                                                                                          | Compiled and highly optimized for specific GPU architecture                                                                       |
-| Generalizable and Portable                                                                                                | Highly-optimized                                                                                                                  |
-| Model compiles to [single, generalizable CUDA "backend"](https://github.com/ggerganov/llama.cpp/blob/master/ggml-cuda.cu) | Model compiles to [GPU-specific execution graph](https://www.baseten.co/blog/high-performance-ml-inference-with-nvidia-tensorrt/) |
+| 基准性能                                                                                                                  | 极速运行（快30-70%）                                                                                                              |
+| 一次编译，跨平台运行                                                                                                      | 针对特定GPU架构深度编译优化                                                                                                       |
+| 通用性强且可移植                                                                                                          | 高度优化                                                                                                                          |
+| 模型编译为[单一通用CUDA后端](https://github.com/ggerganov/llama.cpp/blob/master/ggml-cuda.cu)                             | 模型编译为[GPU专用执行图](https://www.baseten.co/blog/high-performance-ml-inference-with-nvidia-tensorrt/)                        |
 
-## Experiment Setup
+## 实验设置
 
-We ran the experiment using standardized inference requests in a sandboxed environment:
-- **Model**: Mistral 7b model, compiled and quantized at a comparable `int4` quantization.
-- **Test runs**: 5 batches of 10 runs each, per inference engine, on a bare metal PC with no other applications.
-- **Parameters**: User defaults, i.e. `batch_size 1`, `input_len 2048` and `output_len 512`
-- **Measurements**:
-  - CPU, memory from Jan system monitor
-  - GPU VRAM utilization metrics from `nvidia-smi`, and taken over an interval of 14 seconds. 
-  - Throughput (token/sec) using [Jan's built-in Tokens/sec perf stat](https://github.com/search?q=repo%3Ajanhq%2Fjan%20timeDiffInSeconds&type=code).
+我们在沙盒环境中使用标准化推理请求运行实验：
+
+- **模型**: Mistral 7b 模型，采用可比较的 `int4` 量化进行编译和量化处理
+- **测试批次**: 每组推理引擎在裸金属 PC 上运行 5 个批次，每批 10 次，期间无其他应用程序运行
+- **参数**: 用户默认值，即 `batch_size 1`、`input_len 2048` 和 `output_len 512`
+- **测量指标**:
+  - 通过 Jan 系统监视器获取 CPU 和内存数据
+  - 通过 `nvidia-smi` 获取 GPU 显存利用率指标，采样间隔为 14 秒
+  - 使用 [Jan 内置的 Tokens/sec 性能统计](https://github.com/search?q=repo%3Ajanhq%2Fjan%20timeDiffInSeconds&type=code) 计算吞吐量（token/秒）
 
 <Callout>
-We picked a [batch size of 1](https://www.reddit.com/r/LocalLLaMA/comments/17sbwo5/what_does_batch_size_mean_in_inference/) to simulate realistic real-world use cases, as Jan users are likely to make one inference request at a time. We also used a `input_len` of 2048 and `output_len` of 512 to simulate a typical chatbot use case.
+我们选择 [批次大小为 1](https://www.reddit.com/r/LocalLLaMA/comments/17sbwo5/what_does_batch_size_mean_in_inference/) 来模拟真实世界的使用场景，因为 Jan 用户很可能每次只发出一个推理请求。同时采用 `input_len` 2048 和 `output_len` 512 来模拟典型聊天机器人用例。
 </Callout>
 
 <Callout>
-**Further Research**: We found GPU VRAM Utilization to be difficult to measure, with `nvidia-smi` on Windows producing a different result from Windows Task Manager's Resource Monitor for NVIDIA GPUs. After some [research](https://forums.developer.nvidia.com/t/how-to-evaluate-gpu-utilization-usage-on-windows/245451/3), we have gone with `nvidia-smi`'s measurement. 
+**深入研究**: 我们发现 GPU 显存利用率难以准确测量，Windows 系统上 `nvidia-smi` 的显示结果与 Windows 任务管理器的资源监视器对 NVIDIA GPU 的统计存在差异。经过 [调研](https://forums.developer.nvidia.com/t/how-to-evaluate-gpu-utilization-usage-on-windows/245451/3)，最终采用 `nvidia-smi` 的测量数据。
 </Callout>
 
-### Hardware Selection
+### 硬件选型
 
-We chose the following GPUs based on our users' preferences:
+根据用户偏好，我们选择了以下GPU型号：
 
-| NVIDIA GPU                        | VRAM (GB) | CUDA Cores | Tensor Cores | Memory Bus Width (bit) | Memory Bandwidth (GB/s) | Connection (GB/s)                            |
+| NVIDIA GPU                        | 显存容量(GB) | CUDA核心数 | Tensor核心数 | 显存位宽(bit) | 显存带宽(GB/s) | 连接带宽(GB/s)                            |
 | --------------------------------- | --------- | ---------- | ------------ | ---------------------- | ----------------------- | -------------------------------------------- |
 | GeForce RTX 4090 (Ada)            | 24        | 16,384     | 512          | 384                    | ~1000                   | PCIe4.0 x16 (~32)                        |
 | GeForce RTX 3090 (Ampere)         | 24        | 10,496     | 328          | 384                    | 935.8                   | PCIe4.0 x16 (~32)                        |
 | GeForce RTX 4070 Laptop GPU (Ada) | 8         | 7680       | 144          | 192                    | 272                     | PCIe4.0 x4 (~8)                         |
-| GeForce RTX 4090 eGPU (Ada)       | 24        | 16,384     | 512          | 384                    | ~1000                   | Thunderbolt 3 connected to a USB4 USB-C port ([~1.25-5?](https://www.cablematters.com/Blog/Thunderbolt/usb4-vs-thunderbolt-3)) |
+| GeForce RTX 4090 eGPU (Ada)       | 24        | 16,384     | 512          | 384                    | ~1000                   | Thunderbolt 3连接至USB4 USB-C端口 ([~1.25-5?](https://www.cablematters.com/Blog/Thunderbolt/usb4-vs-thunderbolt-3)) |
 
-### llama.cpp Setup
+### llama.cpp配置
 
-- llama.cpp commit [15499eb](https://github.com/ggerganov/llama.cpp/commit/15499eb94227401bdc8875da6eb85c15d37068f7)
-- We used `Mistral-7b-q4_k_m` in `GGUF` with `ngl` at `100`
+- llama.cpp提交版本 [15499eb](https://github.com/ggerganov/llama.cpp/commit/15499eb94227401bdc8875da6eb85c15d37068f7)
+- 使用`GGUF`格式的`Mistral-7b-q4_k_m`模型，`ngl`参数设为`100`
 
 <Callout>
-Note: `ngl` is the abbreviation of `Number of GPU Layers` with the range from `0` as no GPU acceleration to `120` as full on GPU for some big models.
+注意：`ngl` 是 `Number of GPU Layers` 的缩写，取值范围从 `0`（表示无 GPU 加速）到 `120`（表示某些大型模型完全使用 GPU 加速）。
 </Callout>
 
-### TensorRT-LLM Setup
+### TensorRT-LLM 配置
 
-- TensorRT-LLM version [0.7.1](https://github.com/NVIDIA/TensorRT-LLM/releases/tag/v0.7.1) and build on Windows
-- For TensorRT-LLM, we used `Mistral-7b-int4 AWQ`
-- We ran TensorRT-LLM with `free_gpu_memory_fraction` to test it with the lowest VRAM consumption
-- Note: We picked AWQ for TensorRT-LLM to be a closer comparison to GGUF's Q4.
+- 使用 [0.7.1](https://github.com/NVIDIA/TensorRT-LLM/releases/tag/v0.7.1) 版本的 TensorRT-LLM 并在 Windows 上构建
+- 对于 TensorRT-LLM，我们使用了 `Mistral-7b-int4 AWQ` 模型
+- 我们运行 TensorRT-LLM 时启用了 `free_gpu_memory_fraction` 以测试最低 VRAM 消耗
+- 注意：我们选择 AWQ 量化方式是为了与 GGUF 的 Q4 量化进行更接近的比较
 
-## Results
+## 测试结果
 
 ### NVIDIA GeForce RTX 4090 GPU
 
 ![image](./_assets/4090s.png)
-*Jan is built on this Dual-4090 workstation, which recently got upgraded to a nice case*
+*Jan 是在这台双 4090 工作站上构建的，最近升级了一个漂亮的机箱*
 
 ![image](./_assets/og-4090s.webp)
-*The original case (or lack thereof) for our Dual-4090 cluster, as posted on [r/localllama](https://www.reddit.com/r/LocalLLaMA/comments/16lxt6a/case_for_dual_4090s/)*
+*我们双 4090 集群的原始机箱（或者说没有机箱），最初发布在 [r/localllama](https://www.reddit.com/r/LocalLLaMA/comments/16lxt6a/case_for_dual_4090s/)*
 
 <Callout type="info" >
-  **Hardware Details**
-- CPU: Intel 13th series
-- GPU: NVIDIA GeForce RTX 4090 (Ada - sm 89)
-- RAM: 32GB
-- OS: Windows 11 Pro
+  **硬件规格**
+- CPU：英特尔第 13 代处理器
+- GPU：NVIDIA GeForce RTX 4090（Ada 架构 - sm 89）
+- 内存：32GB
+- 操作系统：Windows 11 专业版
 
-**Model Details**
-- llama.cpp model: Mistral 7B v0.2 GGUF Q4_K_M
-- TensorRT-LLM model: Mistral 7B v0.2 AWQ, quantized for single GPU (Ada)
+**模型规格**
+- llama.cpp 模型：Mistral 7B v0.2 GGUF Q4_K_M
+- TensorRT-LLM 模型：Mistral 7B v0.2 AWQ，针对单 GPU（Ada）进行量化
 </Callout>
 
-For this test, we used Jan's [Dual-4090 workstation](https://www.reddit.com/r/LocalLLaMA/comments/16lxt6a/case_for_dual_4090s/), which our engineers timeshare to build Jan.
+本次测试使用了 Jan 的 [双 4090 工作站](https://www.reddit.com/r/LocalLLaMA/comments/16lxt6a/case_for_dual_4090s/)，我们的工程师通过分时共享这台设备来构建 Jan。
 
-The [NVIDIA GeForce RTX 4090](https://www.nvidia.com/en-us/geforce/graphics-cards/40-series/) is the latest top-of-the-line desktop GPU, with an MSRP of $1,599, and uses the Ada architecture. It has a ~1000 GB/s memory bandwidth within VRAM, and a PCIe4 x16 lane (~32 GB/s) between the GPU and the CPU. 
+[NVIDIA GeForce RTX 4090](https://www.nvidia.com/en-us/geforce/graphics-cards/40-series/) 是目前顶级的桌面级 GPU，建议零售价为 1,599 美元，采用 Ada 架构。其显存带宽约为 1000 GB/s，GPU 与 CPU 之间通过 PCIe4 x16 通道（约 32 GB/s）连接。
 
+| 指标                     | GGUF (使用 CPU) | GGUF (使用 GPU) | TensorRT-LLM | TensorRT-LLM 对比优势 |
+| ------------------------ | -------------- | -------------- | ------------ | --------------------- |
+| 吞吐量 (token/秒)        | 14.0           | 100.43         | 170.63       | ✅ 快 69.89%          |
+| 最大 GPU 利用率 (%)      | N/A            | 83.50          | 88.50        | 提升 5.99%            |
+| 最大显存利用率 (%)       | N/A            | 64             | 72.1         | 提升 12.66%           |
+| 平均内存占用 (GB)        | 0.611          | 7.105          | 4.98         | ✅ 减少 29.88%        |
+| 磁盘占用 (GB)            | 4.07           | 4.06           | 3.05         | ✅ 缩小 24.88%        |
 
-| Metrics                  | GGUF (using CPU) | GGUF (using GPU) | TensorRT-LLM | How TensorRT-LLM Compares |
-| ------------------------ | ---------------- | ---------------- | ------------ | ------------------------- |
-| Throughput (token/s)     | 14.0             | 100.43           | 170.63       | ✅ 69.89% faster          |
-| Max GPU Utilization (%)  | N/A              | 83.50            | 88.50        | 5.99% more                |
-| Max VRAM Utilization (%) | N/A              | 64               | 72.1         | 12.66% more               |
-| Avg RAM Used (GB)        | 0.611            | 7.105            | 4.98         | ✅ 29.88% less            |
-| Disk Size (GB)           | 4.07             | 4.06             | 3.05         | ✅ 24.88% smaller         |
+TensorRT-LLM 通过为 GeForce RTX 4090 GPU 的 Ada 架构优化模型执行图，充分发挥其 512 个 Tensor Core、16,384 个 CUDA 核心以及 1000 GB/s 显存带宽的优势，相比 llama.cpp 实现了近 70% 的速度提升。
 
-TensorRT-LLM was almost 70% faster than llama.cpp by building the model for the GeForce RTX 4090 GPU’s Ada architecture for optimal graph execution, fully utilizing the 512 Tensor Cores, 16,384 CUDA cores, and 1,000 GB/s of memory bandwidth.
+llama.cpp 运行速度较慢的直观原因在于，它将模型编译为[单一通用的 CUDA "后端"](https://github.com/ggerganov/llama.cpp/blob/master/ggml-cuda.cu)，这种后端可在多种 NVIDIA GPU 上运行。这种设计导致 llama.cpp 必须牺牲 TensorRT-LLM 通过编译为 GPU 专用执行图所能实现的所有优化。
 
-The intuition for why llama.cpp is slower is because it compiles a model into a [single, generalizable CUDA “backend”](https://github.com/ggerganov/llama.cpp/blob/master/ggml-cuda.cu) that can run on many NVIDIA GPUs. Doing so requires llama.cpp to sacrifice all the optimizations that TensorRT-LLM makes with its compilation to a GPU-specific execution graph.
-
-### NVIDIA GeForce RTX 3090 GPU
+### NVIDIA GeForce RTX 3090 显卡
 
 ![image](./_assets/3090s.jpg)
-*Our 3090 Machine, now used by one of our engineers to build Jan*
+*我们的 3090 设备，现由工程师用于构建 Jan 项目*
 
 <Callout type="info" >
-  **Hardware Details**
-- CPU: Intel 13th series
-- GPU: NVIDIA GeForce RTX 3090 (Ampere - sm 86)
-- RAM: 64GB
-- OS: Windows 11 Pro
+  **硬件配置**
+- 处理器：英特尔第13代系列
+- 显卡：NVIDIA GeForce RTX 3090（安培架构 - sm 86）
+- 内存：64GB
+- 系统：Windows 11 专业版
 
-**Model Details**
-- llama.cpp model: Mistral 7B v0.2 GGUF Q4_K_M
-- TensorRT-LLM model: Mistral 7B v0.2 AWQ, quantized for single GPU (Ampere)
+**模型参数**
+- llama.cpp 模型：Mistral 7B v0.2 GGUF Q4_K_M 量化版
+- TensorRT-LLM 模型：Mistral 7B v0.2 AWQ 单显卡（安培架构）量化版
 </Callout>
 
-The [NVIDIA's GeForce RTX 3090](https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/rtx-3090-3090ti/) is a popular desktop GPU, and retails for approximately $1,500 (as of April 24). It uses the NVIDIA Ampere architecture. As compared to its successor GeForce RTX 4090, it has 33% fewer CUDA cores (10,496) and Tensor Cores (328) and 7% less memory bandwidth (~930 GB/s).
+[NVIDIA GeForce RTX 3090](https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/rtx-3090-3090ti/) 是主流桌面显卡，零售价约1500美元（截至2024年4月）。采用 NVIDIA 安培架构，相比后续型号 RTX 4090，其 CUDA 核心数（10,496个）和张量核心数（328个）减少33%，内存带宽（约930GB/s）降低7%。
 
-
-| Metrics                  | GGUF (using CPU) | GGUF (using GPU) | TensorRT-LLM | How TensorRT-LLM Compares |
+| 指标                  | GGUF (使用 CPU) | GGUF (使用 GPU) | TensorRT-LLM | TensorRT-LLM 对比优势 |
 | ------------------------ | ---------------- | ---------------- | ------------ | ------------------------- |
-| Throughput (token/s)     | 11.42            | 88.70            | 144.19       | ✅ 62.57% faster          |
-| Max GPU Utilization (%)  | N/A              | 80.40            | 89.10        | 10.82% more               |
-| Max VRAM Utilization (%) | N/A              | 66.80            | 76.20        | 14.07% more               |
-| Avg RAM Used (GB)        | 0.611            | 2.60             | 0.98         | 62.41%% less              |
-| Disk Size (GB)           | 4.07             | 4.06             | 3.05         | ✅ 24.88% smaller         |
+| 吞吐量 (token/秒)     | 11.42            | 88.70            | 144.19       | ✅ 快 62.57%          |
+| 最大 GPU 利用率 (%)  | N/A              | 80.40            | 89.10        | 提升 10.82%               |
+| 最大显存利用率 (%) | N/A              | 66.80            | 76.20        | 提升 14.07%               |
+| 平均内存占用 (GB)        | 0.611            | 2.60             | 0.98         | 减少 62.41%              |
+| 磁盘占用 (GB)           | 4.07             | 4.06             | 3.05         | ✅ 缩小 24.88%         |
 
-Interestingly, the GeForce RTX 3090 was only 16.6% slower compared with the GeForce RTX 4090. On TPS, TensorRT-LLM outperformed llama.cpp by 62.57%. Curiously, it also used negligible RAM for subsequent inference requests after the initial model warmup.
+值得注意的是，GeForce RTX 3090 仅比 GeForce RTX 4090 慢 16.6%。在 TPS 方面，TensorRT-LLM 比 llama.cpp 快 62.57%。有趣的是，在模型初始预热后，后续推理请求的内存占用几乎可以忽略不计。
 
-### NVIDIA GeForce RTX 4070 Laptop GPU
+### NVIDIA GeForce RTX 4070 笔记本电脑 GPU
 
 ![image](./_assets/4070s.jpg)
 
 <Callout type="info" >
-  **Hardware Details**
-- Laptop: Razer Blade 14
-- CPU: AMD Ryzen™ 9 8945HS, 8C/16T
-- GPU: NVIDIA GeForce RTX 4070 Laptop GPU (Ada - sm 89) on PCIe 4.0 x16 (32 GB/s)
-- RAM: 32GB
-- OS: Windows 11 Pro
+  **硬件规格**
+- 笔记本: Razer Blade 14
+- 处理器: AMD Ryzen™ 9 8945HS, 8核16线程
+- 显卡: NVIDIA GeForce RTX 4070 笔记本 GPU (Ada - sm 89) PCIe 4.0 x16 (32 GB/s)
+- 内存: 32GB
+- 操作系统: Windows 11 Pro
 
-**Model Details**
-- llama.cpp model: Mistral 7B v0.2 GGUF `Q4_K_M`
-- TensorRT-LLM model: Mistral 7B v0.2 AWQ, quantized for single GPU (Ada)
+**模型规格**
+- llama.cpp 模型: Mistral 7B v0.2 GGUF `Q4_K_M`
+- TensorRT-LLM 模型: Mistral 7B v0.2 AWQ, 单显卡量化版 (Ada)
 </Callout>
 
-We also benchmarked an NVIDIA GeForce RTX 4070 Laptop GPU with 8gb of VRAM, which is a popular configuration among Jan users. Laptop GPUs are less powerful than their desktop counterparts, as they trade portability for reduced energy consumption and thermal constraints.
+我们还测试了配备8GB显存的NVIDIA GeForce RTX 4070笔记本GPU，这是Jan用户中常见的配置。笔记本GPU性能通常弱于桌面版，因其在便携性上妥协，降低了能耗并受限于散热条件。
 
-| Metrics                  | GGUF (using CPU) | GGUF (using GPU) | TensorRT-LLM | Difference on GPU |
+| 指标                  | GGUF (CPU运算) | GGUF (GPU运算) | TensorRT-LLM | GPU性能差异 |
 | ------------------------ | ---------------- | ---------------- | ------------ | ----------------- |
-| Throughput (token/s)     | 11.57            | 39.70            | 51.57        | ✅ 29.9% faster   |
-| Max GPU Utilization (%)  | N/A              | 80.00            | 84.67        | 5.83% more        |
-| Max VRAM Utilization (%) | N/A              | 72.78            | 81.22        | 11.60% more       |
-| Avg RAM Used (GB)        | 4.49             | 4.44             | 1.04         | ✅ 76.55%% less   |
-| Disk Size (GB)           | 4.07             | 4.06             | 3.05         | ✅ 24.88% smaller |
+| 吞吐量 (token/秒)     | 11.57            | 39.70            | 51.57        | ✅ 提升29.9%   |
+| 峰值GPU利用率 (%)  | N/A              | 80.00            | 84.67        | 提升5.83%        |
+| 峰值显存利用率 (%) | N/A              | 72.78            | 81.22        | 提升11.60%       |
+| 平均内存占用 (GB)        | 4.49             | 4.44             | 1.04         | ✅ 减少76.55%%   |
+| 磁盘占用 (GB)           | 4.07             | 4.06             | 3.05         | ✅ 缩小24.88% |
 
-TensorRT-LLM on the laptop dGPU was 29.9% faster in tokens per second throughput than llama.cpp, but significantly slower than the desktop GPUs. 
+笔记本电脑上的TensorRT-LLM在每秒令牌吞吐量上比llama.cpp快29.9%，但明显慢于桌面级GPU。
 
-The intuition for this is fairly simple: the GeForce RTX 4070 Laptop GPU has 53.1% fewer CUDA cores and Tensor Cores (compared to the 4090), and less VRAM (8gb vs. 24gb). This reduces the surface area for GPU-specific optimizations for TensorRT-LLM.
+这背后的原因相当直观：GeForce RTX 4070笔记本GPU相比4090减少了53.1%的CUDA核心和Tensor Core数量，且显存更小（8GB对比24GB）。这限制了TensorRT-LLM针对GPU优化的发挥空间。
 
-The GeForce RTX 4070 Laptop GPU is also ~70% slower than the GeForce RTX 4090 desktop GPU, showing the hardware effect of less electricity draw, less VRAM, and thermal constraints on inference speed.
+GeForce RTX 4070笔记本GPU的性能比GeForce RTX 4090桌面GPU低约70%，体现了功耗限制、显存缩减和散热约束对推理速度的硬件影响。
 
-### Laptop with NVIDIA GeForce RTX 4090 eGPU
+### 搭载NVIDIA GeForce RTX 4090外置显卡的笔记本电脑
 
 ![image](./_assets/egpu.jpg)
 
 <Callout type="info" >
-  **Hardware Details**
-- Laptop: Razer Blade 14
-- eGPU box: AORUS RTX 4090 GAMING BOX
-- CPU: AMD Ryzen™ 9 8945HS, 8C/16T
-- GPU: NVIDIA GeForce RTX 4090 (Ada - sm 89) on eGPU with Thunderbolt 3 connection
-- RAM: 32GB
-- OS: Windows 11 Pro
+  **硬件配置**
+- 笔记本：Razer Blade 14
+- 外置显卡盒：AORUS RTX 4090 GAMING BOX
+- CPU：AMD Ryzen™ 9 8945HS，8核16线程
+- GPU：通过雷电3连接的外置NVIDIA GeForce RTX 4090（Ada架构 - sm 89）
+- 内存：32GB
+- 系统：Windows 11专业版
 
-**Model Details**
-- llama.cpp model: Mistral 7B v0.2 GGUF `Q4_K_M`
-- TensorRT-LLM model: Mistral 7B v0.2 AWQ, quantized for single GPU (Ampere)
+**模型配置**
+- llama.cpp模型：Mistral 7B v0.2 GGUF `Q4_K_M`
+- TensorRT-LLM模型：单GPU（Ampere架构）量化的Mistral 7B v0.2 AWQ版本
 </Callout>
 
-Our last benchmark was to experiment with an [Asus RTX 4090 eGPU](https://www.gigabyte.com/Graphics-Card/GV-N4090IXEB-24GD), that was connected via a [Thunderbolt 3 port](https://www.gigabyte.com/Graphics-Card/GV-N4090IXEB-24GD) to the [Razer Blade 14's USB4 port](https://www.razer.com/sg-en/gaming-laptops/razer-blade-14). Theoretically, the results should be fairly similar to the GeForce RTX 4090 desktop GPU as they have identical underlying GPUs, but with very different connection speeds.
+我们最后的基准测试是尝试使用[华硕 RTX 4090 eGPU](https://www.gigabyte.com/Graphics-Card/GV-N4090IXEB-24GD)，它通过[雷雳3接口](https://www.gigabyte.com/Graphics-Card/GV-N4090IXEB-24GD)连接到[Razer Blade 14的USB4端口](https://www.razer.com/sg-en/gaming-laptops/razer-blade-14)。理论上，结果应该与GeForce RTX 4090桌面GPU非常相似，因为它们具有相同的底层GPU，但连接速度差异很大。
 
-We thought it would be an interesting to see how TensorRT-LLM handles a 68.4% reduction in communication bandwidth between the CPU and GPU:
-- Thunderbolt 3 connection (1.25-5 GB/s?) for eGPUs
-- PCIe 4.0 x4 (~8 GB/s) for "on device" desktops
+我们认为观察TensorRT-LLM如何处理CPU和GPU之间68.4%的通信带宽下降会很有趣：
+
+- eGPU的雷雳3连接（1.25-5 GB/s？）
+- "设备内置"桌面的PCIe 4.0 x4（约8 GB/s）
 
 <Callout>
-**Help Needed:** We are actually not 100% sure what the actual Connection Speed is [between Thunderbolt 3 to USB4](https://www.cablematters.com/Blog/Thunderbolt/usb4-vs-thunderbolt-3), as the actual speed seems different from the advertised speed of 5 GB/s. There seem to be a lot of factors involved, including the actual cable itself. We'd love if someone in the community can guide us!
+**需要帮助：** 我们实际上并不完全确定[雷雳3到USB4](https://www.cablematters.com/Blog/Thunderbolt/usb4-vs-thunderbolt-3)之间的实际连接速度是多少，因为实际速度似乎与宣传的5 GB/s不同。似乎涉及很多因素，包括实际的线缆本身。我们非常希望社区中有人能指导我们！
 </Callout>
 
-Overall, we used mid-to-high-end NVIDIA desktop GPUs for our tests, as TensorRT-LLM’s performance enhancements are most apparent on bigger VRAMs. For users with lower-spec machines, llama.cpp is better.
+总的来说，我们在测试中使用了中高端的NVIDIA桌面GPU，因为TensorRT-LLM的性能提升在更大的VRAM上最为明显。对于配置较低的机器用户，llama.cpp是更好的选择。
 
-| Metrics                  | GGUF (using CPU) | GGUF (using GPU) | TensorRT-LLM | Difference on GPU |
+| 指标                  | GGUF (使用 CPU) | GGUF (使用 GPU) | TensorRT-LLM | GPU 性能差异 |
 | ------------------------ | ---------------- | ---------------- | ------------ | ----------------- |
-| Throughput (token/s)     | 11.56            | 62.22            | 104.95       | ✅ 68.66% faster  |
-| Max VRAM Utilization (%) | 0                | 65               | 99           | 52.31% more       |
-| RAM Used (GB)            | 0.611            | 5.38             | 4.11         | ✅ 23.61% less    |
-| Disk Size (GB)           | 4.07             | 4.06             | 3.05         | ✅ 24.88% smaller |
+| 吞吐量 (token/秒)     | 11.56            | 62.22            | 104.95       | ✅ 提升 68.66%  |
+| 最大显存利用率 (%) | 0                | 65               | 99           | 增加 52.31%       |
+| 内存占用 (GB)            | 0.611            | 5.38             | 4.11         | ✅ 减少 23.61%    |
+| 磁盘占用 (GB)           | 4.07             | 4.06             | 3.05         | ✅ 缩小 24.88%   |
 
-The Thunderbolt 3 eGPU had a 38.5% lower tokens/s as compared to the PCIe4.0 x16 connected GPU. But the % speedup vs. llama.cpp was similar, at around 69%.
+Thunderbolt 3 eGPU 的 token/s 速度比 PCIe4.0 x16 连接的 GPU 低 38.5%，但与 llama.cpp 相比的加速百分比相似，约为 69%。
 
-Interestingly, the VRAM used with the eGPU was variably higher. Our hypothesis is that the slower communication bandwidth results in more VRAM being allocated, as memory is released mostly slowly as well.
+值得注意的是，eGPU 的显存占用明显更高。我们的假设是：较慢的通信带宽导致更多显存被分配，同时内存释放速度也较慢。
 
-## Conclusion
+## 结语
 
-### Token Speed
+### 令牌速度
 
 ![image](./_assets/throughput_Comparison.png)
 
-| Throughput (Higher is Better)      | TensorRT-LLM    | Llama.cpp   | % Difference  |
+| 吞吐量 (数值越高越好)      | TensorRT-LLM    | Llama.cpp   | 性能差异      |
 | ---------------------------------- | --------------- | ----------- | ------------- |
-| GeForce RTX 4090 desktop GPU       | ✅ 170.63t/s    | 100.43t/s   | 69.89% faster |
-| GeForce RTX 3090 desktop GPU       | ✅ 144.19t/s    | 88.70t/s    | 62.57% faster |
-| GeForce RTX 4090 eGPU              | ✅ 104.95t/s    | 62.22t/s    | 68.66% faster |
-| GeForce RTX 4070 Laptop GPU        | ✅ 51.57t/s     | 39.70t/s    | 29.90% faster |
-| Laptop AMD Ryzen™ 9 8945HS, 8C/16T | (Not supported) | ✅ 11.57t/s |               |
+| GeForce RTX 4090 桌面 GPU         | ✅ 170.63t/s    | 100.43t/s   | 快 69.89%     |
+| GeForce RTX 3090 桌面 GPU         | ✅ 144.19t/s    | 88.70t/s    | 快 62.57%     |
+| GeForce RTX 4090 外置 GPU         | ✅ 104.95t/s    | 62.22t/s    | 快 68.66%     |
+| GeForce RTX 4070 笔记本 GPU       | ✅ 51.57t/s     | 39.70t/s    | 快 29.90%     |
+| AMD Ryzen™ 9 8945HS 笔记本, 8C/16T | (不支持)       | ✅ 11.57t/s |               |
 
-- TensorRT-LLM is up to **70% faster** than llama.cpp on desktop GPUs (e.g. 3090 GPU, 4090 GPUs) while using less RAM & CPU (but more fully utilizing VRAM)
-- TensorRT-LLM is up to **30% faster** on laptop GPUs (e.g. 4070 GPUs) with smaller VRAM
+- 在桌面 GPU（如 3090、4090）上，TensorRT-LLM 比 llama.cpp **快达 70%**，同时占用更少内存和 CPU（但更充分利用显存）
+- 在显存较小的笔记本 GPU（如 4070）上，TensorRT-LLM 性能提升 **最高达 30%**
 
-### Max VRAM Utilization
+### 最大显存利用率
 
-| Average VRAM utilization %   | TensorRT-LLM | Llama.cpp | % Difference |
-| ---------------------------- | ------------ | --------- | ------------ |
-| GeForce RTX 4090 desktop GPU | 72.10        | 64.00     | 12.66% more  |
-| GeForce RTX 3090 desktop GPU | 76.20        | 66.80     | 14.07% more  |
-| GeForce RTX 4070 Laptop GPU  | 81.22        | 72.78     | 11.06% more  |
-| GeForce RTX 4090 eGPU        | N/A          | N/A       | N/A          |
+| 平均显存利用率 %   | TensorRT-LLM | Llama.cpp | 差异百分比 |
+| ------------------ | ------------ | --------- | ---------- |
+| GeForce RTX 4090 桌面 GPU | 72.10        | 64.00     | 多 12.66%  |
+| GeForce RTX 3090 桌面 GPU | 76.20        | 66.80     | 多 14.07%  |
+| GeForce RTX 4070 笔记本 GPU | 81.22        | 72.78     | 多 11.06%  |
+| GeForce RTX 4090 外置 GPU | N/A          | N/A       | N/A        |
 
-- TensorRT-LLM used marginally more average VRAM utilization at peak utilization vs. llama.cpp (up to 14%). Though this could have interesting implications on consuming more electricity over time.
-- Note: we used comparable (but not identical) quantizations, and TensorRT-LLM’s `AWQ INT4` is implemented differently from llama.cpp’s `q4_k_m`
+- 与 llama.cpp 相比，TensorRT-LLM 在峰值利用率时平均 VRAM 使用量略高（最高达 14%）。这可能会对长期电力消耗产生潜在影响。
+- 注意：我们使用了相似（但非完全相同）的量化方法，且 TensorRT-LLM 的 `AWQ INT4` 实现方式与 llama.cpp 的 `q4_k_m` 不同
 
-### Max RAM Usage
+### 最大内存使用量
 
-| Max RAM utilization          | TensorRT-LLM | Llama.cpp | % Difference     |
+| 最大内存利用率               | TensorRT-LLM | Llama.cpp | 百分比差异       |
 | ---------------------------- | ------------ | --------- | ---------------- |
-| GeForce RTX 4090 desktop GPU | ✅ 4.98      | 7.11      | ✅ 29.88% less   |
-| GeForce RTX 3090 desktop GPU | ✅ 0.98      | 2.60      | ✅ 62.41% less   |
-| GeForce RTX 4070 Laptop GPU  | ✅ 1.04      | 4.44      | ✅  76.55%% less |
-| GeForce RTX 4090 eGPU        | ✅ 4.11      | 5.38      | ✅ 23.61% less   |
+| GeForce RTX 4090 桌面 GPU     | ✅ 4.98      | 7.11      | ✅ 减少 29.88%   |
+| GeForce RTX 3090 桌面 GPU     | ✅ 0.98      | 2.60      | ✅ 减少 62.41%   |
+| GeForce RTX 4070 笔记本 GPU   | ✅ 1.04      | 4.44      | ✅ 减少 76.55%   |
+| GeForce RTX 4090 eGPU         | ✅ 4.11      | 5.38      | ✅ 减少 23.61%   |
 
-TensorRT-LLM uses a lot less Max RAM vs. llama.cpp on slower connection (PCIe 3.0 or Thunderbolt 3) due to better memory management and efficient delegation to VRAM. On faster connection, it’s at least equal to llama.cpp.
+在较慢连接（PCIe 3.0 或 Thunderbolt 3）下，由于更优的内存管理和高效的 VRAM 分配机制，TensorRT-LLM 的最大内存使用量远低于 llama.cpp。在高速连接下，其表现至少与 llama.cpp 持平。
 
-### Compiled Model Size and Number of Files
-- Contrary to popular belief, TensorRT-LLM prebuilt models turned out to not be that huge
-- Mistral 7b int4 was actually 25% smaller in TensorRT-LLM, at 3.05gb vs. 4.06gb
-- Note: These are approximate comparisons, as TensorRT-LLM’s AWQ INT4 is implemented differently from llama.cpp’s q4_k_m
-- The bigger takeaway is that the Compiled model sizes are roughly in the same ballpark, while the number of files for TensorRT-LLM is 7x the GGUF number of files.
+### 编译模型大小与文件数量
 
-| Model size (Lower is better) | TensorRT-LLM AWQ int4 | Llama.cpp GGUF Q4 | % Difference      |
-| ---------------------------- | --------------------- | ----------------- | ----------------- |
-| Mistral 7B                   | ✅ 3.05GB               | 4.06GB              | ✅ 24.88% smaller |
+- 与普遍认知相反，TensorRT-LLM 预构建模型的实际体积并不庞大
+- Mistral 7B int4 模型在 TensorRT-LLM 中体积缩小了 25%，仅为 3.05GB（对比 llama.cpp 的 4.06GB）
+- 注意：此为近似对比，因 TensorRT-LLM 的 AWQ INT4 实现方式与 llama.cpp 的 q4_k_m 不同
+- 关键结论在于编译后模型体积处于同一量级，但 TensorRT-LLM 的文件数量是 GGUF 格式的 7 倍
 
-### Convenience
-- Llama.cpp still wins on cross-platform versatility and convenience of a “compile once, run everywhere” approach
-- TensorRT-LLM still requires compilation to specific OS and architecture, though this could be solved by pre-compiling and publishing models on [Nvidia's NGC Model Catalog](https://catalog.ngc.nvidia.com/orgs/nvidia/teams/ai-foundation/collections/codellama)
+| 模型体积（越小越好） | TensorRT-LLM AWQ int4 | Llama.cpp GGUF Q4 | 差异百分比        |
+| -------------------- | --------------------- | ----------------- | ----------------- |
+| Mistral 7B           | ✅ 3.05GB             | 4.06GB            | ✅ 减少 24.88%    |
 
-### Accessibility
-- Llama.cpp unsurprisingly beats TensorRT-LLM in terms of accessibility
-- TensorRT-LLM does not support older NVIDIA GPUs and won’t work well on smaller VRAM cards (e.g. 2-4gb VRAM)
+### 便捷性
 
-## Final Notes
+- llama.cpp 仍凭借"一次编译，随处运行"的跨平台优势占据上风
+- TensorRT-LLM 仍需针对特定操作系统和架构进行编译，但可通过[NVIDIA NGC 模型库](https://catalog.ngc.nvidia.com/orgs/nvidia/teams/ai-foundation/collections/codellama)预编译发布来解决
 
-Our benchmarking is not perfect. We evaluated over a dozen tools ([llmperf](https://github.com/ray-project/llmperf), [psutil](https://pypi.org/project/psutil/), [gpustat](https://github.com/wookayin/gpustat), native utilities, and more) and found that everyone measures TPS, common metrics differently. We eventually settled on using our own tools in Jan, which are consistent across any inference engine and hardware. As for runtime parameters, we went with default settings, likely representing the typical user experience.
+### 可访问性
 
-We also did not overclock for this benchmark , as it is not a default setting for most users. But we've measured in our tests that TensorRT-LLM can go even faster with a few tweaks. We see this as a pretty exciting future direction. 
+- 不出所料，llama.cpp 在可访问性方面优于 TensorRT-LLM
+- TensorRT-LLM 不支持较旧的 NVIDIA GPU，且在显存较小的显卡（如 2-4GB VRAM）上表现欠佳
+
+## 最终说明
+
+我们的基准测试并非完美。我们评估了十余种工具（[llmperf](https://github.com/ray-project/llmperf)、[psutil](https://pypi.org/project/psutil/)、[gpustat](https://github.com/wookayin/gpustat)、原生工具等），发现每种工具对TPS和常见指标的测量方式都不尽相同。最终在一月份采用了自研工具，确保任何推理引擎和硬件上的测试结果具有一致性。运行时参数则采用默认设置，以代表典型用户体验。
+
+本次基准测试也未进行超频操作，因为这并非大多数用户的默认配置。但我们的测试表明，TensorRT-LLM经过简单调优后还能获得更快速度。我们认为这是非常值得探索的未来方向。
 
 <Callout type="info" >
-  **How to Overclock:** We found an additional **15% increase in performance** with TensorRT-LLM by:
-- Enabling [XMP](https://www.intel.com/content/www/us/en/gaming/extreme-memory-profile-xmp.html)
-- Overclocking RAM bus speed in BIOS from `3600` to `5600`. 
+  **超频方法：** 通过以下方式可为TensorRT-LLM带来**15%的性能提升**：
+- 启用[XMP](https://www.intel.com/content/www/us/en/gaming/extreme-memory-profile-xmp.html)  
+- 在BIOS中将RAM总线速度从`3600`超频至`5600`
 </Callout>
 
-We're also publishing the underlying [raw experimental data](https://drive.google.com/file/d/1rDwd8XD8erKt0EgIKqOBidv8LsCO6lef/view?usp=sharing), and would encourage the community to scrutinize and help us improve.
+我们同时公开了原始实验数据，欢迎社区审查并协助改进。
 
-Special thanks to Asli Sabanci Demiroz, Annamalai Chockalingam, Jordan Dodge from Nvidia, and Georgi Gerganov from llama.cpp for feedback, review and suggestions. 
+特别感谢Nvidia的Asli Sabanci Demiroz、Annamalai Chockalingam、Jordan Dodge，以及llama.cpp的Georgi Gerganov提供的反馈、审阅和建议。
 
 <CTABlog />

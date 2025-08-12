@@ -1,6 +1,7 @@
 ---
-title: E2B Code Sandbox
-description: Execute Python code securely in isolated sandbox environments with E2B.
+
+title: E2B 代码沙盒
+description: 在 E2B 提供的隔离沙盒环境中安全执行 Python 代码。
 keywords:
   [
     Jan,
@@ -18,192 +19,190 @@ keywords:
 
 import { Callout, Steps } from 'nextra/components'
 
-# E2B Code Sandbox MCP
+# E2B 代码沙盒 MCP
 
-E2B MCP provides isolated Python execution environments. Your AI can run actual code instead of just describing what code might do.
+E2B MCP 提供隔离的 Python 执行环境。您的 AI 可以直接运行实际代码，而不仅限于描述代码可能的行为。
 
-The real value emerges when you combine secure remote execution with Jan's flexible model selection. You can use 
-local models for conversation and reasoning while offloading actual computation to E2B's sandboxes. This means you 
-get the privacy and control of local models plus the computational power of cloud infrastructure, without the 
-complexity of managing Python environments or dependencies locally.
+当您将安全的远程执行与 Jan 灵活的模型选择相结合时，真正的价值就会显现。您可以使用本地模型进行对话和推理，同时将实际计算任务卸载到 E2B 的沙盒中。这意味着您既能获得本地模型的隐私性和控制权，又能享受云基础设施的计算能力，而无需在本地管理复杂的 Python 环境或依赖项。
 
-## Setup
+## 配置
 
-### Prerequisites
+### 环境要求
 
-- Jan with MCP enabled
-- E2B API key from [e2b.dev](https://e2b.dev/)
-- Node.js installed
-- Model with tool calling support
+- 启用 MCP 的 Jan
+- 从 [e2b.dev](https://e2b.dev/) 获取 E2B API 密钥
+- 已安装 Node.js
+- 支持工具调用的模型
 
-### Configuration
+### 配置
 
-1. **Enable MCP**: Go to **Settings** > **MCP Servers**, toggle **Allow All MCP Tool Permission** ON
+1. **启用 MCP**：进入 **设置** > **MCP 服务器**，将 **允许所有 MCP 工具权限** 切换为开启状态
 
-![Turn on MCP](../../_assets/mcp-on.png)
+![启用 MCP](../../_assets/mcp-on.png)
 
 <Callout type="info">
-Don't forget that MCP gets enabled once you turn on Experimental Features in Jan's General settings.
+请注意：在 Jan 的常规设置中开启实验性功能后，MCP 才会被激活。
 </Callout>
 
-2. **Get API Key**: Sign up at [e2b.dev](https://e2b.dev/), generate an API key
+2. **获取 API 密钥**：在 [e2b.dev](https://e2b.dev/) 注册并生成 API 密钥
 
-![E2B API Key](../../_assets/e2b-key.png)
+![E2B API 密钥](../../_assets/e2b-key.png)
 
-Add a meaningful name to your key.
+为您的密钥添加有意义的名称。
 
-![E2B MCP Server](../../_assets/e2b-key1.png)
+![E2B MCP 服务器](../../_assets/e2b-key1.png)
 
-3. **Add MCP Server**: Click `+` in MCP Servers section
+3. **添加 MCP 服务器**: 在 MCP 服务器区域点击 `+` 按钮
 
-Configure:
-- **Server Name**: `e2b-server`
-- **Command**: `npx`
-- **Arguments**: `@e2b/mcp-server`
-- **Environment Variables**: 
-  - Key: `E2B_API_KEY`
-  - Value: `your-api-key`
+配置参数:
 
-![E2B MCP Server](../../_assets/e2b-key2.png)
+- **服务器名称**: `e2b-server`
+- **命令**: `npx`
+- **参数**: `@e2b/mcp-server`
+- **环境变量**: 
+  - 键: `E2B_API_KEY`
+  - 值: `your-api-key`
 
-4. **Verify**: Check server shows as active
+![E2B MCP 服务器](../../_assets/e2b-key2.png)
 
+4. **验证**: 确认服务器状态显示为活跃
 
-![E2B MCP Server](../../_assets/e2b-key3.png)
+![E2B MCP 服务器](../../_assets/e2b-key3.png)
 
-## Pre-installed Libraries
+## 预装库列表
 
-The sandbox includes these packages by default:
+沙箱环境默认包含以下软件包:
 
-**Data Analysis & Science:**
-- `pandas` (1.5.3) - Data manipulation
-- `numpy` (1.26.4) - Numerical computing  
-- `scipy` (1.12.0) - Scientific computing
-- `scikit-learn` (1.4.1) - Machine learning
-- `sympy` (1.12) - Symbolic mathematics
+**数据分析与科学计算:**
 
-**Visualization:**
-- `matplotlib` (3.8.3) - Static plots
-- `seaborn` (0.13.2) - Statistical visualization
-- `plotly` (5.19.0) - Interactive charts
-- `bokeh` (3.3.4) - Web-ready visualizations
+- `pandas` (1.5.3) - 数据处理
+- `numpy` (1.26.4) - 数值计算  
+- `scipy` (1.12.0) - 科学计算
+- `scikit-learn` (1.4.1) - 机器学习
+- `sympy` (1.12) - 符号数学
 
-**Data Processing:**
-- `requests` (2.26.0) - HTTP requests
-- `beautifulsoup4` (4.12.3) - HTML/XML parsing
-- `openpyxl` (3.1.2) - Excel files
-- `python-docx` (1.1.0) - Word documents
+**可视化工具:**
 
-**Text & NLP:**
-- `nltk` (3.8.1) - Natural language processing
-- `spacy` (3.7.4) - Advanced NLP
-- `textblob` (0.18.0) - Text processing
-- `gensim` (4.3.2) - Topic modeling
+- `matplotlib` (3.8.3) - 静态图表
+- `seaborn` (0.13.2) - 统计可视化
+- `plotly` (5.19.0) - 交互式图表
+- `bokeh` (3.3.4) - 网页可视化
 
-**Image & Audio:**
-- `opencv-python` (4.9.0) - Computer vision
-- `scikit-image` (0.22.0) - Image processing
-- `imageio` (2.34.0) - Image I/O
-- `librosa` (0.10.1) - Audio analysis
+**数据处理:**
 
-Additional packages can be installed as needed.
+- `requests` (2.26.0) - HTTP 请求
+- `beautifulsoup4` (4.12.3) - HTML/XML 解析
+- `openpyxl` (3.1.2) - Excel 文件处理
+- `python-docx` (1.1.0) - Word 文档处理
 
-## Examples
+**文本与自然语言处理:**
 
+- `nltk` (3.8.1) - 自然语言处理
+- `spacy` (3.7.4) - 高级 NLP
+- `textblob` (0.18.0) - 文本处理
+- `gensim` (4.3.2) - 主题建模
 
-For the following examples, we'll use Claude 4 Sonnet but you can use any local or remote 
-model with tool calling capabilities you'd like.
+**图像与音频处理:**
+
+- `opencv-python` (4.9.0) - 计算机视觉
+- `scikit-image` (0.22.0) - 图像处理
+- `imageio` (2.34.0) - 图像输入输出
+- `librosa` (0.10.1) - 音频分析
+
+可按需安装其他扩展包
+
+## 使用示例
+
+以下示例我们将使用 Claude 4 Sonnet 模型，但您可以选择任何支持工具调用的本地或远程模型
 
 <Callout type="info">
-Make sure you activate Tools on the model you're using.
+请确保您使用的模型已启用工具功能
 </Callout>
 
-![E2B MCP Server](../../_assets/e2b-key4.png)
+![E2B MCP 服务器](../../_assets/e2b-key4.png)
 
-### Basic Data Analysis
+### 基础数据分析
 
-Start small. Open a new chat, confirm that the model has tools enabled and ask it to create a small dataset of 100 students with grades and study hours. 
+从小规模开始。新建聊天会话，确认模型已启用工具功能，要求其生成包含100名学生成绩与学习时长的小型数据集
 
-![Chat and use E2B MCP ](../../_assets/e2b-key5.png)
-
+![聊天并使用 E2B MCP](../../_assets/e2b-key5.png)
 
 ```
 Create a small dataset of 100 students with grades and study hours. 
 Calculate the correlation and create a scatter plot.
 ```
 
-The model will:
-1. Generate data with pandas (100 rows)
-2. Calculate correlation coefficient
-3. Create a matplotlib scatter plot
-4. Add trend line
+模型将执行以下操作：
 
+1. 使用 pandas 生成数据（100行）
+2. 计算相关系数
+3. 创建 matplotlib 散点图
+4. 添加趋势线
 
-![Chat and use E2B MCP ](../../_assets/e2b-key6.png)
+![聊天并使用 E2B MCP](../../_assets/e2b-key6.png)
 
-![Chat and use E2B MCP ](../../_assets/e2b-key7.png)
-
+![聊天并使用 E2B MCP](../../_assets/e2b-key7.png)
 
 <Callout type="warning">
-  As of `v0.6.5`, Jan won't be able to display visualizations in the chat but we're to get this fixed for the next release.
+截至 `v0.6.5` 版本，Jan 暂不支持在聊天界面显示可视化图表，我们将在下个版本修复此问题
 </Callout>
 
-
-### Statistical Computing
+### 统计计算
 
 ```
 Run a Monte Carlo simulation with 10,000 iterations to estimate π.
 ```
 
-Expected output:
-- Numerical computation with numpy
-- Convergence plot showing estimate improvement
-- Final π estimate
+预期输出：
 
+- 使用 numpy 进行数值计算
+- 显示估计值改进的收敛图
+- 最终π估计值
 
-For more intensive simulations, increase iterations gradually and monitor performance.
+如需进行更密集的模拟，请逐步增加迭代次数并监控性能表现
 
-### Machine Learning
+### 机器学习
 
 ```
 Create a simple 2-class dataset with 200 samples. Train a logistic regression 
 model and visualize the decision boundary.
 ```
 
-The model will:
-- Generate synthetic 2D classification data
-- Train a single scikit-learn model
-- Plot data points and decision boundary
+模型将执行以下操作：
 
+- 生成合成二维分类数据
+- 训练单个 scikit-learn 模型
+- 绘制数据点和决策边界
 
-### Time Series Analysis
+### 时间序列分析
 
 ```
 Generate daily temperature data for one year. Calculate moving averages 
 and identify seasonal patterns.
 ```
 
-Output includes:
-- Line plot of temperature data
-- Moving average overlay
-- Simple seasonal decomposition
+输出内容包括：
 
+- 温度数据折线图
+- 移动平均线叠加
+- 简单季节性分解
 
-### Scaling Up
+### 扩展规模
 
-Once basic examples work, you can increase complexity:
-- Larger datasets (1000+ samples)
-- Multiple models for comparison
-- Complex visualizations with subplots
-- Advanced statistical tests
+基础示例运行成功后，可增加复杂度：
 
-The sandbox handles moderate computational loads well. For very large datasets or intensive ML training, consider breaking work into smaller chunks.
+- 更大数据集（1000+样本）
+- 多模型对比
+- 带子图的复杂可视化
+- 高级统计检验
 
-## Chart Generation
+沙箱能良好处理中等计算负载。对于超大数据集或密集型机器学习训练，建议将工作拆分为小块处理。
 
-E2B automatically detects and extracts charts from matplotlib code. Charts are returned as base64-encoded images and downloadable files.
+## 图表生成
 
-### Static Charts
+E2B 自动检测并从 matplotlib 代码中提取图表。图表以 base64 编码图像和可下载文件形式返回。
+
+### 静态图表
 
 ```python
 import matplotlib.pyplot as plt
@@ -220,11 +219,11 @@ plt.ylabel('sin(x)')
 plt.show()
 ```
 
-E2B captures the plot and makes it available for download.
+E2B 捕获绘图并使其可供下载。
 
-### Interactive Charts
+### 交互式图表
 
-The system extracts chart data for frontend visualization:
+系统提取图表数据用于前端可视化：
 
 ```python
 plt.bar(['A', 'B', 'C'], [10, 20, 15])
@@ -232,7 +231,8 @@ plt.title('Sample Bar Chart')
 plt.show()
 ```
 
-Returns structured data:
+返回结构化数据：
+
 ```json
 {
   "type": "bar",
@@ -245,46 +245,49 @@ Returns structured data:
 }
 ```
 
-Supported chart types: line, bar, scatter, pie, box plots.
+支持的图表类型：折线图、柱状图、散点图、饼图、箱线图。
 
-## Available Tools
+## 可用工具
 
-- **run_code**: Execute Python code
-- **install_package**: Add Python packages  
-- **create_file**: Save files to sandbox
-- **read_file**: Access sandbox files
-- **list_files**: Browse sandbox contents
+- **run_code**：执行 Python 代码
+- **install_package**：添加 Python 包  
+- **create_file**：保存文件至沙箱
+- **read_file**：访问沙箱文件
+- **list_files**：浏览沙箱内容
 
-## Troubleshooting
+## 故障排除
 
-**Connection Issues:**
-- Verify API key is correct
-- Check Node.js installation
-- Restart Jan if server won't start
+**连接问题：**
 
-**Execution Problems:**
-- Free sandboxes have 2 cores and 1GB RAM - start with small datasets
-- Large computations may time out or run out of memory
-- Scale up complexity gradually after testing basic examples
-- Some packages may require explicit installation
+- 验证 API 密钥是否正确
+- 检查 Node.js 安装情况
+- 若服务器无法启动则重启 Jan
 
-**Package Installation:**
-- Most data science packages install successfully
-- System dependencies may cause failures for some packages
-- Try alternative packages if installation fails
+**执行问题：**
+
+- 免费沙盒环境配备2核CPU和1GB内存 - 请从小型数据集开始
+- 大型计算可能超时或内存不足
+- 测试基础示例后逐步增加复杂度
+- 某些软件包可能需要显式安装
+
+**软件包安装：**
+
+- 大多数数据科学包可成功安装
+- 系统依赖可能导致部分包安装失败
+- 安装失败时可尝试替代包
 
 <Callout type="warning">
-  E2B has computational and memory limits. Break large operations into smaller chunks if needed.
+  E2B存在计算和内存限制。必要时请将大型操作拆分为小块处理。
 </Callout>
 
-## Use Cases
+## 使用场景
 
-E2B is useful for:
+E2B适用于：
 
-- **Academic Research**: Statistical analysis, data visualization, hypothesis testing
-- **Data Science**: Exploratory data analysis, model prototyping, result validation  
-- **Financial Analysis**: Portfolio optimization, risk calculations, market simulations
-- **Scientific Computing**: Numerical simulations, mathematical modeling, algorithm testing
-- **Prototyping**: Quick algorithm validation, proof-of-concept development
+- **学术研究**：统计分析、数据可视化、假设检验
+- **数据科学**：探索性数据分析、模型原型设计、结果验证
+- **金融分析**：投资组合优化、风险计算、市场模拟
+- **科学计算**：数值模拟、数学建模、算法测试
+- **原型开发**：快速算法验证、概念验证开发
 
-The sandbox provides isolated execution without local environment setup or dependency management.
+该沙盒环境提供隔离执行能力，无需本地环境设置或依赖管理。

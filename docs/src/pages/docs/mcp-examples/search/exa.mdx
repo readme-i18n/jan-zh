@@ -1,6 +1,7 @@
 ---
+
 title: Exa Search MCP
-description: Connect Jan to real-time web search with Exa's AI-powered search engine.
+description: 通过 Exa 的 AI 驱动搜索引擎，将 Jan 连接到实时网络搜索
 keywords:
   [
     Jan,
@@ -19,198 +20,218 @@ import { Callout, Steps } from 'nextra/components'
 
 # Exa Search MCP
 
-[Exa MCP](https://docs.exa.ai/examples/exa-mcp) provides real-time web search capabilities for AI models. Instead of relying on training data, 
-models can access current web content through Exa's search API.
+[Exa MCP](https://docs.exa.ai/examples/exa-mcp) 为 AI 模型提供实时网络搜索能力。模型不再依赖训练数据，
+而是通过 Exa 的搜索 API 访问当前网络内容。
 
-## Available Tools
+## 可用工具
 
-Exa MCP includes eight search functions:
+Exa MCP 包含八种搜索功能：
 
-- `web_search_exa`: General web search with content extraction
-- `research_paper_search`: Academic papers and research content
-- `company_research`: Company analysis and business intelligence
-- `crawling`: Extract content from specific URLs
-- `competitor_finder`: Find business competitors
-- `linkedin_search`: Search LinkedIn profiles and companies
-- `wikipedia_search_exa`: Wikipedia content retrieval
-- `github_search`: Repository and code search
+- `web_search_exa`: 支持内容提取的通用网络搜索
+- `research_paper_search`: 学术论文与研究内容
+- `company_research`: 公司分析与商业情报
+- `crawling`: 从特定 URL 提取内容
+- `competitor_finder`: 查找商业竞争对手
+- `linkedin_search`: 搜索 LinkedIn 个人资料与企业
+- `wikipedia_search_exa`: 维基百科内容检索
+- `github_search`: 代码库与代码搜索
 
-## Prerequisites
+## 前置条件
 
-- Jan with MCP enabled
-- Exa API key from [dashboard.exa.ai](https://dashboard.exa.ai/api-keys)
-- Model with tool calling support
-- Node.js installed
+- 已启用 MCP 的 Jan
+- 从 [dashboard.exa.ai](https://dashboard.exa.ai/api-keys) 获取的 Exa API 密钥
+- 支持工具调用的模型
+- 已安装 Node.js
 
 <Callout type="info">
-Tool calling support varies by model. Jan Nano 32k and 128k, Claude, Gemini, GPT-4o and above models work reliably. For both local and remote models, 
-verify tool calling is enabled in model parameters.
+不同模型对工具调用的支持程度各异。Jan Nano 32k 和 128k、Claude、Gemini、GPT-4o 及以上版本模型运行稳定。对于本地和远程模型，
+请确认模型参数中已启用工具调用功能。
 </Callout>
 
-## Setup
+## 配置
 
-### Enable MCP
+### 启用MCP
 
-1. Go to **Settings** > **MCP Servers**
-2. Toggle **Allow All MCP Tool Permission** ON
+1. 进入**设置** > **MCP服务器**
+2. 将**允许所有MCP工具权限**切换为开启状态
 
-![MCP settings page with toggle enabled](../../_assets/mcp-on.png)
+![已启用切换按钮的MCP设置页面](../../_assets/mcp-on.png)
 
-### Get API Key
+### 获取 API 密钥
 
-1. Visit [dashboard.exa.ai/api-keys](https://dashboard.exa.ai/api-keys)
-2. Create account or sign in
-3. Generate API key
-4. Save the key
+1. 访问 [dashboard.exa.ai/api-keys](https://dashboard.exa.ai/api-keys)
+2. 创建账户或登录
+3. 生成 API 密钥
+4. 保存密钥
 
-![Exa API Key](../../_assets/exa.png)
+![Exa API 密钥](../../_assets/exa.png)
 
-### Configure MCP Server
+### 配置MCP服务器
 
-Click `+` in MCP Servers section:
+在MCP服务器区域点击`+`：
 
+**配置步骤：**
 
-**Configuration:**
-- **Server Name**: `exa`
-- **Command**: `npx`
-- **Arguments**: `-y exa-mcp-server`
-- **Environment Variables**: 
-  - Key: `EXA_API_KEY`
-  - Value: `your-api-key`
+- **服务器名称**: `exa`
+- **命令**: `npx`
+- **参数**: `-y exa-mcp-server`
+- **环境变量**: 
+  - 键: `EXA_API_KEY`
+  - 值: `your-api-key`
 
-![Exa Jan MCP Server](../../_assets/exa1.png)
+![Exa Jan MCP 服务器](../../_assets/exa1.png)
 
-### Verify Setup
+### 验证设置
 
-Check server status in the MCP Servers list.
+在 MCP 服务器列表中检查服务器状态。
 
-![Exa Jan MCP Server](../../_assets/exa2.png)
+![Exa Jan MCP 服务器](../../_assets/exa2.png)
 
-### Model Configuration
+### 模型配置
 
-Use a compatible model provider:
+使用兼容的模型提供商：
 
 - **Jan Nano 32k**
 - **Anthropic**
 - **OpenAI**
 - **OpenRouter**
 
-![E2B MCP Server](../../_assets/e2b-key4.png)
+![E2B MCP 服务器](../../_assets/e2b-key4.png)
 
-## Usage
+## 使用指南
 
-Start a new chat with a tool-enabled model. Exa tools will appear in the available tools list.
+启动一个支持工具的新聊天会话。Exa 工具将出现在可用工具列表中。
 
-![Exa Tools Available](../../_assets/exa3.png)
+![Exa 工具可用](../../_assets/exa3.png)
 
-### Example Queries
+### 示例查询
 
-**Current Events & Activities:**
+**当前事件与活动:**
+
 ```
 What is happening this week, mid July 2025, in Sydney, Australia?
 ```
 
-![Exa Tools Available](../../_assets/exa4.png)
+![Exa 工具可用](../../_assets/exa4.png)
 
-**Investment Research:**
+**投资研究:**
+
 ```
 Find recent research papers about quantum computing startups that received Series A funding in 2024-2025
 ```
 
-**Tech Discovery:**
+**技术发现:**
+
 ```
 Find GitHub repositories for WebAssembly runtime engines written in Rust with active development
 ```
 
-**Career Intelligence:**
+**职业情报:**
+
 ```
 Search LinkedIn for AI safety researchers at major tech companies who published papers in the last 6 months
 ```
 
-**Competitive Analysis:**
+**竞争分析:**
+
 ```
 Research emerging competitors to OpenAI in the large language model space, focusing on companies founded after 2023
 ```
 
-**Travel & Local Research:**
+**旅行与本地研究:**
+
 ```
 Find authentic local food experiences in Tokyo that aren't in typical tourist guides, mentioned in recent travel blogs
 ```
 
-**Academic Research:**
+**学术研究:**
+
 ```
 Find recent papers about carbon capture technology breakthroughs published in Nature or Science during 2025
 ```
 
-**Creator Economy:**
+**创作者经济:**
+
 ```
 Research successful creators who transitioned from TikTok to longer-form content platforms in 2024-2025
 ```
 
-**Emerging Tech Trends:**
+**新兴技术趋势:**
+
 ```
 Find startups working on brain-computer interfaces that have raised funding in the past 12 months
 ```
 
-**Health & Wellness:**
+**健康与养生:**
+
 ```
 Extract information about the latest longevity research findings from Peter Attia's recent podcast episodes
 ```
 
-**Regulatory Intelligence:**
+**法规情报:**
+
 ```
 Find recent AI regulation developments in the EU that could impact US companies, focusing on July 2025 updates
 ```
 
-**Supply Chain Research:**
+**供应链研究:**
+
 ```
 Research companies developing sustainable packaging alternatives that have partnerships with major retailers
 ```
 
-## Use Cases
+## 使用场景
 
-### Academic Research
-Literature reviews, finding recent papers, tracking research trends.
+### 学术研究
 
-### Business Intelligence
-Competitor analysis, market research, company information gathering.
+文献综述、查找最新论文、追踪研究趋势。
 
-### Technical Research
-Finding libraries, tools, and code repositories. Documentation research.
+### 商业智能
 
-### Content Analysis
-Extracting and analyzing content from specific URLs for research.
+竞争对手分析、市场调研、企业信息收集。
 
-### Professional Search
-LinkedIn searches for industry connections and expertise.
+### 技术研究
 
-## Troubleshooting
+寻找代码库、工具和代码仓库。文档调研。
 
-**Connection Issues:**
-- Verify API key accuracy
-- Check Node.js installation
-- Restart Jan
-- Make sure you have enough credits in your Exa account
+### 内容分析
 
-**Tool Calling Problems:**
-- Confirm tool calling is enabled for your model
-- Try Jan Nano 32k, Claude, Gemini, GPT-4o and above models
-- Check MCP server status
+从特定URL提取并分析内容用于研究。
 
-**Search Quality:**
-- Use specific, descriptive queries
-- Prefer natural language over keywords
+### 专业搜索
 
-**API Errors:**
-- Verify API key at [dashboard.exa.ai](https://dashboard.exa.ai)
-- Check rate limits on your plan
-- Regenerate API key if needed
+在LinkedIn上搜索行业人脉与专业人才。
+
+## 故障排除
+
+**连接问题：**
+
+- 验证API密钥准确性
+- 检查Node.js安装情况
+- 重启Jan
+- 确保Exa账户有足够额度
+
+**工具调用问题：**
+
+- 确认模型已启用工具调用功能
+- 尝试Jan Nano 32k、Claude、Gemini及GPT-4o以上模型
+- 检查MCP服务器状态
+
+**搜索质量：**
+
+- 使用具体、描述性强的查询语句
+- 优先使用自然语言而非关键词
+
+**API错误：**
+
+- 在[dashboard.exa.ai](https://dashboard.exa.ai)验证API密钥
+- 检查当前套餐的速率限制
+- 必要时重新生成API密钥
 
 <Callout type="warning">
-Exa has API rate limits. Check your plan limits to avoid interruptions.
+Exa设有API调用频率限制。请检查套餐限额以避免服务中断。
 </Callout>
 
-## Next Steps
+## 后续步骤
 
-Exa MCP enables real-time web search within Jan's privacy-focused environment. Models can access current information while maintaining 
-local conversation processing.
+Exa MCP可在Jan注重隐私的环境中实现实时网络搜索。模型在保持本地对话处理的同时，能获取最新信息。

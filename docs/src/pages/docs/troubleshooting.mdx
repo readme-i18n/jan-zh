@@ -1,6 +1,7 @@
 ---
-title: Troubleshooting
-description: Explore solutions for common issues and optimize Jan's performance with this comprehensive troubleshooting guide.
+
+title: 故障排除
+description: 通过本全面故障排除指南探索常见问题的解决方案并优化 Jan 的性能。
 keywords:
   [
     Jan,
@@ -25,40 +26,44 @@ keywords:
 import { Tabs } from 'nextra/components'
 import { Callout, Steps } from 'nextra/components'
 
+# 故障排除
 
-# Troubleshooting
+## 如何获取错误日志
 
-## How to Get Error Logs
+错误日志对于排查问题和获取 Jan 团队帮助至关重要。获取 Jan 错误日志的步骤如下：
 
-Error logs are essential for troubleshooting issues and getting help from Jan team. To get error logs from Jan, follow the steps below:
+#### 通过 Jan 界面
 
-#### Through Jan Interface
-
-1. Open **System Monitor** in the footer
-2. Choose **App Log**
+1. 打开底部的 **System Monitor**
+2. 选择 **App Log**
 
 <br/>
-![App log](./_assets/trouble-shooting-02.png)
+
+![应用日志](./_assets/trouble-shooting-02.png)
+
 <br/>
 
-#### Through Terminal
-**Application Logs**
+#### 通过终端
+
+**应用日志**
+
 ```bash
 tail -n 50 ~/Library/Application\ Support/Jan/data/logs/app.log
 ```
-**Server Logs**
+
+**服务器日志**
+
 ```bash
 tail -n 50 ~/Library/Application\ Support/Jan/data/logs/cortex.log
 ```
 
 <Callout type="warning">
-Ensure to redact any private or sensitive information when sharing logs or error details. We retain your logs for only 24 hours.
+分享日志或错误详情时，请确保删除任何私人或敏感信息。我们仅保留您的日志24小时。
 </Callout>
 
+## 构建损坏
 
-## Broken Build
-
-To resolve the issue where Jan is stuck in a broken build after installation:
+解决 Jan 安装后卡在损坏构建状态的问题：
 
 <Tabs items={['Mac', 'Windows', 'Linux']}>
   <Tabs.Tab>
@@ -136,86 +141,86 @@ To resolve the issue where Jan is stuck in a broken build after installation:
 
 </Tabs>
 
-Following these steps, you can cleanly uninstall and reinstall Jan, ensuring a smooth and error-free experience with the latest version.
+按照以下步骤操作，您可以彻底卸载并重新安装 Jan，确保获得最新版本的无缝使用体验。
 
 <Callout type="info">
-  Before reinstalling Jan, ensure it's completely removed from all shared spaces if installed on multiple user accounts on your device.
+  在重新安装 Jan 之前，请确保如果设备上多个用户账户都安装了该软件，需从所有共享空间彻底移除。
 </Callout>
 
-## Troubleshooting NVIDIA GPU
-To resolve issues when Jan does not utilize the NVIDIA GPU on Windows and Linux systems.
+## NVIDIA GPU 故障排查
+
+解决 Jan 在 Windows 和 Linux 系统上无法调用 NVIDIA GPU 的问题。
 
 <Steps>
 
-### Step 1: Verify Hardware and System Requirements
+### 步骤 1：验证硬件与系统要求
 
-#### 1.1. Check GPU Detection
-First, verify that your system recognizes the NVIDIA GPU:
-**Windows:**
-- Right-click desktop → NVIDIA Control Panel
-- Or check Device Manager → Display Adapters
-**Linux:**
+#### 1.1. 检查 GPU 识别状态
+首先确认系统能识别 NVIDIA GPU：
+**Windows：**
+- 右键桌面 → NVIDIA 控制面板
+- 或通过设备管理器 → 显示适配器查看
+**Linux：**
 ```
 lspci | grep -i nvidia
 ```
-#### 1.2. Install Required components
-**NVIDIA Driver:**
-1. Install [NVIDIA Driver](https://www.nvidia.com/en-us/drivers/) for your GPU (NVIDIA driver **470.63.01 or higher**).
-2. Verify installation:
+#### 1.2. 安装必要组件
+**NVIDIA 驱动：**
+1. 为您的 GPU 安装 [NVIDIA Driver](https://www.nvidia.com/en-us/drivers/)（需 **470.63.01 或更高版本**）
+2. 验证安装：
 
 ```
 nvidia-smi
 ```
-Expected output should show your GPU model and driver version.
+正常输出应显示 GPU 型号和驱动版本。
 
-**CUDA Toolkit:**
-1. Download and install [CUDA toolkit](https://developer.nvidia.com/cuda-downloads) (**CUDA 11.7 or higher**)
-2. Verify installation:
+**CUDA 工具包：**
+1. 下载安装 [CUDA toolkit](https://developer.nvidia.com/cuda-downloads)（需 **CUDA 11.7 或更高版本**）
+2. 验证安装：
 
 ```
 nvcc --version
 ```
-**Linux Additional Requirements:**
-1. Required packages are installed:
+**Linux 额外要求：**
+1. 确保安装必要软件包：
 ```
 sudo apt update
 sudo apt install gcc-11 g++-11 cpp-11
 ```
-See [detailed instructions](https://gcc.gnu.org/projects/cxx-status.html#cxx17).
+参阅 [详细说明](https://gcc.gnu.org/projects/cxx-status.html#cxx17)。
 
-2. Set up CUDA environment:
+2. 配置 CUDA 环境：
 ```
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
 ```
-See [detailed instructions](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#post-installation-actions).
+参阅 [详细说明](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#post-installation-actions)。
 
 <Callout type="info">
-Ensure your (V)RAM is accessible; some users with virtual RAM may require additional configuration.
+确保 (V)RAM 可访问，使用虚拟内存的用户可能需要额外配置。
 </Callout>
 
-### Step 2: Turn on GPU acceleration
+### 步骤 2：启用 GPU 加速
 
-Jan manages GPU usage automatically:
-- Switches to GPU mode when supported
-- Automatically selects GPU with highest VRAM
+Jan 会自动管理 GPU 使用：
+- 检测到支持时自动切换至 GPU 模式
+- 自动选择 VRAM 最高的 GPU
 
-To verify GPU acceleration is turned on:
-1. Open **Settings** > **Hardware**
-2. Verify that **GPU Acceleration** is turned on
-3. Verify your selected GPU(s) are visible in **System Monitor** from Jan's footer
+验证 GPU 加速是否启用：
+1. 打开 **设置** > **硬件**
+2. 确认 **GPU 加速** 已开启
+3. 在 Jan 底部 **系统监视器** 中确认所选 GPU 可见
 
 <br/>
-![Hardware](./_assets/trouble-shooting-01.png)
+![硬件](./_assets/trouble-shooting-01.png)
 <br/>
 
+### 步骤 3：GPU 设置检查
 
-### Step 3: GPU Settings Check
+1. 进入 **设置** > **通用** > **数据文件夹**
+2. 点击 **打开所在文件夹**
+3. 打开 `settings.json` 文件
 
-1. Go to **Settings** > **General** > **Data Folder**
-2. Click on **Open Containing Folder**
-3. Open `settings.json` file
-
-Example `settings.json`:
+示例 `settings.json`：
 
 ```
 {
@@ -246,63 +251,63 @@ Example `settings.json`:
   "gpu_highest_vram": "0"
 }
 ```
-**Key Configuration Values:**
-- `run_mode`: Should be "gpu" for GPU acceleration
-- `nvidia_driver`: Shows driver status and version
-- `cuda`: Shows CUDA toolkit status and version
-- `gpus`: Lists available GPUs and their VRAM (in MB)
-- `gpu_highest_vram`: ID of GPU with most VRAM
+**关键配置项说明：**
+- `run_mode`：GPU 加速时应显示为 "gpu"
+- `nvidia_driver`：显示驱动状态与版本
+- `cuda`：显示 CUDA 工具包状态与版本
+- `gpus`：列出可用 GPU 及其 VRAM（单位 MB）
+- `gpu_highest_vram`：VRAM 最高的 GPU ID
 
+### 步骤 4：重启 Jan
 
-
-### Step 4: Restart Jan
-
-Restart Jan to make sure it works.
+重启 Jan 以确保配置生效。
 
 </Steps>
 
-### Tested Configurations
-These configurations have been verified to work with Jan's GPU acceleration. You can use them as reference points for your setup.
+### 已验证配置
 
-**Bare Metal Installations**
+以下配置已确认可与 Jan 的 GPU 加速功能协同工作，可作为您搭建环境的参考基准。
 
-Windows 11 Pro (64-bit)
-| Component | Version/Model |
+**物理机安装**
+
+Windows 11 专业版 (64位)
+| 组件 | 版本/型号 |
 |-----------|--------------|
 | GPU | NVIDIA GeForce RTX 4070Ti |
 | CUDA | 12.2 |
-| NVIDIA Driver | 531.18 |
-| OS | Windows 11 Pro 64-bit |
-| RAM | 32GB |
+| NVIDIA 驱动 | 531.18 |
+| 操作系统 | Windows 11 专业版 64位 |
+| 内存 | 32GB |
 
 Ubuntu 22.04 LTS
-| Component | Version/Model |
+| 组件 | 版本/型号 |
 |-----------|--------------|
 | GPU | NVIDIA GeForce RTX 4070Ti |
 | CUDA | 12.2 |
-| NVIDIA Driver | 545 |
-| OS | Ubuntu 22.04 LTS |
+| NVIDIA 驱动 | 545 |
+| 操作系统 | Ubuntu 22.04 LTS |
 
-**Virtual Machine Setups**
+**虚拟机环境**
 
-Ubuntu on Proxmox VM
-| Component | Version/Model |
+Proxmox 虚拟机中的 Ubuntu
+| 组件 | 版本/型号 |
 |-----------|--------------|
 | GPU | NVIDIA GeForce GTX 1660Ti |
 | CUDA | 12.1 |
-| NVIDIA Driver | 535 |
-| OS | Ubuntu 20.04/18.04 LTS |
-| VM Type | Proxmox |
+| NVIDIA 驱动 | 535 |
+| 操作系统 | Ubuntu 20.04/18.04 LTS |
+| 虚拟机类型 | Proxmox |
 
-**Performance Notes**
-- Bare metal installations provide better performance
-- VM setups require proper GPU passthrough configuration
-- Some laptop GPUs may have reduced performance
-- Hybrid graphics (Optimus) may need additional configuration
+**性能说明**
 
-## Permission Denied
+- 物理机安装可获得更优性能
+- 虚拟机环境需正确配置 GPU 直通功能
+- 部分笔记本 GPU 可能存在性能折损
+- 混合显卡(Optimus)可能需要额外配置
 
-When running Jan, you might encounter the following error message:
+## 权限拒绝
+
+运行 Jan 时可能遇到以下错误信息：
 
 ```
 Uncaught (in promise) Error: Error invoking layout-480796bff433a3a3.js:538 remote method 'installExtension':
@@ -310,37 +315,39 @@ Error Package /Applications/Jan.app/Contents/Resources/app.asar.unpacked/pre-ins
 Error EACCES: permission denied, mkdtemp '/Users/username/.npm/_cacache/tmp/ueCMn4'
 ```
 
-Permission problems mainly cause this error during installation. To resolve this issue, follow these steps:
+该错误通常由安装过程中的权限问题导致，请按以下步骤解决：
 
-1. Open your **Terminal**
+1. 打开您的**终端**
 
-2. Execute the following command to change ownership of the `~/.npm` directory to the current user:
+2. 执行以下命令将 `~/.npm` 目录所有权更改为当前用户：
 
 ```bash
 sudo chown -R $(whoami) ~/.npm
 ```
 
-This command ensures that the necessary permissions are granted for Jan's installation.
+该命令确保 Jan 安装时获得必要的权限。
 
+## "获取失败"或"出现异常"错误
 
-## "Failed to fetch" or "Something's Amiss" errors
+当您启动与模型的聊天并遇到**获取失败**或**出现异常**错误时，以下是可能的解决方案：
 
-When you start a chat with a model and encounter a **Failed to Fetch** or **Something's Amiss** error, here are some possible solutions to resolve it:
+**1. 检查系统与硬件要求**
 
-**1. Check System & Hardware Requirements**
-- Hardware dependencies: Ensure your device meets all [hardware requirements](docs/troubleshooting#step-1-verify-hardware-and-system-requirements)
-- OS: Ensure your operating system meets the minimum requirements ([Mac](/docs/desktop/mac#minimum-requirements), [Windows](/docs/desktop/windows#compatibility), [Linux](docs/desktop/linux#compatibility))
-- RAM: Choose models that use less than 80% of your available RAM
-  - For 8GB systems: Use models under 6GB
-  - For 16GB systems: Use models under 13GB
+- 硬件依赖：确保设备满足所有[硬件要求](docs/troubleshooting#step-1-verify-hardware-and-system-requirements)
+- 操作系统：确保符合最低要求（[Mac](/docs/desktop/mac#minimum-requirements)、[Windows](/docs/desktop/windows#compatibility)、[Linux](docs/desktop/linux#compatibility)）
+- 内存：选择占用可用内存低于80%的模型
+  - 8GB系统：使用6GB以下模型
+  - 16GB系统：使用13GB以下模型
 
-**2. Check Model Parameters**
-- In **Engine Settings** in right sidebar, check your `ngl` ([number of GPU layers](/docs/models/model-parameters#engine-parameters)) setting to see if it's too high
-- Start with a lower NGL value and increase gradually based on your GPU memory
+**2. 检查模型参数**
 
-**3. Port Conflicts**
+- 在右侧边栏的**引擎设置**中，检查`ngl`（[GPU层数](/docs/models/model-parameters#engine-parameters)）设置是否过高
+- 从较低NGL值开始，根据GPU内存逐步增加
 
-If you check your [app logs](/docs/troubleshooting#how-to-get-error-logs) & see "Bind address failed at 127.0.0.1:39291", check port availability:
+**3. 端口冲突**
+
+如果查看[应用日志](/docs/troubleshooting#how-to-get-error-logs)发现"无法绑定地址127.0.0.1:39291"，请检查端口可用性：
+
 ```
 # Mac
 netstat -an | grep 39291
@@ -352,50 +359,57 @@ tasklist /fi "PID eq 39291"
 # Linux
 netstat -anpe | grep "39291"
 ```
-<Callout type="info">
-  `Netstat` displays the contents of various network-related data structures for active connections.
-</Callout>
-
-Default Jan ports:
-- Jan and Cortex API Server: `1337`
-- Jan Documentation: `3001`
-
-**4. Factory Reset**
-
-A factory reset can resolve persistent issues by returning Jan to its original state. This will remove all custom settings, downloaded models, and chat history.
-1. Go to **Settings** > **Advanced Settings**
-2. At **Reset To Factory Settings**, click **Reset**
-
-<Callout type="warning">
-This will delete all chat history, models, and settings.
-</Callout>
-
-**5. Try a clean installation**
-- Uninstall Jan & clean Jan data folders ([Mac](/docs/desktop/mac#uninstall-jan), [Windows](/docs/desktop/windows#uninstall-jan), [Linux](docs/desktop/linux#uninstall-jan))
-- Install the latest [stable release](/download)
-
-<Callout type="warning">
-This will delete all your Jan data.
-</Callout>
-
-## OpenAI Unexpected Token Issue
-The "Unexpected token" error usually relates to OpenAI API authentication or regional restrictions.
-
-**Step 1: API Key Sepup**
-1. Get a valid API key from [OpenAI's developer platform](https://platform.openai.com/)
-2. Ensure the key has sufficient credits & appropriate permissions
-
-**Step 2: Regional Access**
-1. If you're in a region with restricted access, use a VPN service from a supported region
-2. Verify your network can reach OpenAI's API endpoints
-
-
-## Need Further Support?
-If you can't find what you need in our troubleshooting guide, feel free reach out to us for extra help:
-- **Copy** your [app logs](/docs/troubleshooting#how-to-get-error-logs)
-- Go to our [Discord](https://discord.com/invite/FTk2MvZwJH) & send it to **#🆘|jan-help** channel for further support.
-
 
 <Callout type="info">
-Check the logs to ensure the information is what you intend to send. We retain your logs for only **24 hours**, so report any issues promptly.
+  `Netstat`会显示活动连接中各种网络相关数据结构的内容。
+</Callout>
+
+Jan 默认端口：
+
+- Jan 和 Cortex API 服务器：`1337`
+- Jan 文档服务：`3001`
+
+**4. 恢复出厂设置**
+
+执行恢复出厂设置可将 Jan 还原至初始状态，解决持续性问题。此操作将移除所有自定义设置、已下载模型及聊天记录。
+
+1. 进入 **设置** > **高级设置**
+2. 在 **恢复出厂设置** 处点击 **重置**
+
+<Callout type="warning">
+此操作将删除所有聊天记录、模型及设置。
+</Callout>
+
+**5. 尝试全新安装**
+
+- 卸载 Jan 并清理数据目录（[Mac](/docs/desktop/mac#uninstall-jan)、[Windows](/docs/desktop/windows#uninstall-jan)、[Linux](docs/desktop/linux#uninstall-jan)）
+- 安装最新[稳定版本](/download)
+
+<Callout type="warning">
+此操作将清除所有 Jan 数据。
+</Callout>
+
+## OpenAI 意外令牌问题
+
+"Unexpected token"错误通常与 OpenAI API 认证或区域限制有关。
+
+**步骤1：API 密钥配置**
+
+1. 从 [OpenAI 开发者平台](https://platform.openai.com/) 获取有效 API 密钥
+2. 确保密钥有足够余额及适当权限
+
+**步骤2：区域访问**
+
+1. 若您所在区域受限，请使用支持区域的 VPN 服务
+2. 确认网络可连通 OpenAI API 端点
+
+## 需要进一步支持？
+
+如果在我们的故障排除指南中找不到所需内容，欢迎随时联系我们获取额外帮助：
+
+- **复制**您的[应用日志](/docs/troubleshooting#how-to-get-error-logs)
+- 前往我们的[Discord](https://discord.com/invite/FTk2MvZwJH)服务器，将日志发送至 **#🆘|jan-help** 频道以获取进一步支持
+
+<Callout type="info">
+请检查日志内容确保其符合发送意图。我们仅保留日志**24小时**，请及时报告问题。
 </Callout>

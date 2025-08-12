@@ -1,19 +1,20 @@
 ---
+
 title: Continue.dev
-description: A step-by-step guide on integrating Jan with Continue and VS Code.
+description: 关于将 Jan 与 Continue 及 VS Code 集成的分步指南
 keywords:
   [
     Jan,
-    Customizable Intelligence, LLM,
-    local AI,
-    privacy focus,
-    free and open source,
-    private and offline,
-    conversational AI,
-    no-subscription fee,
-    large language models,
-    Continue integration,
-    VSCode integration,
+    可定制智能, LLM,
+    本地AI,
+    隐私优先,
+    免费开源,
+    私有离线,
+    对话式AI,
+    无订阅费,
+    大语言模型,
+    Continue集成,
+    VSCode集成,
   ]
 ---
 
@@ -21,34 +22,30 @@ import { Tabs, Steps } from 'nextra/components'
 
 # Continue.dev
 
-## Integrate with Continue VS Code
+## 与 Continue VS Code 集成
 
-[Continue](https://continue.dev/docs/intro) is an open-source autopilot compatible with Visual Studio Code and JetBrains, offering the simplest method to code with any LLM (Local Language Model).
+[Continue](https://continue.dev/docs/intro) 是一款兼容 Visual Studio Code 和 JetBrains 的开源自驾系统，提供了使用任何 LLM（本地语言模型）进行编码的最简方法。
 
-To integrate Jan with a local AI language model, follow the steps below:
+要将 Jan 与本地 AI 语言模型集成，请按照以下步骤操作：
 
 <Steps>
-### Step 1: Installing Continue on Visual Studio Code
+### 步骤1：在 Visual Studio Code 上安装 Continue
 
-Follow this [guide](https://continue.dev/docs/quickstart) to install the Continue extension on Visual Studio Code.
+按照此[指南](https://continue.dev/docs/quickstart)在 Visual Studio Code 上安装 Continue 扩展。
 
-### Step 2: Enable the Jan API Server
+### 步骤2：启用 Jan API 服务器
 
-To set up Continue for use with Jan's Local Server, you must activate the Jan API Server with your chosen model.
+要将 Continue 与 Jan 本地服务器配合使用，您需要使用所选模型激活 Jan API 服务器。
 
-1. Press the `⚙️ Settings` button. 
+1. 点击 `⚙️ 设置` 按钮。
+2. 找到 `Local API Server`。
+3. 配置服务器，包括 **IP 端口**、**跨域资源共享 (CORS)** 和 **详细服务器日志**。
+4. 添加您自定义的 API 密钥。
+5. 点击 **Start Server** 按钮。
 
-2. Locate `Local API Server`.
+### 步骤3：配置 Continue 使用 Jan 本地服务器
 
-3. Setup the server, which includes the **IP Port**, **Cross-Origin-Resource-Sharing (CORS)** and **Verbose Server Logs**.
-
-4. Include your user-defined API Key. 
-
-5. Press the **Start Server** button
-
-### Step 3: Configure Continue to Use Jan's Local Server
-
-1. Go to the `~/.continue` directory.
+1. 进入 `~/.continue` 目录。
 
 <Tabs items={['Mac', 'Windows', 'Linux']}>
     <Tabs.Tab value="mac" label="Mac" default>
@@ -88,29 +85,29 @@ context:
   - provider: codebase
 ```
 
-2. Ensure the file has the following configurations:
-  - Ensure `openai` is selected as the `provider`.
-  - Match the `model` with the one enabled in the Jan API Server.
-  - Set `apiBase` to `http://localhost:1337/v1`.
+2. 确保文件包含以下配置：
+  - 确保选择 `openai` 作为 `provider`。
+  - 确保 `model` 与 Jan API 服务器中启用的模型匹配。
+  - 将 `apiBase` 设置为 `http://localhost:1337/v1`。
 
-### Step 4: Ensure the Using Model Is Activated in Jan
+### 步骤4：确保在 Jan 中激活使用的模型
 
-1. Navigate to `Settings` > `Model Providers`.
-2. Under Llama.cpp, find the model that you would want to use.
-3. Select the **Start Model** button to activate the model.
+1. 导航至 `Settings` > `Model Providers`。
+2. 在 Llama.cpp 下找到您想要使用的模型。
+3. 点击 **Start Model** 按钮以激活模型。
 
 </Steps>
 
-## How to Use Jan Integration with Continue in Visual Studio Code
+## 如何在 Visual Studio Code 中使用 Jan 与 Continue 集成
 
-### 1. Exploring Code with Jan
+### 1. 使用 Jan 探索代码
 
-1. Highlight a code.
-2. Press `Command + Shift + M` to open the Left Panel.
-3. Click "Jan" at the bottom of the panel and submit your query, such as `Explain this code`.
+1. 选中一段代码
+2. 按下 `Command + Shift + M` 打开左侧面板
+3. 点击面板底部的 "Jan" 并提交查询，例如 `解释这段代码`
 
-### 2. Enhancing Code with the Help of a Large Language Model
+### 2. 借助大语言模型增强代码
 
-1. Select a code snippet.
-2. Press `Command + Shift + L`.
-3. Type in your specific request, for example, `Add comments to this code`.
+1. 选择代码片段
+2. 按下 `Command + Shift + L`
+3. 输入具体需求，例如 `为这段代码添加注释`

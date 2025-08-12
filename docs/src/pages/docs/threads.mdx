@@ -1,6 +1,7 @@
 ---
-title: Start Chatting
-description: Download models and manage your conversations with AI models locally.
+
+title: 开始聊天
+description: 下载模型并本地管理您与AI模型的对话。
 keywords:
   [
     Jan,
@@ -18,128 +19,131 @@ keywords:
 import { Callout, Steps } from 'nextra/components'
 import { SquarePen, Pencil, Ellipsis, Paintbrush, Trash2, Settings } from 'lucide-react'
 
-# Start Chatting
+# 开始聊天
 
 <Steps>
 
-### Step 1: Install Jan
+### 第一步：安装 Jan
 
-1. [Download Jan](/download)
-2. Install the app ([Mac](/docs/desktop/mac), [Windows](/docs/desktop/windows), [Linux](/docs/desktop/linux))
-3. Launch Jan
+1. [下载 Jan](/download)
+2. 安装应用（[Mac](/docs/desktop/mac)、[Windows](/docs/desktop/windows)、[Linux](/docs/desktop/linux)）
+3. 启动 Jan
 
-### Step 2: Download a Model
+### 第二步：下载模型
 
-Jan requires a model to chat. Download one from the Hub:
+Jan 需要模型才能进行对话。从 Hub 下载一个：
 
-1. Go to the **Hub Tab**
-2. Browse available models (must be GGUF format)
-3. Select one matching your hardware specs
-4. Click **Download**
+1. 进入 **Hub 标签页**
+2. 浏览可用模型（必须为 GGUF 格式）
+3. 选择与您硬件配置匹配的模型
+4. 点击 **下载**
 
-![Download a Model](./_assets/model-management-01.png)
+![下载模型](./_assets/model-management-01.png)
 
 <Callout type="warning">
-Models consume memory and processing power. Choose based on your hardware specs.
+模型会占用内存和计算资源。请根据硬件配置选择。
 </Callout>
 
-**HuggingFace models:** Some require an access token. Add yours in **Settings > Model Providers > Llama.cpp > Hugging Face Access Token**.
+**HuggingFace 模型：** 部分需要访问令牌。在 **设置 > 模型供应商 > Llama.cpp > Hugging Face 访问令牌** 中添加您的令牌。
 
-![Add HF Token](./_assets/hf_token.png)
+![添加 HF 令牌](./_assets/hf_token.png)
 
-### Step 3: Enable GPU Acceleration (Optional)
+### 第三步：启用 GPU 加速（可选）
 
-For Windows/Linux with compatible graphics cards:
+适用于配备兼容显卡的 Windows/Linux 用户：
 
-1. Go to **(<Settings width={16} height={16} style={{display:"inline"}}/>) Settings** > **Hardware**
-2. Toggle **GPUs** to ON
+1. 进入 **（<Settings width={16} height={16} style={{display:"inline"}}/>）设置 > 硬件**
+2. 将 **GPU** 开关切换为开启
 
-![Turn on GPU acceleration](./_assets/gpu_accl.png)
+![开启 GPU 加速](./_assets/gpu_accl.png)
 
 <Callout type="info">
-Install required drivers before enabling GPU acceleration. See setup guides for [Windows](/docs/desktop/windows#gpu-acceleration) & [Linux](/docs/desktop/linux#gpu-acceleration).
+启用 GPU 加速前请安装所需驱动。参考 [Windows](/docs/desktop/windows#gpu-acceleration) 和 [Linux](/docs/desktop/linux#gpu-acceleration) 的设置指南。
 </Callout>
 
-### Step 4: Start Chatting
+### 第四步：开始对话
 
-1. Click **New Chat** (<SquarePen width={16} height={16} style={{display:"inline"}}/>) icon
-2. Select your model in the input field dropdown
-3. Type your message and start chatting
+1. 点击 **新建对话**（<SquarePen width={16} height={16} style={{display:"inline"}}/>）图标
+2. 在输入框下拉菜单中选择您的模型
+3. 输入消息开始对话
 
-![Create New Thread](./_assets/threads-new-chat-updated.png)
+![创建新会话](./_assets/threads-new-chat-updated.png)
 
 </Steps>
 
-## Managing Conversations
+## 会话管理
 
-Jan organizes conversations into threads for easy tracking and revisiting.
+Jan 将对话组织成线程形式，便于追踪和回溯。
 
-### View Chat History
+### 查看聊天记录
 
-- **Left sidebar** shows all conversations
-- Click any chat to open the full conversation
-- **Favorites**: Pin important threads for quick access
-- **Recents**: Access recently used threads
+- **左侧边栏** 显示所有对话
+- 点击任意聊天可展开完整对话
+- **收藏夹**：置顶重要线程以便快速访问
+- **最近记录**：访问近期使用过的线程
 
-![Favorites and Recents](./_assets/threads-favorites-and-recents-updated.png)
+![收藏夹与最近记录](./_assets/threads-favorites-and-recents-updated.png)
 
-### Edit Chat Titles
+### 编辑聊天标题
 
-1. Hover over a conversation in the sidebar
-2. Click **three dots** (<Ellipsis width={16} height={16} style={{display:"inline"}}/>) icon
-3. Click <Pencil width={16} height={16} style={{display:"inline"}}/> **Rename**
-4. Enter new title and save
+1. 将鼠标悬停在侧边栏的对话上
+2. 点击 **三点菜单** (<Ellipsis width={16} height={16} style={{display:"inline"}}/>) 图标
+3. 点击 <Pencil width={16} height={16} style={{display:"inline"}}/> **重命名**
+4. 输入新标题并保存
 
-![Context Menu](./_assets/threads-context-menu-updated.png)
+![上下文菜单](./_assets/threads-context-menu-updated.png)
 
-### Delete Threads
+### 删除线程
 
 <Callout type="warning">
-Thread deletion is permanent. No undo available.
+线程删除操作不可逆，无法撤销。
 </Callout>
 
-**Single thread:**
-1. Hover over thread in sidebar
-2. Click **three dots** (<Ellipsis width={16} height={16} style={{display:"inline"}}/>) icon
-3. Click <Trash2 width={16} height={16} style={{display:"inline"}}/> **Delete**
+**单个线程：**
 
-**All threads:**
-1. Hover over `Recents` category
-2. Click **three dots** (<Ellipsis width={16} height={16} style={{display:"inline"}}/>) icon  
-3. Select <Trash2 width={16} height={16} style={{display:"inline"}}/> **Delete All**
+1. 将鼠标悬停在侧边栏的线程上
+2. 点击 **三点菜单** (<Ellipsis width={16} height={16} style={{display:"inline"}}/>) 图标
+3. 点击 <Trash2 width={16} height={16} style={{display:"inline"}}/> **删除**
 
-## Advanced Features
+**全部线程：**
 
-### Custom Assistant Instructions
+1. 将鼠标悬停在 `最近记录` 分类上
+2. 点击 **三点菜单** (<Ellipsis width={16} height={16} style={{display:"inline"}}/>) 图标  
+3. 选择 <Trash2 width={16} height={16} style={{display:"inline"}}/> **全部删除**
 
-Customize how models respond:
+## 高级功能
 
-1. Use the assistant dropdown in the input field
-2. Or go to the **Assistant tab** to create custom instructions
-3. Instructions work across all models
+### 自定义助手指令
 
-![Assistant Instruction](./_assets/assistant-dropdown.png)
+定制模型响应方式：
 
-![Add an Assistant Instruction](./_assets/assistant-edit-dialog.png)
+1. 在输入框中使用助手下拉菜单
+2. 或前往**助手选项卡**创建自定义指令
+3. 指令适用于所有模型
 
-### Model Parameters
+![助手指令](./_assets/assistant-dropdown.png)
 
-Fine-tune model behavior:
-- Click the **Gear icon** next to your model
-- Adjust parameters in **Assistant Settings**
-- Switch models via the **model selector**
+![添加助手指令](./_assets/assistant-edit-dialog.png)
 
-![Chat with a Model](./_assets/model-parameters.png)
+### 模型参数
 
-### Connect Cloud Models (Optional)
+微调模型行为：
 
-Connect to OpenAI, Anthropic, Groq, Mistral, and others:
+- 点击模型旁的**齿轮图标**
+- 在**助手设置**中调整参数
+- 通过**模型选择器**切换模型
 
-1. Open any thread
-2. Select a cloud model from the dropdown
-3. Click the **Gear icon** beside the provider
-4. Add your API key (ensure sufficient credits)
+![与模型对话](./_assets/model-parameters.png)
 
-![Connect Remote APIs](./_assets/quick-start-03.png)
+### 连接云端模型（可选）
 
-For detailed setup, see [Remote APIs](/docs/remote-models/openai).
+连接 OpenAI、Anthropic、Groq、Mistral 等服务：
+
+1. 打开任意会话线程
+2. 从下拉菜单中选择云端模型
+3. 点击服务商旁的**齿轮图标**
+4. 添加您的 API 密钥（确保账户余额充足）
+
+![连接远程API](./_assets/quick-start-03.png)
+
+详细设置请参阅[远程API文档](/docs/remote-models/openai)。

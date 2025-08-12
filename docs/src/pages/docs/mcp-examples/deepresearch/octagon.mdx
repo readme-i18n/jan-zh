@@ -1,6 +1,7 @@
 ---
+
 title: Octagon Deep Research MCP
-description: Finance-focused deep research with AI-powered analysis through Octagon's MCP integration.
+description: 通过Octagon MCP集成实现AI驱动的金融深度研究分析
 keywords:
   [
     Jan,
@@ -18,87 +19,94 @@ keywords:
 
 import { Callout, Steps } from 'nextra/components'
 
-# Octagon Deep Research MCP
+# Octagon深度研究MCP
 
-[Octagon Deep Research MCP](https://docs.octagonagents.com/guide/deep-research-mcp.html) provides specialized AI research capabilities with a strong focus on financial markets and business intelligence. Unlike general research tools, Octagon excels at complex financial analysis, market dynamics, and investment research.
+[Octagon深度研究MCP](https://docs.octagonagents.com/guide/deep-research-mcp.html)提供专注于金融市场和商业情报的AI研究能力。与通用研究工具不同，Octagon擅长复杂的财务分析、市场动态和投资研究。
 
-The integration delivers comprehensive reports that combine multiple data sources, cross-verification, and actionable insights - particularly useful for understanding market structures, investment strategies, and business models.
+该集成方案能生成结合多数据源、交叉验证和可执行见解的综合报告，特别适用于理解市场结构、投资策略和商业模式。
 
-## Available Tools
+## 可用工具
 
 ### octagon-agent
-Orchestrates comprehensive market intelligence research, particularly strong in:
-- Financial market analysis
-- Private equity and M&A research
-- Corporate structure investigations
-- Investment strategy evaluation
+
+协调全面的市场情报研究，尤其擅长：
+
+- 金融市场分析
+- 私募股权与并购研究
+- 企业结构调查
+- 投资策略评估
 
 ### octagon-scraper-agent
-Specialized web scraping for public and private market data:
-- SEC filings and regulatory documents
-- Company financials and metrics
-- Market transaction data
-- Industry reports and analysis
+
+针对公开和私募市场数据的专业网络爬取：
+
+- SEC备案与监管文件
+- 公司财务数据与指标
+- 市场交易数据
+- 行业报告与分析
 
 ### octagon-deep-research-agent
-Comprehensive research synthesis combining:
-- Multi-source data aggregation
-- Cross-verification of claims
-- Historical trend analysis
-- Actionable insights generation
 
-## Prerequisites
+综合研究分析框架整合：
 
-- Jan with MCP enabled
-- Octagon account (includes 2-week Pro trial)
-- Model with tool calling support
-- Node.js installed
+- 多源数据聚合
+- 声明交叉验证
+- 历史趋势分析
+- 可执行洞察生成
+
+## 前置条件
+
+- 启用MCP的Jan客户端
+- Octagon账户（含2周专业版试用）
+- 支持工具调用的模型
+- 已安装Node.js环境
 
 <Callout type="info">
-Octagon offers a 2-week Pro trial upon signup, providing full access to their financial research capabilities.
+Octagon注册即享2周专业版试用，全面开放其金融研究功能。
 </Callout>
 
-## Setup
+## 配置
 
-### Enable MCP
+### 启用MCP
 
-1. Go to **Settings** > **MCP Servers**
-2. Toggle **Allow All MCP Tool Permission** ON
+1. 进入**设置** > **MCP服务器**
+2. 将**允许所有MCP工具权限**切换为开启状态
 
-![MCP settings page with toggle enabled](../../_assets/mcp-on.png)
+![已启用切换按钮的MCP设置页面](../../_assets/mcp-on.png)
 
-### Get Octagon API Key
+### 获取Octagon API密钥
 
-1. Sign up at [Octagon signup page](https://app.octagonai.co/signup/?redirectToAfterSignup=https://app.octagonai.co/api-keys)
-2. Navigate to the API playground
-3. Copy your API key from the dashboard
+1. 访问[Octagon注册页面](https://app.octagonai.co/signup/?redirectToAfterSignup=https://app.octagonai.co/api-keys)完成注册
+2. 进入API调试平台
+3. 从控制面板复制API密钥
 
-![Octagon API playground showing API key location](../../_assets/octagon2.png)
+![显示API密钥位置的Octagon API调试平台界面](../../_assets/octagon2.png)
 
-### Configure MCP Server
+### 配置MCP服务器
 
-Click `+` in MCP Servers section:
+在MCP服务器区域点击`+`：
 
-**NPM Package Configuration:**
-- **Server Name**: `octagon-mcp-server`
-- **Command**: `npx`
-- **Arguments**: `-y octagon-mcp@latest`
-- **Environment Variables**: 
-  - Key: `OCTAGON_API_KEY`, Value: `your-api-key`
+**NPM包配置：**
 
-![Jan MCP server configuration with Octagon settings](../../_assets/octagon3.png)
+- **服务器名称**: `octagon-mcp-server`
+- **命令**: `npx`
+- **参数**: `-y octagon-mcp@latest`
+- **环境变量**: 
+  - 键: `OCTAGON_API_KEY`, 值: `your-api-key`
 
-### Verify Setup
+![配置Octagon参数的Jan MCP服务器界面](../../_assets/octagon3.png)
 
-Check the tools bubble in chat to confirm Octagon tools are available:
+### 验证设置
 
-![Chat interface showing available Octagon tools with moonshotai/kimi-k2 model](../../_assets/octagon4.png)
+通过聊天工具气泡确认Octagon功能可用性：
 
-## Real-World Example: Private Equity Analysis
+![显示moonshotai/kimi-k2模型下Octagon工具可用的聊天界面](../../_assets/octagon4.png)
 
-Here's an actual deep research query demonstrating Octagon's financial analysis capabilities:
+## 实际案例：私募股权分析
 
-### The Prompt
+以下是展示Octagon金融分析能力的深度研究查询实例：
+
+### 查询指令
 
 ```
 Break apart the private equity paradox: How did an industry that promises to "unlock value" become synonymous with gutting companies, yet still attracts the world's smartest money? 
@@ -116,145 +124,161 @@ Address the human cost through labor statistics and case studies—what happens 
 Write this as if explaining to a skeptical but curious friend over drinks—clear language, no jargon without explanation, and enough dry humor to make the absurdities apparent. Think Michael Lewis meets Matt Levine. Keep it under 3,000 words but pack it with hard data and real examples. The goal: help readers understand why PE is simultaneously capitalism's most sophisticated expression and its most primitive.
 ```
 
-![Prompt entered in Jan UI](../../_assets/octagon5.png)
+![在 Jan UI 中输入的提示](../../_assets/octagon5.png)
 
-### Research Process
+### 研究流程
 
-The AI engages multiple Octagon tools to gather comprehensive data:
+AI 调用多个 Octagon 工具来收集全面数据：
 
-![Kimi model using Octagon tools for research](../../_assets/octagon6.png)
+![Kimi 模型使用 Octagon 工具进行研究](../../_assets/octagon6.png)
 
-### The Results
+### 研究成果
 
-Octagon delivers a detailed analysis covering:
+Octagon 提供涵盖以下方面的详细分析：
 
-**Part 1: The Mechanics Explained**
-![First part of the research report](../../_assets/octagon7.png)
+**第一部分：机制解析**
+![研究报告的第一部分](../../_assets/octagon7.png)
 
-**Part 2: Historical Analysis and Case Studies**
-![Second part showing PE evolution and specific deals](../../_assets/octagon8.png)
+**第二部分：历史分析与案例研究**
+![展示 PE 演变及具体交易的第二部分](../../_assets/octagon8.png)
 
-**Part 3: Financial Engineering and Human Impact**
-![Final section on fee structures and consequences](../../_assets/octagon9.png)
+**第三部分：金融工程与人文影响**
+![关于费用结构与影响的最终章节](../../_assets/octagon9.png)
 
-The report demonstrates Octagon's ability to:
-- Access and analyze SEC filings
-- Compare multiple deal outcomes
-- Calculate real returns after fees
-- Track political connections
-- Assess human impact with data
+该报告展示了 Octagon 的以下能力：
 
-## Finance-Focused Use Cases
+- 访问并分析 SEC 文件
+- 对比多项交易结果
+- 计算扣除费用后的实际回报
+- 追踪政治关联
+- 通过数据评估人文影响
 
-### Investment Research
+## 金融领域应用场景
+
+### 投资研究
+
 ```
 Analyze Tesla's vertical integration strategy vs traditional automakers. Include supply chain dependencies, margin analysis, and capital efficiency metrics from the last 5 years.
 ```
 
-### Market Structure Analysis
+### 市场结构分析
+
 ```
 Map the concentration of market makers in US equities. Who controls order flow, what are their profit margins, and how has this changed since zero-commission trading?
 ```
 
-### Corporate Governance
+### 公司治理
+
 ```
 Investigate executive compensation at the 10 largest US banks post-2008. Compare pay ratios, stock buybacks vs R&D spending, and correlation with shareholder returns.
 ```
 
-### Private Market Intelligence
+### 私募市场情报
+
 ```
 Track Series B+ funding rounds in AI/ML companies in 2024. Identify valuation trends, investor concentration, and compare to public market multiples.
 ```
 
-### Regulatory Analysis
+### 监管分析
+
 ```
 Examine how Basel III implementation differs across major markets. Which banks gained competitive advantages and why?
 ```
 
-### M&A Strategy
+### 并购策略
+
 ```
 Analyze Microsoft's acquisition strategy under Nadella. Calculate actual vs projected synergies, integration success rates, and impact on market position.
 ```
 
-## Technical Research Capabilities
+## 技术研究能力
 
-While finance-focused, Octagon also handles technical research:
+虽然聚焦金融领域，Octagon 同样胜任技术研究：
 
-### Framework Evaluation
+### 框架评估
+
 ```
 Compare Kubernetes alternatives for edge computing. Consider resource usage, latency, reliability, and operational complexity with real deployment data.
 ```
 
-### API Economics
+### API 经济学
+
 ```
 Analyze the unit economics of major AI API providers. Include pricing history, usage patterns, and margin estimates based on reported compute costs.
 ```
 
-### Open Source Sustainability
+### 开源可持续性
+
 ```
 Research funding models for critical open source infrastructure. Which projects are at risk and what are the economic incentives misalignments?
 ```
 
-## Research Quality
+## 研究质量
 
-Octagon's reports typically include:
-- **Primary Sources**: SEC filings, earnings calls, regulatory documents
-- **Quantitative Analysis**: Financial metrics, ratios, trend analysis
-- **Comparative Studies**: Peer benchmarking, historical context
-- **Narrative Clarity**: Complex topics explained accessibly
-- **Actionable Insights**: Not just data, but implications
+Octagon 报告通常包含：
 
-## Troubleshooting
+- **主要信息来源**：SEC备案文件、财报电话会议、监管文件  
+- **量化分析**：财务指标、比率分析、趋势研判  
+- **对比研究**：同业对标、历史背景分析  
+- **叙述清晰性**：复杂议题通俗化解读  
+- **可操作洞察**：不止于数据，更聚焦实际影响
 
-**Authentication Issues:**
-- Verify API key from Octagon dashboard
-- Check trial status hasn't expired
-- Ensure correct API key format
-- Contact Octagon support if needed
+## 故障排除
 
-**Research Failures:**
-- Some queries may exceed scope (try narrowing)
-- Financial data may have access restrictions
-- Break complex queries into parts
-- Allow time for comprehensive research
+**认证问题排查**：
 
-**Tool Calling Problems:**
-- Not all models handle multiple tools well
-- Kimi-k2 via OpenRouter works reliably
-- Claude 3.5+ Sonnet also recommended
-- Enable tool calling in model settings
+- 从Octagon仪表盘验证API密钥  
+- 检查试用状态是否过期  
+- 确认API密钥格式正确  
+- 必要时联系Octagon技术支持
 
-**Performance Considerations:**
-- Deep research takes time (be patient)
-- Complex financial analysis may take minutes
-- Monitor API usage in dashboard
-- Consider query complexity vs urgency
+**研究失败处理**：
 
-<Callout type="warning">
-Octagon specializes in financial and business research. While capable of technical analysis, it's optimized for market intelligence and investment research.
+- 部分查询可能超出范围（尝试缩小条件）  
+- 财务数据可能存在访问限制  
+- 将复杂查询拆分为多个部分  
+- 为深度研究预留充足时间
+
+**工具调用问题**：
+
+- 并非所有模型都支持多工具协同  
+- 通过OpenRouter的Kimi-k2运行稳定  
+- 推荐使用Claude 3.5+ Sonnet版本  
+- 需在模型设置中启用工具调用功能
+
+**性能注意事项**：
+
+- 深度研究耗时较长（请保持耐心）  
+- 复杂财务分析可能需要数分钟  
+- 通过仪表盘监控API用量  
+- 权衡查询复杂度与紧急程度
+
+<Callout type="warning">  
+Octagon专精于金融与商业研究。虽然支持技术分析，但其核心优化方向是市场情报与投资研究。  
 </Callout>
 
-## Pricing After Trial
+## 试用期后定价
 
-After the 2-week Pro trial:
-- Check current pricing at octagonagents.com
-- Usage-based pricing for API access
-- Different tiers for research depth
-- Educational discounts may be available
+2周Pro试用结束后：
 
-## Octagon vs Other Research Tools
+- 当前定价请查看 octagonagents.com
+- API 访问采用基于使用量的定价模式
+- 不同层级对应不同研究深度
+- 可能提供教育折扣
 
-| Feature | Octagon | ChatGPT Deep Research | Perplexity |
+## Octagon 与其他研究工具对比
+
+| 功能特性 | Octagon | ChatGPT 深度研究 | Perplexity |
 |---------|---------|----------------------|------------|
-| **Finance Focus** | Specialized | General | General |
-| **Data Sources** | Financial databases | Web-wide | Web-wide |
-| **SEC Integration** | Native | Limited | Limited |
-| **Market Data** | Comprehensive | Basic | Basic |
-| **Research Depth** | Very Deep | Deep | Moderate |
-| **Speed** | Moderate | Slow | Fast |
+| **金融专注度** | 专业领域 | 通用型 | 通用型 |
+| **数据来源** | 金融数据库 | 全网范围 | 全网范围 |
+| **SEC 集成** | 原生支持 | 有限 | 有限 |
+| **市场数据** | 全面覆盖 | 基础 | 基础 |
+| **研究深度** | 非常深入 | 深入 | 中等 |
+| **响应速度** | 中等 | 较慢 | 快速 |
 
-## Next Steps
+## 后续步骤
 
-Octagon Deep Research MCP excels at complex financial analysis that would typically require a team of analysts. The integration provides institutional-quality research capabilities within Jan's conversational interface.
+Octagon 深度研究 MCP 擅长处理通常需要分析师团队协作的复杂金融分析。该集成方案在 Jan 的对话式界面中提供了机构级研究能力。
 
-Whether analyzing market structures, evaluating investments, or understanding business models, Octagon delivers the depth and accuracy that financial professionals expect, while maintaining readability for broader audiences.
+无论是分析市场结构、评估投资价值还是理解商业模式，Octagon 既能满足金融专业人士对深度和准确性的要求，又能保持对更广泛受众的可读性。

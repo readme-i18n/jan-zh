@@ -1,53 +1,54 @@
 ---
+
 title: n8n
 keywords:
   [
     Jan,
-    Customizable Intelligence, LLM,
-    local AI,
-    privacy focus,
-    free and open source,
-    private and offline,
-    conversational AI,
-    no-subscription fee,
-    large language models,
-    n8n integration,
+    可定制智能, LLM,
+    本地AI,
+    隐私优先,
+    免费开源,
+    私有离线,
+    对话式AI,
+    无订阅费,
+    大语言模型,
+    n8n集成,
     n8n,
   ]
-description: A step-by-step guide on integrating Jan with n8n.
+description: 关于将Jan与n8n集成的分步指南。
 ---
 
 import { Steps } from 'nextra/components'
 
 # n8n
 
-## Integrate n8n with Jan
+## 将n8n与Jan集成
 
-[n8n](https://n8n.io/) is an open-source workflow automation tool that allows you to connect to more than 400+ integrations and services to automate repetitive tasks. With its visual interface, you can create complex workflows conveniently. To integrate n8n with Jan, follow the steps below:
+[n8n](https://n8n.io/) 是一款开源工作流自动化工具，可连接400多种集成和服务来自动化重复任务。通过其可视化界面，您可以便捷地创建复杂工作流。要将n8n与Jan集成，请按照以下步骤操作：
 
 <Steps>
-### Step 1: Run your preferred model with Jan server
+### 步骤 1: 通过 Jan server 运行您选择的模型
 
-1. Open Jan app.
-2. Go to the **Hub** and download your preferred model
-3. Run the Jan server 
+1. 打开 Jan 应用程序
+2. 进入 **Hub** 并下载您选择的模型
+3. 启动 Jan 服务器
 
-### Step 2: Start n8n service
-Start n8n immediately using npx:
+### 步骤 2: 启动 n8n 服务
+使用 npx 立即启动 n8n：
 
 ```
 npx n8n
 ```
 
-Or deploy with Docker:
+或通过 Docker 部署：
 
 ```
 docker run -it --rm --name n8n -p 5678:5678 docker.n8n.io/n8nio/n8n
 ```
 
-### Step 3: Integrate Jan with n8n service using HTTP Request
+### 步骤 3: 使用 HTTP 请求将 Jan 与 n8n 服务集成
 
-Integrate Jan by selecting the HTTP Request node in n8n and importing the following cURL command:
+在 n8n 中选择 HTTP 请求节点并导入以下 cURL 命令来集成 Jan：
 
 ```bash
 curl -X 'POST' \

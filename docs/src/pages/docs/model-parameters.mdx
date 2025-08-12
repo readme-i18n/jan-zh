@@ -1,6 +1,7 @@
 ---
-title: Model Parameters
-description: Customize how your AI models behave and perform.
+
+title: 模型参数
+description: 自定义AI模型的行为与性能表现
 keywords:
   [
     Jan,
@@ -16,95 +17,105 @@ keywords:
     parameters,
   ]
 ---
+
 import { Callout, Steps } from 'nextra/components'
 
-# Model Parameters
+# 模型参数
 
-Model parameters control how your AI thinks and responds. Think of them as the AI's personality settings and performance controls.
+模型参数控制着AI的思考与响应方式，可将其视为AI的个性设置与性能调控开关。
 
-## How to Access Settings
+## 如何访问设置
 
-**For individual conversations:**
-- In **Threads**, click the **gear icon** next to your selected model
+**针对单次对话：**
 
-**For permanent model settings:**
-- Go to **Settings > Model Providers > Llama.cpp**, click the **gear icon** next to a model
+- 在**会话列表**中，点击所选模型旁的**齿轮图标**
 
-**For model capabilities:**
-- Click the **edit button** next to a model to enable features like vision or tools
+**永久性模型设置：**
 
-## Performance Settings (Gear Icon)
+- 前往**设置 > 模型供应商 > Llama.cpp**，点击模型旁的**齿轮图标**
 
-These settings control how the model thinks and performs:
+**模型功能配置：**
 
-| Setting | What It Does | Simple Explanation |
+- 点击模型旁的**编辑按钮**可启用视觉识别或工具等功能
+
+## 性能设置（齿轮图标）
+
+这些设置控制模型的思考方式与性能表现：
+
+| 设置项 | 功能说明 | 通俗解释 |
 |---------|-------------|-------------------|
-| **Context Size** | How much text the model remembers | Like the model's working memory. Larger = remembers more of your conversation, but uses more computer memory. |
-| **GPU Layers** | How much work your graphics card does | More layers on GPU = faster responses, but needs more graphics memory. Start high and reduce if you get errors. |
-| **Temperature** | How creative vs. predictable responses are | Low (0.1-0.3) = focused, consistent answers. High (0.7-1.0) = creative, varied responses. Try 0.7 for general use. |
-| **Top K** | How many word choices the model considers | Smaller numbers (20-40) = more focused. Larger numbers (80-100) = more variety. Most people don't need to change this. |
-| **Top P** | Another way to control word variety | Works with Top K. Values like 0.9 work well. Lower = more focused, higher = more creative. |
-| **Min P** | Minimum chance a word needs to be chosen | Prevents very unlikely words. Usually fine at default settings. |
-| **Repeat Last N** | How far back to check for repetition | Helps prevent the model from repeating itself. Default values usually work well. |
-| **Repeat Penalty** | How much to avoid repeating words | Higher values (1.1-1.3) reduce repetition. Too high makes responses awkward. |
-| **Presence Penalty** | Encourages talking about new topics | Higher values make the model explore new subjects instead of staying on one topic. |
-| **Frequency Penalty** | Reduces word repetition | Similar to repeat penalty but focuses on how often words are used. |
+| **上下文长度** | 模型记忆的文本量 | 类似模型的工作记忆。数值越大=能记住更多对话内容，但会占用更多计算机内存。 |
+| **GPU 层数** | 显卡承担的计算量 | GPU 层数越多=响应越快，但需要更多显存。建议从高值开始，若报错再逐步降低。 |
+| **温度系数** | 控制回答的创造性/可预测性 | 低值(0.1-0.3)=专注一致的回答。高值(0.7-1.0)=富有创意的多样回答。通用场景建议设为0.7。 |
+| **Top K** | 模型考虑的候选词数量 | 较小值(20-40)=更聚焦。较大值(80-100)=更多样化。多数用户无需调整此参数。 |
+| **Top P** | 另一种控制词汇多样性的方式 | 与 Top K 配合使用。0.9 等值效果良好。数值越低越聚焦，越高越有创造性。 |
+| **Min P** | 词语被选中的最低概率阈值 | 避免选择极不可能出现的词汇。通常保持默认即可。 |
+| **重复检测窗口** | 检查重复内容的回溯距离 | 防止模型自我重复。默认值通常效果最佳。 |
+| **重复惩罚** | 避免词语重复的强度 | 较高值(1.1-1.3)可减少重复。过高会导致回答不自然。 |
+| **话题新鲜度** | 鼓励探讨新主题 | 数值越高，模型越倾向于切换话题而非持续讨论当前主题。 |
+| **词频惩罚** | 降低词语重复率 | 类似重复惩罚，但侧重词语使用频率的调控。 |
 
-![Model Parameters](./_assets/model-parameters.png)
+![模型参数](./_assets/model-parameters.png)
 
-## Model Capabilities (Edit Button)
+## 模型能力 (编辑按钮)
 
-These toggle switches enable special features:
+这些切换开关可启用特殊功能：
 
-- **Vision**: Let the model see and analyze images you share
-- **Tools**: Enable advanced features like web search, file operations, and code execution
-- **Embeddings**: Allow the model to create numerical representations of text (for advanced users)
-- **Web Search**: Let the model search the internet for current information
-- **Reasoning**: Enable step-by-step thinking for complex problems
+- **视觉功能**：让模型能够查看并分析您分享的图片
+- **工具**：启用高级功能如网络搜索、文件操作和代码执行
+- **嵌入功能**：允许模型创建文本的数值表示（面向高级用户）
+- **网络搜索**：让模型能在互联网上搜索最新信息
+- **推理能力**：为复杂问题启用逐步思考模式
 
-![Model Capabilities Edit 01](./_assets/model-capabilities-edit-01.png)
-![Model Capabilities Edit 02](./_assets/model-capabilities-edit-02.png)
+![模型能力编辑01](./_assets/model-capabilities-edit-01.png)
+![模型能力编辑02](./_assets/model-capabilities-edit-02.png)
 
-## Hardware Settings
+## 硬件设置
 
-These control how efficiently the model runs on your computer:
+这些设置控制模型在您计算机上的运行效率：
 
-### GPU Layers
-Think of your model as a stack of layers, like a cake. Each layer can run on either your main processor (CPU) or graphics card (GPU). Your graphics card is usually much faster.
+### GPU层数
 
-- **More GPU layers** = Faster responses, but uses more graphics memory
-- **Fewer GPU layers** = Slower responses, but uses less graphics memory
+将模型想象成由多层组成的蛋糕。每层可以在主处理器(CPU)或显卡(GPU)上运行，显卡通常速度更快。
 
-Start with the maximum number and reduce if you get out-of-memory errors.
+- **更多GPU层数** = 响应更快，但占用更多显存
+- **较少GPU层数** = 响应较慢，但占用更少显存
 
-### Context Length
-This is like the model's short-term memory - how much of your conversation it can remember at once.
+建议从最大层数开始尝试，若出现内存不足错误再逐步减少。
 
-- **Longer context** = Remembers more of your conversation, better for long discussions
-- **Shorter context** = Uses less memory, runs faster, but might "forget" earlier parts of long conversations
+### 上下文长度
 
-<Callout type="info">
-Jan defaults to 8192 tokens (roughly 6000 words) or your model's maximum, whichever is smaller. This handles most conversations well.
+这相当于模型的短期记忆容量——决定它能同时记住多少对话内容。
+
+- **较长上下文** = 能记住更多对话内容，适合长时间讨论  
+- **较短上下文** = 占用内存更少，运行更快，但可能"遗忘"长对话的前期部分
+
+<Callout type="info">  
+Jan 默认使用 8192 tokens（约6000词）或您模型的最大值（取较小者）。这能满足大多数对话需求。  
 </Callout>
 
-## Quick Setup Guide
+## 快速配置指南
 
-**For most users:**
-1. Enable **Tools** if you want web search and code execution
-2. Set **Temperature** to 0.7 for balanced creativity
-3. Max out **GPU Layers** (reduce only if you get memory errors)
-4. Leave other settings at defaults
+**多数用户建议:**
 
-**For creative writing:**
-- Increase **Temperature** to 0.8-1.0
-- Increase **Top P** to 0.95
+1. 启用 **Tools** 以使用网络搜索和代码执行功能  
+2. 将 **Temperature** 设为 0.7 以获得平衡的创造性  
+3. 将 **GPU Layers** 调至最大值（仅当出现内存错误时降低）  
+4. 其他设置保持默认
 
-**For factual/technical work:**
-- Decrease **Temperature** to 0.1-0.3
-- Enable **Tools** for web search and calculations
+**创意写作建议：**
 
-**Troubleshooting:**
-- **Responses too repetitive?** Increase Temperature or Repeat Penalty
-- **Out of memory errors?** Reduce GPU Layers or Context Size
-- **Responses too random?** Decrease Temperature
-- **Model running slowly?** Increase GPU Layers (if you have VRAM) or reduce Context Size
+- 将 **Temperature** 提升至 0.8-1.0  
+- 将 **Top P** 提升至 0.95
+
+**事实性/技术性工作建议：**
+
+- 将 **Temperature** 降至 0.1-0.3  
+- 启用 **Tools** 进行网络搜索和计算
+
+**排查步骤:**
+
+- **响应过于重复？** 提高 Temperature 或 Repeat Penalty  
+- **内存不足报错？** 减少 GPU Layers 或 Context Size  
+- **响应过于随机？** 降低 Temperature  
+- **模型运行缓慢？** 增加 GPU Layers（如有显存）或减小 Context Size

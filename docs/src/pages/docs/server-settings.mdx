@@ -1,6 +1,7 @@
 ---
-title: Settings
-description: Configure Jan to work best for your needs and hardware.
+
+title: 设置
+description: 根据您的需求和硬件配置优化 Jan 的运行表现。
 keywords:
   [
     Jan,
@@ -17,206 +18,225 @@ keywords:
 import { Tabs, Steps, Callout } from 'nextra/components'
 import { Settings, EllipsisVertical, Plus, FolderOpen, Pencil } from 'lucide-react'
 
-# Settings
+# 设置
 
-Access Jan's settings by clicking the <Settings width={16} height={16} style={{display:"inline"}}/> icon in the bottom left corner.
+点击左下角 <Settings width={16} height={16} style={{display:"inline"}}/> 图标即可访问 Jan 的设置选项。
 
-## Managing AI Models
+## AI 模型管理
 
-Find all model options at **Settings** > **Model Providers**:
+所有模型选项位于 **设置** > **模型提供商**：
 
-### Adding Models
+### 添加模型
 
-**From Hugging Face:**
-- Enter a model's ID (like `microsoft/DialoGPT-medium`) in the search bar
-- **Need authentication?** Some models require a Hugging Face token - add yours at **Settings > Model Providers > Hugging Face Access Token**
+**从 Hugging Face 获取：**
 
-**From Your Computer:**
-- Click **Import Model** and select GGUF files from your computer
-- Works with any compatible model files you've downloaded
+- 在搜索栏输入模型 ID（如 `microsoft/DialoGPT-medium`）
+- **需要认证？** 部分模型需 Hugging Face 令牌 - 在 **设置 > 模型提供商 > Hugging Face 访问令牌** 处添加您的令牌
 
-### Managing Existing Models
+**从本地计算机导入：**
 
-**Start a model:**
-1. Open a new chat and select the model you want
-2. Or go to **Settings > Model Providers** and click the **Start** button
+- 点击 **导入模型** 并选择计算机中的 GGUF 文件
+- 支持任何已下载的兼容模型文件
 
-**Remove a model:**
-- Click the trash icon next to the **Start** button
-- Confirm deletion when prompted
+### 管理现有模型
 
-### Hugging Face Token Setup
+**启动模型：**
 
-For restricted models (like Meta's Llama models):
-1. Get your token from [Hugging Face Tokens](https://huggingface.co/docs/hub/en/security-tokens)
-2. Add it at **Settings > Model Providers > Hugging Face**
+1. 打开新聊天窗口并选择目标模型
+2. 或前往 **设置 > 模型提供商** 点击 **启动** 按钮
 
-## Model Configuration (Gear Icon)
+**移除模型：**
 
-![Model Settings](./_assets/trouble-shooting-04.png)
+- 点击 **启动** 按钮旁的垃圾桶图标
+- 根据提示确认删除操作
 
-Click the gear icon next to any model to adjust how it behaves:
+### Hugging Face 令牌设置
 
-**Basic Settings:**
-- **Context Size**: How much conversation history the model remembers
-- **GPU Layers**: How much of the model runs on your graphics card (higher = faster, but uses more GPU memory)
-- **Temperature**: Controls creativity (0.1 = focused, 1.0 = creative)
+对于受限模型（如 Meta 的 Llama 系列）：
 
-**Advanced Controls:**
-- **Top K & Top P**: Fine-tune how the model picks words (lower = more focused)
-- **Min P**: Minimum probability threshold for word selection
-- **Repeat Penalty**: Prevents the model from repeating itself too much
-- **Presence Penalty**: Encourages the model to use varied vocabulary
+1. 从 [Hugging Face Tokens](https://huggingface.co/docs/hub/en/security-tokens) 获取您的令牌
+2. 在 **设置 > 模型提供商 > Hugging Face** 处添加
+
+## 模型配置（齿轮图标）
+
+![模型设置](./_assets/trouble-shooting-04.png)
+
+点击任意模型旁的齿轮图标可调整其行为：
+
+**基础设置：**
+
+- **上下文长度**：模型能记住的对话历史量
+- **GPU 层数**：模型在显卡上运行的比例（数值越高速度越快，但占用更多显存）
+- **温度系数**：控制创造性（0.1 = 专注，1.0 = 创意）
+
+**高级控制：**
+
+- **Top K & Top P**：微调模型选词策略（数值越低越专注）
+- **Min P**：词语选择的最小概率阈值
+- **重复惩罚**：防止模型过度自我重复
+- **存在惩罚**：鼓励模型使用多样化词汇
 
 <Callout type="info">
-For detailed explanations of these parameters, see our [Model Parameters Guide](/docs/model-parameters).
+关于这些参数的详细说明，请参阅我们的[模型参数指南](/docs/model-parameters)。
 </Callout>
 
-## Hardware Monitoring
+## 硬件监控
 
-Check your computer's performance at **Settings** > **Hardware**:
+在 **设置 > 硬件** 查看电脑性能：
 
-- **CPU, RAM, GPU**: Real-time usage and specifications
-- **GPU Acceleration**: Turn GPU acceleration on/off
-- **Temperature monitoring**: Keep an eye on system heat
+- **CPU、内存、显卡**：实时使用率与规格参数
+- **GPU 加速**：启用/禁用显卡加速
+- **温度监控**：实时监测系统温度
 
-![Hardware](./_assets/hardware.png)
+![硬件监控](./_assets/hardware.png)
 
 <Callout type="warning">
-If your computer gets very hot, consider using smaller models or reducing GPU layers.
+如果您的电脑发热严重，建议使用更小规模的模型或减少 GPU 层数。
 </Callout>
 
-## Personalization
+## 个性化设置
 
-### Visual Appearance
+### 视觉外观
 
-Customize Jan's look at **Settings** > **Appearance**:
-- **Theme**: Choose light or dark mode
-- **Colors**: Pick your preferred color scheme
-- **Code highlighting**: Adjust syntax colors for programming discussions
+在 **设置** > **外观** 中自定义 Jan 的显示效果：
 
-![Appearance](./_assets/settings-04.png)
+- **主题**：选择浅色或深色模式
+- **配色**：选择您偏好的色彩方案
+- **代码高亮**：调整编程讨论中的语法着色
 
-### Writing Assistance
+![外观设置](./_assets/settings-04.png)
 
-**Spell Check:** Jan can help catch typing mistakes in your messages.
+### 写作辅助
 
-![Spell Check](./_assets/settings-06.png)
+**拼写检查**：Jan 可帮助识别消息中的输入错误。
 
-## Privacy & Data Control
+![拼写检查](./_assets/settings-06.png)
 
-Access privacy settings at **Settings** > **Privacy**:
+## 隐私与数据控制
 
-### Usage Analytics
+通过 **设置** > **隐私** 访问隐私选项：
 
-**Default: No data collection.** Everything stays on your computer.
+### 使用分析
 
-**Optional: Help improve Jan**
-- Toggle **Analytics** to share anonymous usage patterns
-- No conversations or personal data ever shared
-- Change this setting anytime
+**默认：不收集数据**。所有内容都保留在您的设备上。
+
+**可选：帮助改进 Jan**
+
+- 开启 **分析** 以分享匿名使用模式
+- 绝不共享对话内容或个人数据
+- 可随时更改此设置
 
 <Callout type="info">
-See exactly what we collect (with your permission) in our [Privacy Policy](/docs/privacy).
+查看我们（在您许可下）具体收集哪些数据，请参阅[隐私政策](/docs/privacy)。
 </Callout>
 
-![Analytics](./_assets/settings-07.png)
+![分析设置](./_assets/settings-07.png)
 
-### Log Management
+### 日志管理
 
-**Viewing System Logs:**
-- Logs help troubleshoot problems
-- Click the folder icon to open App Logs and System Logs
-- Logs are automatically deleted after 24 hours
+**查看系统日志：**
 
-![View Logs](./_assets/settings-08.png)
+- 日志有助于故障排查
+- 点击文件夹图标可查看应用日志和系统日志
+- 日志将在 24 小时后自动删除
 
-**Clearing Logs:**
-- Click **Clear** to remove all log files immediately
-- Useful before sharing your computer or troubleshooting
+![查看日志](./_assets/settings-08.png)
+
+**清除日志：**
+
+- 点击**清除**可立即移除所有日志文件
+- 在共享电脑或故障排除前特别有用
 
 <Callout type="warning">
-Clearing logs cannot be undone.
+清除日志操作不可撤销。
 </Callout>
 
-![Clear Logs](./_assets/settings-09.png)
+![清除日志](./_assets/settings-09.png)
 
-### Data Folder Management
+### 数据文件夹管理
 
-Jan stores everything locally on your computer in standard file formats.
+Jan 将所有数据以标准文件格式存储在您的本地计算机上。
 
-**Access Your Data:**
-- Click the folder icon to open Jan's data directory
-- Find your chat history, models, and settings
-- All files are yours to backup, move, or examine
+**访问您的数据：**
 
-![Open Jan Data Folder](./_assets/settings-11.png)
+- 点击文件夹图标打开 Jan 的数据目录
+- 查找聊天记录、模型和设置文件
+- 所有文件均可自由备份、移动或检查
 
-**Change Storage Location:**
-1. Click the pencil icon to edit the data folder location
-2. Choose an empty directory
-3. Confirm the move (original folder stays intact)
-4. Restart Jan to complete the change
+![打开 Jan 数据文件夹](./_assets/settings-11.png)
 
-![Edit Jan Data Folder](./_assets/settings-12.png)
+**更改存储位置：**
+
+1. 点击铅笔图标编辑数据文件夹路径
+2. 选择一个空目录
+3. 确认迁移（原文件夹保持不变）
+4. 重启 Jan 完成更改
+
+![编辑 Jan 数据文件夹](./_assets/settings-12.png)
 
 <Callout type="info">
-This duplicates your data to the new location - your original files stay safe.
+此操作会将数据复制到新位置 - 原始文件保持安全。
 </Callout>
 
-## Local API Server
+## 本地 API 服务器
 
-All settings for running Jan as a local, OpenAI-compatible server have been moved to their own dedicated page for clarity.
+为清晰起见，所有将 Jan 作为本地 OpenAI 兼容服务器运行的设置已移至专属页面。
 
-This includes configuration for:
-- Server Host and Port
-- API Keys
-- CORS (Cross-Origin Resource Sharing)
-- Verbose Logging
+包含以下配置项：
 
-[**Go to Local API Server Settings &rarr;**](/docs/local-server/api-server)
+- 服务器主机与端口
+- API 密钥
+- CORS（跨域资源共享）
+- 详细日志记录
 
-## Emergency Options
+[**前往本地 API 服务器设置 &rarr;**](/docs/local-server/api-server)
 
-### Factory Reset
+## 紧急选项
 
-**When to use:** Only as a last resort for serious problems that other solutions can't fix.
+### 恢复出厂设置
 
-**What it does:** Returns Jan to its original state - deletes everything.
+**使用场景：** 仅作为其他解决方案无法修复的严重问题时的最后手段。
 
-**Steps:**
-1. Click **Reset** under "Reset to Factory Settings"
-2. Type **RESET** to confirm you understand this deletes everything
-3. Optionally keep your current data folder location
-4. Click **Reset Now**
-5. Restart Jan
+**功能说明：** 将 Jan 恢复至初始状态 - 删除所有数据。
 
-![Factory Reset](./_assets/settings-17.png)
+**操作步骤：**
 
-![Reset Confirmation](./_assets/settings-18.png)
+1. 点击"恢复出厂设置"下方的 **Reset** 按钮
+2. 输入 **RESET** 确认您理解此操作将删除所有内容
+3. 可选保留当前数据文件夹位置
+4. 点击 **Reset Now**
+5. 重新启动 Jan
+
+![恢复出厂设置](./_assets/settings-17.png)
+
+![重置确认](./_assets/settings-18.png)
 
 <Callout type="error">
-**This cannot be undone.** All chat history, downloaded models, and settings will be permanently deleted.
+**此操作不可逆。** 所有聊天记录、下载的模型及设置将被永久删除。
 </Callout>
 
-**Try these first:**
-- Restart Jan
-- Check the [Troubleshooting Guide](./troubleshooting)
-- Ask for help on [Discord](https://discord.gg/qSwXFx6Krr)
+**建议先尝试以下操作：**
 
-## Quick Tips
+- 重启 Jan
+- 查阅[故障排除指南](./troubleshooting)
+- 在[Discord](https://discord.gg/qSwXFx6Krr)寻求帮助
 
-**For new users:**
-- Start with default settings
-- Try a few different models to find what works best
-- Enable GPU acceleration if you have a graphics card
+## 快速提示
 
-**For performance:**
-- Monitor hardware usage in real-time
-- Adjust GPU layers based on your graphics card memory
-- Use smaller models on older hardware
+**新用户建议：**
 
-**For privacy:**
-- All data stays local by default
-- Check the data folder to see exactly what's stored
-- Analytics are opt-in only
+- 从默认设置开始使用
+- 尝试多种模型以找到最佳方案
+- 若配备显卡请启用GPU加速
+
+**性能优化：**
+
+- 实时监控硬件使用情况
+- 根据显卡显存调整GPU层数
+- 老旧硬件建议使用小型模型
+
+**隐私保护：**
+
+- 默认所有数据本地存储
+- 检查数据文件夹查看具体存储内容
+- 数据分析功能需手动启用

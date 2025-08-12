@@ -1,6 +1,7 @@
 ---
-title: "Run DeepSeek R1 locally on your device (Beginner-Friendly Guide)"
-description: "A straightforward guide to running DeepSeek R1 locally regardless of your background."
+
+title: "在本地设备上运行 DeepSeek R1（新手友好指南）"
+description: "一份简明指南，助您轻松在本地运行 DeepSeek R1，无需专业背景"
 tags: DeepSeek, R1, local AI, Jan, GGUF, Qwen, Llama
 categories: guides
 date: 2025-01-31
@@ -8,75 +9,81 @@ ogImage: assets/deepseek-r1-locally-jan.jpg
 twitter:
   card: summary_large_image
   site: "@jandotai"
-  title: "Run DeepSeek R1 locally on your device (Beginner-Friendly Guide)"
-  description: "A straightforward guide to running DeepSeek R1 locally regardless of your background."
+  title: "在本地设备上运行 DeepSeek R1（新手友好指南）"
+  description: "一份简明指南，助您轻松在本地运行 DeepSeek R1，无需专业背景"
   image: assets/deepseek-r1-locally-jan.jpg
 ---
+
 import { Callout } from 'nextra/components'
 import CTABlog from '@/components/Blog/CTA'
 
-# Run DeepSeek R1 locally on your device (Beginner-Friendly Guide)
+# 在本地设备上运行 DeepSeek R1（新手友好指南）
 
-![DeepSeek R1 running locally in Jan AI interface, showing the chat interface and model settings](./_assets/deepseek-r1-locally-jan.jpg)
+![Jan AI 界面中本地运行的 DeepSeek R1，展示聊天界面和模型设置](./_assets/deepseek-r1-locally-jan.jpg)
 
-DeepSeek R1 is one of the best open-source models in the market right now, and you can run DeepSeek R1 on your own computer! 
-
-<Callout type="info">
-New to running AI models locally? Check out the [guide on running AI models locally](/post/run-ai-models-locally) first. It covers essential concepts that will help you better understand this DeepSeek R1 guide.
-</Callout>
-
-DeepSeek R1 requires data-center level computers to run at its full potential, and we'll use a smaller version that works great on regular computers.
-
-Why use an optimized version?
-- Efficient performance on standard hardware
-- Faster download and initialization
-- Optimized storage requirements
-- Maintains most of the original model's capabilities
-
-## Quick Steps at a Glance
-1. Download [Jan](https://jan.ai/)
-2. Select a model version
-3. Choose settings
-4. Set up the prompt template & start using DeepSeek R1
-
-Let's walk through each step with detailed instructions.
-
-## Step 1: Download Jan
-[Jan](https://jan.ai/) is an open-source application that enables you to run AI models locally. It's available for Windows, Mac, and Linux. For beginners, Jan is the best choice to get started.
-
-![Jan AI interface, showing the download button](./_assets/download-jan.jpg)
-
-1. Visit [jan.ai](https://jan.ai)
-2. Download the appropriate version for your operating system
-3. Install the app
-
-## Step 2: Choose Your DeepSeek R1 Version
-
-To run AI models like DeepSeek R1 on your computer, you'll need something called VRAM (Video Memory). Think of VRAM as your computer's special memory for handling complex tasks like gaming or, in our case, running AI models. It's different from regular RAM - VRAM is part of your graphics card (GPU).
+DeepSeek R1 是当前市场上最优秀的开源模型之一，您完全可以在自己的电脑上运行它！
 
 <Callout type="info">
-Running AI models locally is like running a very sophisticated video game - it needs dedicated memory to process all the AI's "thinking." The more VRAM you have, the larger and more capable AI models you can run.
+初次尝试本地运行 AI 模型？建议先阅读[本地运行 AI 模型指南](/post/run-ai-models-locally)。该指南涵盖了基础概念，能帮助您更好地理解本 DeepSeek R1 教程。
 </Callout>
 
-Let's first check how much VRAM your computer has. Don't worry if it's not much - DeepSeek R1 has versions for all kinds of computers!
+DeepSeek R1 需要数据中心级硬件才能发挥全部性能，我们将使用适用于普通电脑的优化版本。
 
-Finding your VRAM is simple:
-- On Windows: Press `Windows + R`, type `dxdiag`, hit Enter, and look under the "Display" tab
-- On Mac: Click the Apple menu, select "About This Mac", then "More Info", and check under "Graphics/Displays"
-- On Linux: Open Terminal and type `nvidia-smi` for NVIDIA GPUs, or `lspci -v | grep -i vga` for other graphics cards
+为何要使用优化版本？
+
+- 在标准硬件上实现高效性能
+- 更快的下载和初始化速度
+- 优化的存储需求
+- 保留原始模型的大部分能力
+
+## 快速步骤概览
+
+1. 下载 [Jan](https://jan.ai/)
+2. 选择模型版本
+3. 配置参数
+4. 设置提示词模板并开始使用 DeepSeek R1
+
+下面我们将逐步详细介绍每个步骤。
+
+## 第一步：下载 Jan
+
+[Jan](https://jan.ai/) 是一个开源应用程序，可让你在本地运行 AI 模型。它支持 Windows、Mac 和 Linux 系统。对于初学者来说，Jan 是最佳入门选择。
+
+![Jan AI 界面，显示下载按钮](./_assets/download-jan.jpg)
+
+1. 访问 [jan.ai](https://jan.ai)
+2. 下载适合你操作系统的版本
+3. 安装应用程序
+
+## 第二步：选择 DeepSeek R1 版本
+
+要在计算机上运行 DeepSeek R1 等 AI 模型，你需要 VRAM（显存）。可以将 VRAM 视为计算机用于处理复杂任务（如游戏或运行 AI 模型）的专用内存。它与常规 RAM 不同——VRAM 是显卡（GPU）的一部分。
+
+<Callout type="info">
+本地运行 AI 模型就像运行一个非常复杂的视频游戏——它需要专用内存来处理 AI 的所有"思考"。VRAM 越大，就能运行更强大、更复杂的 AI 模型。
+</Callout>
+
+首先检查您的电脑有多少显存。别担心显存不足——DeepSeek R1 有针对各类电脑的版本！
+
+查看显存很简单：
+
+- Windows 系统：按下 `Windows + R`，输入 `dxdiag`，回车后在"显示"选项卡查看
+- Mac 系统：点击苹果菜单，选择"关于本机"，点击"更多信息"，在"图形/显示器"下查看
+- Linux 系统：打开终端，输入 `nvidia-smi`（NVIDIA显卡）或 `lspci -v | grep -i vga`（其他显卡）
 
 <Callout>
-**No dedicated graphics card?** That's okay! You can still run the smaller versions of DeepSeek R1. They're specially optimized to work on computers with basic graphics capabilities.
+**没有独立显卡？** 没关系！您仍可运行 DeepSeek R1 的小型版本。这些版本专门针对基础图形性能的电脑进行了优化。
 </Callout>
 
-Once you know your VRAM, here's what version of DeepSeek R1 will work best for you. If you have:
-- 6GB VRAM: Go for the 1.5B version - it's fast and efficient
-- 8GB VRAM: You can run the 7B or 8B versions, which offer great capabilities
-- 16GB or more VRAM: You have access to the larger models with enhanced features
+了解显存后，以下是适合您的 DeepSeek R1 版本推荐：
 
-Available versions and basic requirements for DeepSeek R1 distills:
+- 6GB 显存：选择 1.5B 版本——快速高效
+- 8GB 显存：可运行 7B 或 8B 版本，功能更强大
+- 16GB 及以上显存：可运行具备增强功能的大型模型
 
-| Version | Model Link | Required VRAM |
+DeepSeek R1 各版本及基本需求：
+
+| 版本 | 模型链接 | 所需显存 |
 |---------|------------|---------------|
 | Qwen 1.5B | [DeepSeek-R1-Distill-Qwen-1.5B-GGUF](https://huggingface.co/bartowski/DeepSeek-R1-Distill-Qwen-1.5B-GGUF) | 6GB+ |
 | Qwen 7B | [DeepSeek-R1-Distill-Qwen-7B-GGUF](https://huggingface.co/bartowski/DeepSeek-R1-Distill-Qwen-7B-GGUF) | 8GB+ |
@@ -85,31 +92,33 @@ Available versions and basic requirements for DeepSeek R1 distills:
 | Qwen 32B | [DeepSeek-R1-Distill-Qwen-32B-GGUF](https://huggingface.co/bartowski/DeepSeek-R1-Distill-Qwen-32B-GGUF) | 16GB+ |
 | Llama 70B | [DeepSeek-R1-Distill-Llama-70B-GGUF](https://huggingface.co/unsloth/DeepSeek-R1-Distill-Llama-70B-GGUF) | 48GB+ |
 
-To download your chosen model:
+下载所选模型步骤：
 
-Launch Jan and navigate to Jan Hub using the sidebar
+启动 Jan 并通过侧边栏导航至 Jan Hub
 
-![Jan AI interface, showing the model library](./_assets/jan-library-deepseek-r1.jpg)
+![Jan AI界面，显示模型库](./_assets/jan-library-deepseek-r1.jpg)
 
-3. Input the model link in this field:
+3. 在此字段输入模型链接：
 
-![Jan AI interface, showing the model link input field](./_assets/jan-hub-deepseek-r1.jpg)
+![Jan AI界面，显示模型链接输入字段](./_assets/jan-hub-deepseek-r1.jpg)
 
-## Step 3: Configure Model Settings
-When configuring your model, you'll encounter quantization options:
+## 步骤3：配置模型设置
+
+配置模型时，您将看到量化选项：
 
 <Callout type="tip">
-Quantization balances performance and resource usage:
-- **Q4:** Recommended for most users - optimal balance of efficiency and quality
-- **Q8:** Higher precision but requires more computational resources
+量化技术平衡性能与资源消耗：
+- **Q4:** 推荐大多数用户使用 - 效率与质量的最佳平衡点
+- **Q8:** 更高精度但需要更多计算资源
 </Callout>
 
-## Step 4: Configure Prompt Template
-Final configuration step:
+## 步骤4：配置提示词模板
 
-1. Access Model Settings via the sidebar
-2. Locate the Prompt Template configuration
-3. Use this specific format:
+最终配置步骤：
+
+1. 通过侧边栏进入模型设置
+2. 定位到提示词模板配置项
+3. 使用以下特定格式：
 
 <Callout type="warning">
 ```
@@ -117,14 +126,14 @@ Final configuration step:
 ```
 </Callout>
 
-This template is for proper communication between you and the model.
+该模板用于确保您与模型间的正确通信格式
 
-You're now ready to interact with DeepSeek R1:
+现在您可以开始与DeepSeek R1交互：
 
-![Jan interface, showing DeepSeek R1 running locally](./_assets/jan-runs-deepseek-r1-distills.jpg)
+![Jan界面显示本地运行的DeepSeek R1模型](./_assets/jan-runs-deepseek-r1-distills.jpg)
 
-## Need Assistance?
+## 需要帮助？
 
 <Callout type="info">
-Join our [Discord community](https://discord.gg/Exe46xPMbK) for support and discussions about running AI models locally.
+加入我们的[Discord社区](https://discord.gg/Exe46xPMbK)获取支持，参与本地运行AI模型的讨论
 </Callout>

@@ -1,6 +1,7 @@
 ---
+
 title: QA
-description: Jan is a ChatGPT-alternative that runs on your own computer, with a local API server.
+description: Jan 是一款可在本地计算机上运行的 ChatGPT 替代方案，提供本地 API 服务。
 keywords:
   [
     Jan,
@@ -15,68 +16,68 @@ keywords:
   ]
 ---
 
-# QA
+# 质量保证
 
-## Phase 1: Planning
+## 第一阶段：规划
 
-### Definition of Ready (DoR):
+### 就绪定义 (DoR):
 
-- **Scope Defined:** The features to be implemented are clearly defined and scoped out.
-- **Requirements Gathered:** Gather and document all the necessary requirements for the feature.
-- **Stakeholder Input:** Ensure relevant stakeholders have provided input on the document scope and content.
+- **范围界定:** 需实现的功能已明确定义并划定范围。
+- **需求收集:** 收集并记录该功能的所有必要需求。
+- **利益相关方意见:** 确保相关利益方已对文档范围和内容提供意见。
 
-### Definition of Done (DoD):
+### 完成定义 (DoD):
 
-- **Document Complete:** All sections of the document are filled out with relevant information.
-- **Reviewed by Stakeholders:** The document has been reviewed and approved by stakeholders.
-- **Ready for Development:** The document is in a state where developers can use it to begin implementation.
+- **文档完整:** 文档所有章节均已填写相关信息。
+- **利益相关方评审:** 文档已通过利益相关方评审并获得批准。
+- **开发就绪:** 文档已达到可供开发人员开始实施的状态。
 
-## Phase 2: Development
+## 第二阶段：开发
 
-### Definition of Ready (DoR):
+### 就绪定义 (DoR):
 
-- **Task Breakdown:** The development team has broken down tasks based on the document.
-- **Communication Plan:** A plan is in place for communication between developers and writers if clarification is needed during implementation.
-- **Developer Understanding:** Developers have a clear understanding of the document content.
+- **任务分解:** 开发团队已根据文档分解任务。
+- **沟通计划:** 制定实施过程中开发人员与文档作者间的澄清沟通计划。
+- **开发人员理解:** 开发人员已清晰理解文档内容。
 
-### Definition of Done (DoD):
+### 完成定义 (DoD):
 
-- **Code Implementation:** The feature is implemented according to the document specifications.
-- **Developer Testing:**
-  - Unit tests and basic integration tests are completed
-  - Developer also completed self-testing for the feature (please add this as a comment in the ticket, with the tested OS and as much info as possible to reduce overlaping effort).
-  - (AC -> Code Changes -> Impacted scenarios)
-- **Communication with Writers:** Developers have communicated any changes or challenges to the writers, and necessary adjustments are made in the document. (Can be through a note in the PR of the feature for writers to take care, or create a separate PR with the change you made for the docs, for writers to review)
+- **代码实现:** 功能已按照文档规范完成开发
+- **开发者测试:**
+  - 单元测试和基础集成测试已完成
+  - 开发者已完成功能自测（请在工单中添加注释，注明测试操作系统及尽可能详细的信息以减少重复工作）
+  - (验收标准 -> 代码变更 -> 影响场景)
+- **与文档编写者沟通:** 开发者已就任何变更或挑战与文档编写者沟通，并对文档进行必要调整（可通过功能PR中的备注告知文档团队，或创建单独的文档变更PR供文档团队评审）
 
-## Phase 3: QA for feature
+## 阶段3: 功能质量保证
 
-### Definition of Ready (DoR):
+### 就绪定义 (DoR):
 
-- **Test Note Defined:** The test note is prepared outlining the testing items.
-- **Environment Ready:** PR merged to nightly build, Nightly build notes updated (automatically from pipeline after merged).
-- **Status:** Ticket moved to the column Testing and assigning to QA/writers to review.
-- **Test Data Prepared:** Relevant test data is prepared for testing the scenarios.
+- **测试说明已定义:** 已准备好概述测试项的测试说明
+- **环境就绪:** PR已合并至夜间构建版本，夜间构建说明已更新（合并后由流水线自动生成）
+- **状态:** 工单已移至"测试中"列并分配给QA/文档编写者评审
+- **测试数据准备就绪:** 已准备好用于测试场景的相关测试数据
 
-### Definition of Done (DoD):
+### 完成定义 (DoD):
 
-- **Test Executed:** All identified test items are executed on different OS, along with exploratory testing.
-- **Defects Logged:** Any defects found during testing are resolved / appropriately logged (and approved for future fix).
-- **Test Sign-Off:** QA team provides sign-off indicating the completion of testing.
+- **测试执行情况:** 所有已识别的测试项均在不同操作系统上执行完毕，同时完成探索性测试。
+- **缺陷记录:** 测试过程中发现的缺陷均已解决/妥善记录（并获得未来修复的批准）。
+- **测试签署:** 质量保证团队提供签署确认测试完成。
 
-## Phase 4: Release (DoR)
+## 阶段4：发布 (DoR)
 
-- **Pre-release wait time:** Code change to pre-release version should be frozen for at least X (hrs/days) for Regression testing purpose.
-  - Pre-release cut off on Thu morning for the team to regression test.
-  - Release to production (Stable) during working hour on Mon morning (if no blocker) or Tue morning.
-  - During the release cut off, the nightly build will be paused, to leave room for pre-release build. The build version used for regression test will be notified.
-- **Pre-release testing:** A review of the implemented feature has been conducted, a long with regression test (check-list) by the team.
-  - Release checklist cloned from the templat for different OS (with hackMD link)
-  - New key test items from new feature added to the checklist.
-  - Split 3 OS to different team members for testing.
-- **Document Updated:** The document is updated based on the review and feedback on any discrepancies or modification needed for this release.
-- **Reviewed by Stakeholders:** New feature and the updated document is reviewed and approved by stakeholders. The document is in its final version, reflecting the implemented feature accurately.
+- **预发布等待时间:** 代码变更在预发布版本中应冻结至少 X (小时/天) 以进行回归测试。
+  - 团队在周四上午截止预发布代码提交以执行回归测试。
+  - 若无阻碍，在工作时间周一上午发布生产环境(稳定版)，或推迟至周二上午。
+  - 发布截止期间将暂停夜间构建，为预发布构建留出空间。用于回归测试的构建版本将另行通知。
+- **预发布测试:** 已完成对已实现功能的审查，并由团队执行回归测试(检查清单)。
+  - 从模板克隆针对不同操作系统的发布检查清单(含hackMD链接)
+  - 将新功能的关键测试项添加至检查清单。
+  - 将三种操作系统分配给不同团队成员进行测试。
+- **文档更新:** 根据审查结果和反馈更新文档，解决本次发布所需的差异或修改。
+- **利益相关方审核:** 新功能及更新后的文档已通过利益相关方审核批准。文档为最终版本，准确反映已实现功能。
 
-## Notes (WIP)
+## 注意事项(进行中)
 
-- **API collection run:** to run along with nightly build daily, for critical API validation
-- **Automation run:** for regression testing purpose, to reduce manual testing effort for the same items each release on multiple OS.
+- **API集合运行:** 每日与夜间构建同步执行，用于关键API验证
+- **自动化运行:** 用于回归测试目的，减少每次发布在多操作系统上对相同项目的手动测试工作量。

@@ -1,25 +1,26 @@
 ---
-title: llama.cpp Engine
-description: Understand and configure Jan's local AI engine for running models on your hardware.
+
+title: llama.cpp 引擎
+description: 了解并配置 Jan 的本地 AI 引擎，用于在您的硬件上运行模型。
 keywords:
   [
     Jan,
-    Customizable Intelligence, LLM,
-    local AI,
-    privacy focus,
-    free and open source,
-    private and offline,
-    conversational AI,
-    no-subscription fee,
-    large language models,
-    Llama CPP integration,
-    llama.cpp Engine,
-    Intel CPU,
-    AMD CPU,
-    NVIDIA GPU,
-    AMD GPU Radeon,
-    Apple Silicon,
-    Intel Arc GPU,
+    可定制智能, LLM,
+    本地 AI,
+    隐私优先,
+    免费开源,
+    私有离线,
+    对话式 AI,
+    无订阅费,
+    大语言模型,
+    Llama CPP 集成,
+    llama.cpp 引擎,
+    Intel 处理器,
+    AMD 处理器,
+    NVIDIA 显卡,
+    AMD Radeon 显卡,
+    Apple 芯片,
+    Intel Arc 显卡,
   ]
 ---
 
@@ -27,47 +28,47 @@ import { Tabs } from 'nextra/components'
 import { Callout, Steps } from 'nextra/components'
 import { Settings, EllipsisVertical, Plus, FolderOpen, Pencil } from 'lucide-react'
 
-# Local AI Engine (llama.cpp)
+# 本地 AI 引擎 (llama.cpp)
 
-## What is llama.cpp?
+## 什么是 llama.cpp？
 
-llama.cpp is the engine that runs AI models locally on your computer. Think of it as the software that takes an AI model file and makes it actually work on your hardware - whether that's your CPU, graphics card, or Apple's M-series chips.
+llama.cpp 是在您计算机本地运行 AI 模型的引擎。可以将其视为使 AI 模型文件在您的硬件（无论是 CPU、显卡还是 Apple M 系列芯片）上实际运行的软件。
 
-Originally created by Georgi Gerganov, llama.cpp is designed to run large language models efficiently on consumer hardware without requiring specialized AI accelerators or cloud connections.
+该项目最初由 Georgi Gerganov 创建，旨在无需专用 AI 加速器或云端连接的情况下，高效地在消费级硬件上运行大语言模型。
 
-## Why This Matters
+## 为何重要
 
-**Privacy**: Your conversations never leave your computer
-**Cost**: No monthly subscription fees or API costs
-**Speed**: No internet required once models are downloaded
-**Control**: Choose exactly which models to run and how they behave
+**隐私性**：您的对话内容永远不会离开本地设备
+**成本**：无需支付月费或 API 调用费用
+**速度**：模型下载后无需联网即可运行
+**控制权**：自由选择运行哪些模型及其行为方式
 
-## Accessing Engine Settings
+## 访问引擎设置
 
-Find llama.cpp settings at **Settings** (<Settings width={16} height={16} style={{display:"inline"}}/>) > **Local Engine** > **llama.cpp**:
+在 **设置** (<Settings width={16} height={16} style={{display:"inline"}}/>) > **本地引擎** > **llama.cpp** 处可找到相关配置：
 
 ![llama.cpp](./_assets/llama.cpp-01-updated.png)
 
 <Callout type="info">
-These are advanced settings. You typically only need to adjust them if models aren't working properly or you want to optimize performance for your specific hardware.
+这些是高级设置。通常只有在模型无法正常工作或需要针对特定硬件优化性能时才需要调整。
 </Callout>
 
-## Engine Management
+## 引擎管理
 
-| Feature | What It Does | When You Need It |
+| 功能 | 作用 | 使用场景 |
 |---------|-------------|------------------|
-| **Engine Version** | Shows which version of llama.cpp you're running | Check compatibility with newer models |
-| **Check Updates** | Downloads newer engine versions | When new models require updated engine |
-| **Backend Selection** | Choose the version optimized for your hardware | After installing new graphics cards or when performance is poor |
-| **Auto Update Engine** | Automatically updates llama.cpp to latest version | Enable for automatic compatibility with new models |
-| **Auto-Unload Old Models** | Unloads unused models to free memory | Enable when running multiple models or low on memory |
+| **引擎版本** | 显示当前运行的 llama.cpp 版本 | 检查与新模型的兼容性 |
+| **检查更新** | 下载新版引擎 | 当新模型需要更新引擎时 |
+| **后端选择** | 选择针对硬件优化的版本 | 安装新显卡或性能不佳时 |
+| **自动更新引擎** | 自动将 llama.cpp 更新至最新版本 | 需要自动兼容新模型时启用 |
+| **自动卸载旧模型** | 释放未使用模型占用的内存 | 运行多个模型或内存不足时启用 |
 
-## Hardware Backends
+## 硬件后端
 
-Jan offers different backend versions optimized for your specific hardware. Think of these as different "drivers" - each one is tuned for particular processors or graphics cards.
+Jan 提供针对特定硬件优化的不同后端版本。可以将其视为不同的"驱动程序"——每个版本都针对特定处理器或显卡进行了调优。
 
 <Callout type="warning">
-Using the wrong backend can make models run slowly or fail to load. Pick the one that matches your hardware.
+使用错误的后端可能导致模型运行缓慢或加载失败。请选择与硬件匹配的版本。
 </Callout>
 
 <Tabs items={['Windows', 'Linux', 'macOS']}>
@@ -133,130 +134,140 @@ Apple Silicon Macs automatically use the GPU through Metal - no additional setup
 
 </Tabs>
 
-## Performance Settings
+## 性能设置
 
-These control how efficiently models run:
+这些设置控制模型运行效率：
 
-| Setting | What It Does | Recommended Value | Impact |
+| 设置项 | 功能说明 | 推荐值 | 影响范围 |
 |---------|-------------|------------------|---------|
-| **Continuous Batching** | Process multiple requests at once | Enabled | Faster when using multiple tools or having multiple conversations |
-| **Threads** | Number of threads for generation | -1 (auto) | -1 uses all logical cores, adjust for specific needs |
-| **Threads (Batch)** | Threads for batch and prompt processing | -1 (auto) | Usually same as Threads setting |
-| **Batch Size** | Logical maximum batch size | 2048 | Higher allows more parallel processing |
-| **uBatch Size** | Physical maximum batch size | 512 | Controls memory usage during batching |
-| **GPU Split Mode** | How to distribute model across GPUs | Layer | Layer mode is most common for multi-GPU setups |
-| **Main GPU Index** | Primary GPU for processing | 0 | Change if you want to use a different GPU |
+| **连续批处理** | 同时处理多个请求 | 启用 | 使用多工具或多会话时速度更快 |
+| **线程数** | 生成线程数量 | -1 (自动) | -1 表示使用所有逻辑核心，可按需调整 |
+| **批处理线程数** | 批量及提示处理的线程数 | -1 (自动) | 通常与线程数设置相同 |
+| **批量大小** | 逻辑最大批量尺寸 | 2048 | 数值越高并行处理能力越强 |
+| **物理批量大小** | 物理最大批量尺寸 | 512 | 控制批处理时的内存使用量 |
+| **GPU分配模式** | 模型在GPU间的分配方式 | 分层 | 多GPU配置最常用分层模式 |
+| **主GPU索引** | 主要处理GPU | 0 | 需要更换主GPU时可调整此值 |
 
-## Memory Settings
+## 内存设置
 
-These control how models use your computer's memory:
+这些选项控制模型如何使用计算机内存：
 
-| Setting | What It Does | Recommended Value | When to Change |
+| 设置项 | 功能说明 | 推荐值 | 调整场景 |
 |---------|-------------|------------------|----------------|
-| **Flash Attention** | More efficient memory usage | Enabled | Leave enabled unless you have problems |
-| **Disable mmap** | Don't memory-map model files | Disabled | Enable if experiencing crashes or pageouts |
-| **MLock** | Keep model in RAM, prevent swapping | Disabled | Enable if you have enough RAM and want consistent performance |
-| **Context Shift** | Handle very long conversations | Disabled | Enable for very long chats or multiple tool calls |
-| **Disable KV Offload** | Keep KV cache on CPU | Disabled | Enable if GPU memory is limited |
-| **KV Cache K Type** | Memory precision for keys | f16 | Change to q8_0 or q4_0 if running out of memory |
-| **KV Cache V Type** | Memory precision for values | f16 | Change to q8_0 or q4_0 if running out of memory |
-| **KV Cache Defragmentation** | Threshold for cache cleanup | 0.1 | Lower values defragment more often |
+| **Flash Attention** | 提升内存使用效率 | 启用 | 除非出现问题否则保持启用 |
+| **Disable mmap** | 禁用模型文件内存映射 | 禁用 | 遇到崩溃或页面置换问题时启用 |
+| **MLock** | 将模型锁定在内存中，防止交换 | 禁用 | 内存充足且需要稳定性能时启用 |
+| **Context Shift** | 处理超长对话上下文 | 禁用 | 超长对话或多工具调用时启用 |
+| **Disable KV Offload** | 将KV缓存保留在CPU | 禁用 | GPU内存不足时启用 |
+| **KV Cache K Type** | 键向量的内存精度 | f16 | 内存不足时可改为q8_0或q4_0 |
+| **KV Cache V Type** | 值向量的内存精度 | f16 | 内存不足时可改为q8_0或q4_0 |
+| **KV Cache Defragmentation** | 缓存清理阈值 | 0.1 | 数值越小碎片整理越频繁 |
 
-### KV Cache Types Explained
-- **f16**: Full 16-bit precision, uses more memory but highest quality
-- **q8_0**: 8-bit quantized, balanced memory usage and quality
-- **q4_0**: 4-bit quantized, uses least memory, slight quality loss
+### KV缓存类型详解
 
-## Advanced Settings
+- **f16**: 16位全精度，占用内存多但质量最高
+- **q8_0**: 8位量化，内存占用与质量平衡
+- **q4_0**: 4位量化，内存占用最少，质量略有损失
 
-These settings are for fine-tuning model behavior and advanced use cases:
+## 高级设置
 
-### Text Generation Control
+这些设置用于模型行为微调和高级用例：
 
-| Setting | What It Does | Default Value | When to Change |
+### 文本生成控制
+
+| 设置项 | 功能说明 | 默认值 | 调整时机 |
 |---------|-------------|---------------|----------------|
-| **Max Tokens to Predict** | Maximum tokens to generate | -1 (infinite) | Set a limit to prevent runaway generation |
-| **Custom Jinja Chat Template** | Override model's chat format | Empty | Only if model needs special formatting |
+| **最大预测标记数** | 生成的最大标记数量 | -1 (无限) | 需限制生成长度时设置 |
+| **自定义Jinja聊天模板** | 覆盖模型的聊天格式 | 空 | 仅当模型需要特殊格式时 |
 
-### RoPE (Rotary Position Embedding) Settings
+### RoPE (旋转位置编码) 设置
 
-| Setting | What It Does | Default Value | When to Change |
+| 设置项 | 功能说明 | 默认值 | 调整时机 |
 |---------|-------------|---------------|----------------|
-| **RoPE Scaling Method** | Context extension method | None | For models that support extended context |
-| **RoPE Scale Factor** | Context scaling multiplier | 1 | Increase for longer contexts |
-| **RoPE Frequency Base** | Base frequency for RoPE | 0 (auto) | Usually loaded from model |
-| **RoPE Frequency Scale Factor** | Frequency scaling factor | 1 | Advanced tuning only |
+| **RoPE缩放方法** | 上下文扩展方法 | 无 | 支持扩展上下文的模型使用 |
+| **RoPE缩放因子** | 上下文缩放乘数 | 1 | 需要更长上下文时增加 |
+| **RoPE基础频率** | RoPE的基础频率 | 0 (自动) | 通常从模型加载 |
+| **RoPE频率缩放因子** | 频率缩放系数 | 1 | 仅限高级调优 |
 
-### Mirostat Sampling
+### Mirostat采样
 
-| Setting | What It Does | Default Value | When to Change |
+| 设置项 | 功能说明 | 默认值 | 调整时机 |
 |---------|-------------|---------------|----------------|
-| **Mirostat Mode** | Alternative sampling method | Disabled | Try V1 or V2 for more consistent output |
-| **Mirostat Learning Rate** | How fast it adapts | 0.1 | Lower for more stable output |
-| **Mirostat Target Entropy** | Target perplexity | 5 | Higher for more variety |
+| **Mirostat模式** | 替代采样方法 | 禁用 | 选择V1或V2可获得更稳定输出 |
+| **Mirostat学习率** | 适应速度 | 0.1 | 需要更稳定输出时降低 |
+| **Mirostat目标熵值** | 目标困惑度 | 5 | 需要更多变化时提高 |
 
-### Output Constraints
+### 输出约束
 
-| Setting | What It Does | Default Value | When to Change |
+| 设置项 | 功能说明 | 默认值 | 调整时机 |
 |---------|-------------|---------------|----------------|
-| **Grammar File** | Constrain output format | Empty | For structured output (JSON, code, etc.) |
-| **JSON Schema File** | Enforce JSON structure | Empty | When you need specific JSON formats |
+| **语法文件** | 约束输出格式 | 空 | 需要结构化输出时(JSON、代码等) |
+| **JSON模式文件** | 强制JSON结构 | 空 | 需要特定JSON格式时 |
 
-## Troubleshooting Common Issues
+## 常见问题排查
 
-**Models won't load:**
-- Try a different backend (switch from CUDA to CPU or vice versa)
-- Check if you have enough RAM/VRAM
-- Update to latest engine version
+**模型无法加载:**
 
-**Very slow performance:**
-- Make sure you're using GPU acceleration (CUDA/Metal/Vulkan backend)
-- Increase GPU Layers in model settings
-- Close other memory-intensive programs
+- 尝试切换后端(从CUDA切换到CPU或反之)
+- 检查RAM/VRAM是否充足
+- 更新至最新引擎版本
 
-**Out of memory errors:**
-- Reduce Context Size in model settings
-- Switch KV Cache Type to q8_0 or q4_0
-- Try a smaller model variant
+**性能极慢:**
 
-**Random crashes:**
-- Switch to a more stable backend (try avx instead of avx2)
-- Disable overclocking if you have it enabled
-- Update graphics drivers
+- 确保启用GPU加速(CUDA/Metal/Vulkan后端)
+- 增加模型设置中的GPU层数
+- 关闭其他内存密集型程序
 
-## Quick Setup Guide
+**内存不足错误:**
 
-**For most users:**
-1. Use the default backend that Jan installs
-2. Enable Auto Update Engine for automatic compatibility
-3. Leave all performance settings at defaults
-4. Only adjust if you experience problems
+- 减少模型设置中的上下文长度
+- 将KV缓存类型切换为q8_0或q4_0
+- 尝试更小的模型变体
 
-**If you have an NVIDIA graphics card:**
-1. Select the appropriate CUDA backend from the dropdown (e.g., `avx2-cuda-12-0`)
-2. Make sure GPU Layers is set high in model settings
-3. Keep Flash Attention enabled
-4. Set Main GPU Index if you have multiple GPUs
+**随机崩溃:**
 
-**If models are too slow:**
-1. Check you're using GPU acceleration (CUDA/Metal/Vulkan backend)
-2. Enable Continuous Batching
-3. Increase Batch Size and uBatch Size
-4. Close other applications using memory
+- 切换至更稳定的后端(尝试用avx替代avx2)
+- 禁用超频设置(如已启用)
+- 更新显卡驱动
 
-**If running out of memory:**
-1. Enable Auto-Unload Old Models
-2. Change KV Cache K/V Type to q8_0 or q4_0
-3. Reduce Context Size in model settings
-4. Enable MLock if you have sufficient RAM
-5. Try a smaller model
+## 快速设置指南
 
-**For advanced users:**
-1. Experiment with Mirostat sampling for more consistent outputs
-2. Use Grammar/JSON Schema files for structured generation
-3. Adjust RoPE settings for models with extended context support
-4. Fine-tune thread counts based on your CPU
+**多数用户建议:**
+
+1. 使用Jan安装的默认后端
+2. 启用引擎自动更新以保持兼容性
+3. 保持所有性能设置为默认值
+4. 仅在遇到问题时调整
+
+**NVIDIA显卡用户:**
+
+1. 从下拉菜单中选择合适的 CUDA 后端（例如 `avx2-cuda-12-0`）
+2. 确保模型设置中的 GPU 层数调高
+3. 保持 Flash Attention 启用状态
+4. 若有多块 GPU，请设置主 GPU 索引
+
+**若模型运行过慢：**
+
+1. 检查是否启用了 GPU 加速（CUDA/Metal/Vulkan 后端）
+2. 开启连续批处理
+3. 增加批处理大小和微批处理大小
+4. 关闭其他占用内存的应用程序
+
+**若出现内存不足：**
+
+1. 启用自动卸载旧模型功能
+2. 将 KV 缓存 K/V 类型改为 q8_0 或 q4_0
+3. 在模型设置中减小上下文长度
+4. 若内存充足可启用 MLock
+5. 尝试更小规模的模型
+
+**高级用户建议：**
+
+1. 尝试 Mirostat 采样以获得更稳定的输出
+2. 使用语法/JSON 模式文件实现结构化生成
+3. 针对支持扩展上下文的模型调整 RoPE 设置
+4. 根据 CPU 性能微调线程数
 
 <Callout type="info">
-Most users can run Jan successfully without changing any of these settings. The defaults are chosen to work well on typical hardware.
+大多数用户无需修改这些设置即可成功运行 Jan。默认值已针对典型硬件配置进行了优化。
 </Callout>

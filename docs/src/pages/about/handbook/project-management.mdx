@@ -1,6 +1,7 @@
 ---
-title: Project Management
-description: Project management at Jan
+
+title: 项目管理
+description: Jan 的项目管理
 keywords:
   [
     Jan,
@@ -18,66 +19,66 @@ keywords:
 
 import { Callout } from 'nextra/components'
 
-# Project Management
+# 项目管理
 
-We use the [Jan Monorepo Project](https://github.com/orgs/menloresearch/projects/5) in Github to manage our roadmap and sprint Kanbans.
+我们使用 [Jan Monorepo Project](https://github.com/orgs/menloresearch/projects/5) 在 Github 上管理产品路线图和冲刺看板。
 
-As much as possible, everyone owns their respective `epics` and `tasks`.
+尽可能让每位成员自主负责各自的 `epics` 和 `tasks`。
 
 <Callout>
-  We aim for a `loosely coupled, but tightly aligned` autonomous culture.
+  我们致力于建立一种"松散耦合但紧密对齐"的自治文化。
 </Callout>
 
-## Quicklinks
+## 快速链接
 
-- [High-level roadmap](https://github.com/orgs/menloresearch/projects/5/views/16): view used at at strategic level, for team wide alignment. Start & end dates reflect engineering implementation cycles. Typically product & design work preceeds these timelines.
-- [Standup Kanban](https://github.com/orgs/menloresearch/projects/5/views/25): view used during daily standup. Sprints should be up to date.
+- [高层路线图](https://github.com/orgs/menloresearch/projects/5/views/16): 战略层面使用的视图，用于团队整体对齐。起止日期反映工程实施周期，通常产品与设计工作会先于这些时间线展开。
+- [站会看板](https://github.com/orgs/menloresearch/projects/5/views/25): 每日站会使用的视图。冲刺任务应保持最新状态。
 
-## Organization
+## 组织架构
 
-[`Roadmap Labels`](https://github.com/menloresearch/jan/labels?q=roadmap)
+[`路线图标签`](https://github.com/menloresearch/jan/labels?q=roadmap)
 
-- `Roadmap Labels` tag large, long-term, & strategic projects that can span multiple teams and multiple sprints
-- Example label: `roadmap: Jan has Mobile`
-- `Roadmaps` contain `epics`
+- `路线图标签` 用于标记跨团队、跨冲刺的大型长期战略项目
+- 示例标签: `roadmap: Jan has Mobile`
+- `路线图` 包含 `epics`
 
 [`Epics`](https://github.com/menloresearch/jan/issues?q=is%3Aissue+is%3Aopen+label%3A%22type%3A+epic%22)
 
-- `Epics` track large stories that span 1-2 weeks, and it outlines specs, architecture decisions, designs
-- `Epics` contain `tasks`
-- `Epics` should always have 1 owner
+- `Epics` 用于追踪持续1-2周的大型任务，包含规范说明、架构决策和设计方案
+- `Epics` 包含多个 `tasks` 子任务
+- 每个 `Epics` 必须指定唯一负责人
 
 [`Milestones`](https://github.com/menloresearch/jan/milestones)
 
-- `Milestones` track release versions. We use [semantic versioning](https://semver.org/)
-- `Milestones` span ~2 weeks and have deadlines
-- `Milestones` usually fit within 2-week sprint cycles
+- `Milestones` 用于追踪版本发布，遵循[语义化版本规范](https://semver.org/)
+- `Milestones` 周期约2周并设有截止期限
+- `Milestones` 通常适配双周迭代周期
 
 [`Tasks`](https://github.com/menloresearch/jan/issues)
 
-- Tasks are individual issues (feats, bugs, chores) that can be completed within a few days
-- Tasks, except for critical bugs, should always belong to an `epic` (and thus fit into our roadmap)
-- Tasks are usually named per [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary)
-- Tasks should always have 1 owner
+- Tasks 是可独立完成的问题单元（功能/缺陷/杂项），通常耗时数日
+- 除关键缺陷外，所有 Tasks 都应归属于某个 `epic`（从而纳入路线图）
+- Tasks 命名遵循[约定式提交规范](https://www.conventionalcommits.org/en/v1.0.0/#summary)
+- 每个 Task 必须指定唯一负责人
 
-We aim to always sprint on `tasks` that are a part of the [current roadmap](https://github.com/orgs/menloresearch/projects/5/views/16).
+我们始终聚焦于[当前路线图](https://github.com/orgs/menloresearch/projects/5/views/16)中的 `tasks` 进行迭代开发。
 
-## Kanban
+## 看板规范
 
-- `no status`: issues that need to be triaged (needs an owner, ETA)
-- `icebox`: issues you don't plan to tackle yet
-- `planned`: issues you plan to tackle this week
-- `in-progress`: in progress
-- `in-review`: pending PR or blocked by something
-- `done`: done
+- `no status`: 待分类事项（需指定负责人和预计完成时间）
+- `icebox`: 暂不处理的事项
+- `planned`: 本周计划处理的事项
+- `in-progress`: 进行中的事项
+- `in-review`: 待PR审核或存在阻塞项
+- `done`: 已完成事项
 
-## Triage SOP
+## 事项分类标准流程
 
-- `Urgent bugs`: assign to an owner (or @engineers if you are not sure) && tag the current `sprint` & `milestone`
-- `All else`: assign the correct roadmap `label(s)` and owner (if any)
+- `紧急缺陷`: 分配给负责人(不确定时可@工程师团队) && 标记当前`sprint`和`milestone`
+- `其他情况`: 分配正确的路线图`标签`和负责人(如有)
 
-### Request for help
+### 协助请求
 
-As a result, our feature prioritization can feel a bit black box at times.
+因此，我们的功能优先级决策有时会显得不够透明。
 
-We'd appreciate high quality insights and volunteers for user interviews through [Discord](https://discord.gg/af6SaTdzpx) and [Github](https://github.com/menloresearch).
+我们诚挚欢迎通过[Discord](https://discord.gg/af6SaTdzpx)和[Github](https://github.com/menloresearch)提供高质量见解或参与用户访谈的志愿者。

@@ -1,6 +1,7 @@
 ---
+
 title: Jupyter MCP
-description: Real-time Jupyter notebook interaction and code execution through MCP integration.
+description: 通过 MCP 集成实现 Jupyter notebook 实时交互与代码执行
 keywords:
   [
     Jan,
@@ -22,60 +23,63 @@ import { Callout } from 'nextra/components'
 
 # Jupyter MCP
 
-[Jupyter MCP Server](https://jupyter-mcp-server.datalayer.tech/) enables real-time interaction with Jupyter notebooks, allowing AI models to edit, execute, and document code for data analysis and visualization. Instead of just generating code suggestions, AI can actually run Python code and see the results.
+[Jupyter MCP Server](https://jupyter-mcp-server.datalayer.tech/) 实现了与 Jupyter notebook 的实时交互，允许 AI 模型编辑、执行和记录代码以进行数据分析和可视化。AI 不仅能生成代码建议，还能实际运行 Python 代码并查看结果。
 
-This integration gives Jan the ability to execute analysis, create visualizations, and iterate based on actual results - turning your AI assistant into a capable data science partner.
+该集成赋予 Jan 执行分析、创建可视化并根据实际结果迭代的能力——将您的 AI 助手转变为得力的数据科学合作伙伴。
 
 <Callout type="info">
-**Breaking Change**: Version 0.11.0+ renamed `room` to `document`. Check the [release notes](https://jupyter-mcp-server.datalayer.tech/releases) for details.
+**重大变更**：0.11.0+ 版本将 `room` 重命名为 `document`。详情请查看[发布说明](https://jupyter-mcp-server.datalayer.tech/releases)。
 </Callout>
 
-## Available Tools
+## 可用工具
 
-The Jupyter MCP Server provides [12 comprehensive tools](https://jupyter-mcp-server.datalayer.tech/tools/):
+Jupyter MCP Server 提供 [12 种综合工具](https://jupyter-mcp-server.datalayer.tech/tools/)：
 
-### Core Operations
-- `append_execute_code_cell`: Add and run code cells at notebook end
-- `insert_execute_code_cell`: Insert and run code at specific positions
-- `execute_cell_simple_timeout`: Execute cells with timeout control
-- `execute_cell_streaming`: Long-running cells with progress updates
-- `execute_cell_with_progress`: Execute with timeout and monitoring
+### 核心操作
 
-### Cell Management
-- `append_markdown_cell`: Add documentation cells
-- `insert_markdown_cell`: Insert markdown at specific positions
-- `delete_cell`: Remove cells from notebook
-- `overwrite_cell_source`: Update existing cell content
+- `append_execute_code_cell`: 在笔记本末尾添加并运行代码单元格
+- `insert_execute_code_cell`: 在指定位置插入并运行代码
+- `execute_cell_simple_timeout`: 带超时控制的单元格执行
+- `execute_cell_streaming`: 支持进度更新的长时运行单元格
+- `execute_cell_with_progress`: 带超时和监控的执行
 
-### Information & Reading
-- `get_notebook_info`: Retrieve notebook metadata
-- `read_cell`: Examine specific cell content
-- `read_all_cells`: Get complete notebook state
+### 单元格管理
+
+- `append_markdown_cell`: 添加文档单元格
+- `insert_markdown_cell`: 在指定位置插入Markdown
+- `delete_cell`: 从笔记本中移除单元格
+- `overwrite_cell_source`: 更新现有单元格内容
+
+### 信息与读取
+
+- `get_notebook_info`: 获取笔记本元数据
+- `read_cell`: 检查特定单元格内容
+- `read_all_cells`: 获取完整笔记本状态
 
 <Callout type="warning">
-The MCP connects to **one notebook at a time**, not multiple notebooks. Specify your target notebook in the configuration.
+MCP每次仅连接**一个笔记本**，不支持多笔记本操作。请在配置中指定目标笔记本。
 </Callout>
 
-## Prerequisites
+## 前置条件
 
-- Jan with MCP enabled
-- Python 3.8+ with uv package manager
-- Docker installed
-- OpenAI API key for GPT-5 access
-- Basic understanding of Jupyter notebooks
+- 启用MCP的Jan环境
+- Python 3.8+及uv包管理器
+- 已安装Docker
+- 访问GPT-5的OpenAI API密钥
+- 基础的Jupyter笔记本知识
 
-## Setup
+## 配置
 
-### Enable MCP
+### 启用MCP
 
-1. Go to **Settings** > **MCP Servers**
-2. Toggle **Allow All MCP Tool Permission** ON
+1. 进入**设置** > **MCP服务器**
+2. 将**允许所有MCP工具权限**切换为开启状态
 
-![MCP settings page with toggle enabled](../../_assets/mcp-on.png)
+![已启用切换按钮的MCP设置页面](../../_assets/mcp-on.png)
 
-### Install uv Package Manager
+### 安装uv包管理器
 
-If you don't have uv installed:
+若未安装uv：
 
 ```bash
 # macOS and Linux
@@ -85,9 +89,9 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
 
-### Create Python Environment
+### 创建Python环境
 
-Set up an isolated environment for Jupyter:
+为Jupyter设置隔离环境：
 
 ```bash
 # Create environment with Python 3.13
@@ -107,231 +111,250 @@ uv pip install datalayer_pycrdt==0.12.17
 uv pip install pandas numpy matplotlib altair
 ```
 
-### Start JupyterLab Server
+### 启动JupyterLab服务
 
-Launch JupyterLab with authentication:
+带认证启动JupyterLab：
 
 ```bash
 jupyter lab --port 8888 --IdentityProvider.token heyheyyou --ip 0.0.0.0
 ```
 
-![Terminal showing JupyterLab startup](../../_assets/jupyter1.png)
+![显示JupyterLab启动的终端界面](../../_assets/jupyter1.png)
 
-The server opens in your browser:
+服务将在浏览器中打开：
 
-![JupyterLab interface in browser](../../_assets/jupyter.png)
+![浏览器中的 JupyterLab 界面](../../_assets/jupyter.png)
 
-### Create Target Notebook
+### 创建目标笔记本
 
-Create a new notebook named `for_jan.ipynb`:
+新建一个名为 `for_jan.ipynb` 的笔记本：
 
-![Notebook created in JupyterLab](../../_assets/jupyter2.png)
+![JupyterLab 中创建的笔记本](../../_assets/jupyter2.png)
 
-### Configure MCP Server in Jan
+### 在 Jan 中配置 MCP 服务器
 
-Click `+` in MCP Servers section:
+在MCP服务器区域点击`+`：
 
-**Configuration for macOS/Windows:**
-- **Server Name**: `jupyter`
-- **Command**: `docker`
-- **Arguments**:
+**macOS/Windows 配置：**
+
+- **服务器名称**：`jupyter`
+- **命令**：`docker`
+- **参数**：
   ```
   run -i --rm -e DOCUMENT_URL -e DOCUMENT_TOKEN -e DOCUMENT_ID -e RUNTIME_URL -e RUNTIME_TOKEN datalayer/jupyter-mcp-server:latest
   ```
-- **Environment Variables**:
-  - Key: `DOCUMENT_URL`, Value: `http://host.docker.internal:8888`
-  - Key: `DOCUMENT_TOKEN`, Value: `heyheyyou`
-  - Key: `DOCUMENT_ID`, Value: `for_jan.ipynb`
-  - Key: `RUNTIME_URL`, Value: `http://host.docker.internal:8888`
-  - Key: `RUNTIME_TOKEN`, Value: `heyheyyou`
+- **环境变量**：
+  - 键：`DOCUMENT_URL`，值：`http://host.docker.internal:8888`
+  - 键：`DOCUMENT_TOKEN`，值：`heyheyyou`
+  - 键：`DOCUMENT_ID`，值：`for_jan.ipynb`
+  - 键：`RUNTIME_URL`，值：`http://host.docker.internal:8888`
+  - 键：`RUNTIME_TOKEN`，值：`heyheyyou`
 
-![Jan MCP server configuration](../../_assets/jupyter3.png)
+![Jan MCP 服务器配置界面](../../_assets/jupyter3.png)
 
-## Using OpenAI's GPT-5
+## 使用 OpenAI 的 GPT-5
 
-### Configure OpenAI Provider
+### 配置 OpenAI 提供商
 
-Navigate to **Settings** > **Model Providers** > **OpenAI**:
+导航至 **设置** > **模型提供商** > **OpenAI**：
 
-![OpenAI settings page](../../_assets/openai-settings.png)
+![OpenAI 设置页面](../../_assets/openai-settings.png)
 
-### Add GPT-5 Model
+### 添加 GPT-5 模型
 
-Since GPT-5 is new, you'll need to manually add it to Jan:
+由于 GPT-5 是新模型，需要手动将其添加到 Jan：
 
-![Manually adding GPT-5 model name](../../_assets/gpt5-add.png)
+![手动添加 GPT-5 模型名称](../../_assets/gpt5-add.png)
 
 <Callout type="info">
-**About GPT-5**: OpenAI's smartest, fastest, most useful model yet. It features built-in thinking capabilities, state-of-the-art performance across coding, math, and writing, and exceptional tool use abilities. GPT-5 automatically decides when to respond quickly versus when to think longer for expert-level responses.
+**关于 GPT-5**：OpenAI 迄今为止最智能、最快速、最实用的模型。它具备内置的思考能力，在编程、数学和写作领域拥有顶尖性能，以及卓越的工具使用能力。GPT-5 会自动判断何时需要快速响应，何时需要更长时间的思考以提供专家级回答。
 </Callout>
 
-### Enable Tool Calling
+### 启用工具调用
 
-Ensure tools are enabled for GPT-5:
+确保为 GPT-5 启用工具功能：
 
-![Enabling tools for GPT-5](../../_assets/gpt5-tools.png)
+![为 GPT-5 启用工具](../../_assets/gpt5-tools.png)
 
-## Usage
+## 使用指南
 
-### Verify Tool Availability
+### 验证工具可用性
 
-Start a new chat with GPT-5. The tools bubble shows all available Jupyter operations:
+新建一个与 GPT-5 的聊天会话。工具气泡会显示所有可用的 Jupyter 操作：
 
-![GPT-5 ready in chat with Jupyter tools visible](../../_assets/gpt5-chat.png)
+![聊天中准备就绪的 GPT-5 及可见的 Jupyter 工具](../../_assets/gpt5-chat.png)
 
-### Initial Test
+### 初始测试
 
-Start with establishing the notebook as your workspace:
+首先将笔记本设为工作区：
 
 ```
 You have access to a jupyter notebook, please use it as our data analysis scratchpad. Let's start by printing "Hello Jan" in a new cell.
 ```
 
-GPT-5 creates and executes the code successfully:
+GPT-5 成功创建并执行代码：
 
-![First message showing successful tool use](../../_assets/gpt5-msg.png)
+![显示工具使用成功的首条消息](../../_assets/gpt5-msg.png)
 
-### Advanced Data Analysis
+### 高级数据分析
 
-Try a more complex task combining multiple operations:
+尝试结合多个操作的复杂任务：
 
 ```
 Generate synthetic data with numpy, move it to a pandas dataframe and create a pivot table, and then make a cool animated plot using matplotlib. Your use case will be sales analysis in the luxury fashion industry.
 ```
 
-![Complex analysis with luxury fashion sales data](../../_assets/gpt5-msg2.png)
+![使用奢侈品销售数据进行复杂分析](../../_assets/gpt5-msg2.png)
 
-Watch the complete output unfold:
+观察完整输出结果：
 
 <video width="100%" controls>
   <source src="/assets/videos/mcpjupyter.mp4" type="video/mp4" />
   Your browser does not support the video tag.
 </video>
 
-## Example Prompts to Try
+## 可尝试的示例提示
 
-### Financial Analysis
+### 财务分析
+
 ```
 Create a Monte Carlo simulation for portfolio risk analysis. Generate 10,000 scenarios, calculate VaR at 95% confidence, and visualize the distribution.
 ```
 
-### Time Series Forecasting
+### 时间序列预测
+
 ```
 Generate synthetic time series data representing daily website traffic over 2 years with weekly seasonality and trend. Build an ARIMA model and forecast the next 30 days.
 ```
 
-### Machine Learning Pipeline
+### 机器学习流程
+
 ```
 Build a complete classification pipeline: generate a dataset with 3 classes and 5 features, split the data, try multiple algorithms (RF, SVM, XGBoost), and create a comparison chart of their performance.
 ```
 
-### Interactive Dashboards
+### 交互式仪表板
+
 ```
 Create an interactive visualization using matplotlib widgets showing how changing interest rates affects loan payments over different time periods.
 ```
 
-### Statistical Testing
+### 统计测试
+
 ```
 Generate two datasets representing A/B test results for an e-commerce site. Perform appropriate statistical tests and create visualizations to determine if the difference is significant.
 ```
 
-## Performance Considerations
+## 性能注意事项
 
 <Callout type="warning">
-Multiple tools can quickly consume context windows, especially for local models. GPT-5's unified system with smart routing helps manage this, but local models may struggle with speed and context limitations.
+多工具并行会快速消耗上下文窗口，尤其对本地模型影响显著。GPT-5的智能路由统一系统能有效管理，但本地模型可能在处理速度和上下文限制方面面临挑战。
 </Callout>
 
-### Context Management
-- Each tool call adds to conversation history
-- 12 available tools means substantial system prompt overhead
-- Local models may need reduced tool sets for reasonable performance
-- Consider disabling unused tools to conserve context
+### 上下文管理
 
-### Cloud vs Local Trade-offs
-- **Cloud models (GPT-5)**: Handle multiple tools efficiently with large context windows
-- **Local models**: May require optimization, reduced tool sets, or smaller context sizes
-- **Hybrid approach**: Use cloud for complex multi-tool workflows, local for simple tasks
+- 每次工具调用都会增加对话历史记录
+- 12个可用工具意味着显著的系统提示开销  
+- 本地模型可能需要精简工具集以保证合理性能
+- 建议禁用未使用的工具以节省上下文空间
 
-## Security Considerations
+### 云端与本地权衡
+
+- **云端模型(GPT-5)**: 能高效处理多工具任务并支持大上下文窗口
+- **本地模型**: 可能需要优化、精简工具集或缩小上下文尺寸  
+- **混合方案**: 复杂多工具流程用云端，简单任务用本地
+
+## 安全考量
 
 <Callout type="warning">
-MCP provides powerful capabilities but requires careful security practices.
+MCP提供强大能力但需严格遵守安全规范。
 </Callout>
 
-### Authentication Tokens
-- **Always use strong tokens** - avoid simple passwords
-- **Never commit tokens** to version control
-- **Rotate tokens regularly** for production use
-- **Use different tokens** for different environments
+### 认证令牌
 
-### Network Security
-- JupyterLab is network-accessible with `--ip 0.0.0.0`
-- Consider using `--ip 127.0.0.1` for local-only access
-- Implement firewall rules to restrict access
-- Use HTTPS in production environments
+- **始终使用强令牌** - 避免简单密码
+- **切勿将令牌提交**至版本控制系统  
+- **生产环境定期轮换**令牌
+- **不同环境使用**不同令牌
 
-### Code Execution Risks
-- AI has full Python execution capabilities
-- Review generated code before execution
-- Use isolated environments for sensitive work
-- Monitor resource usage and set limits
+### 网络安全
 
-### Data Privacy
-- Notebook content is processed by AI models
-- When using cloud models like GPT-5, data leaves your system
-- Keep sensitive data in secure environments
-- Consider model provider's data policies
+- JupyterLab通过`--ip 0.0.0.0`开放网络访问
+- 建议使用`--ip 127.0.0.1`仅限本地访问  
+- 实施防火墙规则限制访问
+- 生产环境务必启用HTTPS
 
-## Best Practices
+### 代码执行风险
 
-### Environment Management
-- Use virtual environments for isolation
-- Document required dependencies
-- Version control your notebooks
-- Regular environment cleanup
+- AI具备完整的Python执行能力
+- 执行前请检查生成的代码
+- 敏感操作请使用隔离环境
+- 监控资源使用并设置限制
 
-### Performance Optimization
-- Start with simple operations
-- Monitor memory usage during execution
-- Close unused notebooks
-- Restart kernels when needed
+### 数据隐私
 
-### Effective Prompting
-- Be specific about desired outputs
-- Break complex tasks into steps
-- Ask for explanations with code
-- Request error handling in critical operations
+- 笔记本内容会被AI模型处理
+- 使用GPT-5等云端模型时数据会离开本地系统
+- 敏感数据请保存在安全环境中
+- 需考虑模型提供商的数据政策
 
-## Troubleshooting
+## 最佳实践
 
-**Connection Problems:**
-- Verify JupyterLab is running
-- Check token matches configuration
-- Confirm Docker can reach host
-- Test with curl to verify connectivity
+### 环境管理
 
-**Execution Failures:**
-- Check Python package availability
-- Verify kernel is running
-- Look for syntax errors in generated code
-- Restart kernel if stuck
+- 使用虚拟环境实现隔离
+- 记录必要的依赖项
+- 对笔记本进行版本控制
+- 定期清理环境
 
-**Tool Calling Errors:**
-- Ensure model supports tool calling
-- Verify all 12 tools appear in chat
-- Check MCP server is active
-- Review Docker logs for errors
+### 性能优化
 
-**API Rate Limits:**
-- Monitor OpenAI usage dashboard
-- Implement retry logic for transient errors
-- Consider fallback to local models
-- Cache results when possible
+- 从简单操作开始
+- 执行过程中监控内存使用
+- 关闭未使用的笔记本
+- 需要时重启内核
 
-## Conclusion
+### 高效提示技巧
 
-The Jupyter MCP integration combined with GPT-5's advanced capabilities creates an exceptionally powerful data science environment. With GPT-5's built-in reasoning and expert-level intelligence, complex analyses that once required extensive manual coding can now be accomplished through natural conversation.
+- 明确指定期望输出
+- 将复杂任务分解为步骤
+- 要求附带代码解释
+- 关键操作需包含错误处理
 
-Whether you're exploring data, building models, or creating visualizations, this integration provides the computational power of Jupyter with the intelligence of GPT-5 - all within Jan's privacy-conscious interface.
+## 故障排除
 
-Remember: with great computational power comes the responsibility to use it securely. Always validate generated code, use strong authentication, and be mindful of data privacy when using cloud-based models.
+**连接问题:**
+
+- 确认JupyterLab正在运行
+- 检查令牌与配置是否匹配
+- 确保Docker可访问主机
+- 使用curl测试连接性
+
+**执行失败:**
+
+- 检查Python包可用性
+- 确认内核正在运行
+- 检查生成代码中的语法错误
+- 卡顿时重启内核
+
+**工具调用错误:**
+
+- 确保模型支持工具调用
+- 验证所有12个工具是否出现在聊天中
+- 检查MCP服务器是否活跃
+- 查看Docker日志中的错误
+
+**API速率限制:**
+
+- 监控 OpenAI 使用情况仪表盘
+- 针对瞬时错误实施重试机制
+- 考虑回退到本地模型
+- 尽可能缓存结果
+
+## 结语
+
+Jupyter MCP 集成与 GPT-5 的先进能力相结合，创造出了异常强大的数据科学环境。借助 GPT-5 内置的推理能力和专家级智能，过去需要大量手动编码的复杂分析现在可以通过自然对话完成。
+
+无论是探索数据、构建模型还是创建可视化，该集成都能在 Jan 注重隐私的界面中，同时提供 Jupyter 的计算能力和 GPT-5 的智能。
+
+谨记：强大的计算能力伴随着安全使用的责任。使用基于云的模型时，务必验证生成的代码、采用强身份验证机制，并时刻注意数据隐私。

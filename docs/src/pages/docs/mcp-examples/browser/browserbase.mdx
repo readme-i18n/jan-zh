@@ -1,6 +1,7 @@
 ---
+
 title: Browserbase MCP
-description: Control browsers with natural language through Browserbase's cloud infrastructure.
+description: 通过Browserbase云基础设施实现自然语言控制浏览器
 keywords:
   [
     Jan,
@@ -19,257 +20,281 @@ import { Callout, Steps } from 'nextra/components'
 
 # Browserbase MCP
 
-[Browserbase MCP](https://docs.browserbase.com/integrations/mcp/introduction) gives AI models actual browser control through cloud infrastructure. Built on Stagehand, it lets you navigate websites, extract data, and interact with web pages using natural language commands.
+[Browserbase MCP](https://docs.browserbase.com/integrations/mcp/introduction) 通过云基础设施为AI模型提供真实的浏览器控制能力。基于Stagehand构建，允许使用自然语言命令导航网站、提取数据并与网页交互。
 
-The integration provides real browser sessions that AI can control, enabling tasks that go beyond simple web search APIs.
+该集成提供AI可控制的真实浏览器会话，实现超越简单网页搜索API的任务处理能力。
 
-## Available Tools
+## 可用工具
 
 <Callout type="info">
-Browserbase's MCP tools evolve over time. This list reflects current capabilities but may change.
+Browserbase的MCP工具会持续演进。当前列表反映现有功能，未来可能变更。
 </Callout>
 
-### Multi-Session Tools
-- `multi_browserbase_stagehand_session_create`: Create parallel browser sessions
-- `multi_browserbase_stagehand_session_list`: Track active sessions
-- `multi_browserbase_stagehand_session_close`: Clean up sessions
-- `multi_browserbase_stagehand_navigate_session`: Navigate in specific session
+### 多会话工具
 
-### Core Browser Actions
-- `browserbase_stagehand_navigate`: Navigate to URLs
-- `browserbase_stagehand_act`: Perform actions ("click the login button")
-- `browserbase_stagehand_extract`: Extract text content
-- `browserbase_stagehand_observe`: Find page elements
-- `browserbase_screenshot`: Capture screenshots
+- `multi_browserbase_stagehand_session_create`: 创建并行浏览器会话
+- `multi_browserbase_stagehand_session_list`: 追踪活跃会话
+- `multi_browserbase_stagehand_session_close`: 清理会话
+- `multi_browserbase_stagehand_navigate_session`: 在指定会话中导航
 
-### Session Management
-- `browserbase_session_create`: Create or reuse sessions
-- `browserbase_session_close`: Close active sessions
+### 核心浏览器操作
 
-## Prerequisites
+- `browserbase_stagehand_navigate`: 导航至指定URL
+- `browserbase_stagehand_act`: 执行操作（如"点击登录按钮"）
+- `browserbase_stagehand_extract`: 提取文本内容
+- `browserbase_stagehand_observe`: 查找页面元素
+- `browserbase_screenshot`: 截取屏幕截图
 
-- Jan with MCP enabled
-- Browserbase account (includes 60 minutes free usage)
-- Model with strong tool calling support
-- Node.js installed
+### 会话管理
+
+- `browserbase_session_create`: 创建或复用会话
+- `browserbase_session_close`: 关闭活动会话
+
+## 前置条件
+
+- 已启用MCP的Jan
+- Browserbase账户（包含60分钟免费使用时长）
+- 支持强大工具调用的模型
+- 已安装Node.js
 
 <Callout type="warning">
-Currently, only the latest Anthropic models handle multiple tools reliably. Other models may struggle with the full tool set.
+当前仅最新版Anthropic模型能可靠处理多个工具。其他模型可能无法完整支持全部工具集。
 </Callout>
 
-## Setup
+## 配置
 
-### Enable MCP
+### 启用MCP
 
-1. Go to **Settings** > **MCP Servers**
-2. Toggle **Allow All MCP Tool Permission** ON
+1. 进入**设置** > **MCP服务器**
+2. 将**允许所有MCP工具权限**切换为开启状态
 
-![MCP settings page with toggle enabled](../../_assets/mcp-on.png)
+![已启用切换按钮的MCP设置页面](../../_assets/mcp-on.png)
 
-### Get Browserbase Credentials
+### 获取Browserbase凭证
 
-1. Sign up at [browserbase.com](https://browserbase.com)
-   - Email verification required
-   - Phone number authentication
-   - Thorough security process
+1. 在[browserbase.com](https://browserbase.com)注册账号
+   - 需完成邮箱验证
+   - 手机号认证
+   - 严格的安全流程
 
-2. Access your dashboard and copy:
-   - **API Key** 
-   - **Project ID**
+2. 进入控制面板并复制：
+   - **API密钥**
+   - **项目ID**
 
-![Browserbase dashboard showing API key and project ID](../../_assets/browserbase.png)
+![显示API密钥和项目ID的Browserbase控制面板](../../_assets/browserbase.png)
 
-### Configure MCP Server
+### 配置MCP服务器
 
-Click `+` in MCP Servers section:
+在MCP服务器区域点击`+`：
 
-**NPM Package Configuration:**
-- **Server Name**: `browserbase`
-- **Command**: `npx`
-- **Arguments**: `@browserbasehq/mcp-server-browserbase`
-- **Environment Variables**:
-  - Key: `BROWSERBASE_API_KEY`, Value: `your-api-key`
-  - Key: `BROWSERBASE_PROJECT_ID`, Value: `your-project-id`
+**NPM包配置：**
 
-![Jan MCP server configuration with Browserbase settings](../../_assets/browserbase3.png)
+- **服务器名称**: `browserbase`
+- **命令**: `npx`
+- **参数**: `@browserbasehq/mcp-server-browserbase`
+- **环境变量**:
+  - 键: `BROWSERBASE_API_KEY`, 值: `your-api-key`
+  - 键: `BROWSERBASE_PROJECT_ID`, 值: `your-project-id`
 
-### Verify Setup
+![使用Browserbase设置的Jan MCP服务器配置](../../_assets/browserbase3.png)
 
-Check the tools bubble in chat to confirm Browserbase tools are available:
+### 验证设置
 
-![Chat interface showing available Browserbase tools](../../_assets/browserbase2.png)
+在聊天工具气泡中确认Browserbase工具可用:
 
-## Real Usage Example
+![显示可用Browserbase工具的聊天界面](../../_assets/browserbase2.png)
 
-### Live Information Query
+## 实际使用示例
+
+### 实时信息查询
 
 ```
 Which sports matches are happening right now in Australia (irrespective of the sport)?
 ```
 
-This simple query demonstrates browser automation in action:
+这个简单查询展示了浏览器自动化的实际应用:
 
-1. **Tool Activation**
-   - Model creates browser session
-   - Navigates to sports websites
-   - Extracts current match data
+1. **工具激活**
+   - 模型创建浏览器会话
+   - 导航至体育网站
+   - 提取当前比赛数据
 
-![Model using browser tools to search for information](../../_assets/browserbase5.png)
+![模型使用浏览器工具搜索信息](../../_assets/browserbase5.png)
 
-2. **Results Delivery**
-   - Real-time match information
-   - Multiple sports covered
-   - Current scores and timings
+2. **结果交付**
+   - 实时比赛信息
+   - 涵盖多项体育运动
+   - 当前比分和时间
 
-![Final response with Australian sports matches](../../_assets/browserbase6.png)
+![包含澳大利亚体育赛事的最终响应](../../_assets/browserbase6.png)
 
-The AI successfully found:
-- AFL matches with live scores
-- NRL games in progress
-- Upcoming Rugby Union fixtures
+AI成功找到:
 
-## Common Issues
+- 带实时比分的AFL比赛
+- 进行中的NRL赛事
+- 即将举行的橄榄球联盟赛程
 
-### Tool Call Failures
+## 常见问题
 
-Sometimes tool calls fail due to parsing issues:
+### 工具调用失败
 
-![Tool call error showing parsing problem](../../_assets/browserbase7.png)
+有时工具调用会因解析问题失败:
 
-**Solutions:**
-- Try rephrasing your prompt
-- Disable unnecessary tools
-- Use simpler, more direct requests
-- Switch to Claude 3.5+ Sonnet if using another model
+![显示解析问题的工具调用错误](../../_assets/browserbase7.png)
 
-### Model Limitations
+**解决方案:**
 
-Most models struggle with multiple tools. If experiencing issues:
-- Start with single-purpose requests
-- Build complexity gradually
-- Consider which tools are actually needed
-- Expect some trial and error initially
+- 尝试重新组织您的提示词
+- 禁用不必要的工具
+- 使用更简单直接的请求方式
+- 如果使用其他模型，请切换至 Claude 3.5+ Sonnet
 
-## Usage Limits
+### 模型限制
 
-**Free Tier:**
-- 60 minutes of browser time included
-- Sessions auto-terminate after 5 minutes inactivity
-- Can adjust timeout in Browserbase dashboard
-- Usage visible in dashboard analytics
+大多数模型难以处理多工具协同。如遇问题：
 
-**Session Management:**
-- Each browser session counts against time
-- Close sessions when done to conserve minutes
-- Multi-session operations consume time faster
+- 从单一功能请求开始
+- 逐步增加复杂度
+- 评估实际需要的工具
+- 初期需进行适当调试
 
-## Practical Use Cases
+## 使用限制
 
-### Real-Time Data Collection
+**免费层级：**
+
+- 包含60分钟浏览器使用时间
+- 5分钟无操作后会话自动终止
+- 可在Browserbase仪表板调整超时设置
+- 使用情况可见于仪表板分析
+
+**会话管理：**
+
+- 每个浏览器会话均计入使用时间
+- 完成后关闭会话以节省分钟数
+- 多会话操作会更快消耗时间
+
+## 实际用例
+
+### 实时数据采集
+
 ```
 Check current prices for MacBook Pro M4 at major Australian retailers and create a comparison table.
 ```
 
-### Form Testing
+### 表单测试
+
 ```
 Navigate to myservice.gov.au and walk through the Medicare claim process, documenting each required field.
 ```
 
-### Content Monitoring
+### 内容监控
+
 ```
 Visit ABC News Australia and extract the top 5 breaking news headlines with their timestamps.
 ```
 
-### Multi-Site Analysis
+### 多站点分析
+
 ```
 Compare flight prices from Sydney to Tokyo next week across Qantas, Jetstar, and Virgin Australia.
 ```
 
-### Automated Verification
+### 自动化验证
+
 ```
 Check if our company is listed correctly on Google Maps, Yelp, and Yellow Pages, noting any discrepancies.
 ```
 
-## Advanced Techniques
+## 高级技巧
 
-### Session Reuse
+### 会话复用
+
 ```
 Create a browser session, log into LinkedIn, then search for "AI engineers in Melbourne" and extract the first 10 profiles.
 ```
 
-### Parallel Operations
+### 并行操作
+
 ```
 Create three browser sessions: monitor stock prices on ASX, check crypto on CoinSpot, and track forex on XE simultaneously.
 ```
 
-### Sequential Workflows
+### 顺序工作流
+
 ```
 Go to seek.com.au, search for "data scientist" jobs in Sydney, apply filters for $150k+, then extract job titles and companies.
 ```
 
-## Optimization Tips
+## 优化建议
 
-**Prompt Engineering:**
-- Be specific about what to extract
-- Name exact websites when possible
-- Break complex tasks into steps
-- Specify output format clearly
+**提示词工程：**
 
-**Tool Selection:**
-- Use multi-session only when needed
-- Close sessions promptly
-- Choose observe before act when possible
-- Screenshot sparingly to save time
+- 明确指定需要提取的内容
+- 尽可能注明具体网站名称
+- 将复杂任务分解为步骤
+- 清晰定义输出格式
 
-**Error Recovery:**
-- Have fallback prompts ready
-- Start simple, add complexity
-- Watch for timeout warnings
-- Monitor usage in dashboard
+**工具选择：**
 
-## Troubleshooting
+- 仅在需要时使用多会话模式
+- 及时关闭会话
+- 优先选择观察而非操作
+- 谨慎使用截图以节省时间
 
-**Connection Issues:**
-- Verify API key and Project ID
-- Check Browserbase service status
-- Ensure NPX can download packages
-- Restart Jan after configuration
+**错误恢复：**
 
-**Browser Failures:**
-- Some sites block automation
-- Try different navigation paths
-- Check if site requires login
-- Verify target site is accessible
+- 准备备用提示词
+- 从简单开始，逐步增加复杂度
+- 注意超时警告
+- 在仪表盘中监控使用情况
 
-**Performance Problems:**
-- Reduce concurrent sessions
-- Simplify extraction requests
-- Check remaining time quota
-- Consider upgrading plan
+## 故障排除
 
-**Model Struggles:**
-- Too many tools overwhelm most models
-- Claude 3.5+ Sonnet most reliable
-- Reduce available tools if needed
-- Use focused, clear instructions
+**连接问题：**
+
+- 验证API密钥和项目ID
+- 检查Browserbase服务状态
+- 确保NPX可以下载包
+- 配置后重启Jan
+
+**浏览器故障：**
+
+- 部分网站会阻止自动化操作
+- 尝试不同的导航路径
+- 检查网站是否需要登录
+- 确认目标网站可访问
+
+**性能问题：**
+
+- 减少并发会话数
+- 简化提取请求
+- 检查剩余时间配额
+- 考虑升级套餐
+
+**模型处理困难：**
+
+- 过多工具会使大多数模型不堪重负
+- Claude 3.5+ Sonnet最为可靠
+- 必要时减少可用工具数量
+- 使用聚焦明确的指令
 
 <Callout type="info">
-Browser automation is complex. Expect occasional failures and be prepared to adjust your approach.
+浏览器自动化很复杂。预期偶尔会出现故障，并准备好调整您的方法。
 </Callout>
 
-## Browserbase vs Browser Use
+## Browserbase与浏览器使用对比
 
-| Feature | Browserbase | Browser Use |
+| 功能特性 | Browserbase | 浏览器直接使用 |
 |---------|-------------|-------------|
-| **Infrastructure** | Cloud browsers | Local browser |
-| **Setup Complexity** | API key only | Python environment |
-| **Performance** | Consistent | System dependent |
-| **Cost** | Usage-based | Free (local resources) |
-| **Reliability** | High | Variable |
-| **Privacy** | Cloud-based | Fully local |
+| **基础设施** | 云端浏览器 | 本地浏览器 |
+| **配置复杂度** | 仅需API密钥 | 需Python环境 |
+| **性能表现** | 稳定一致 | 依赖系统配置 |
+| **成本** | 按用量计费 | 免费(消耗本地资源) |
+| **可靠性** | 高 | 存在波动 |
+| **隐私性** | 基于云端 | 完全本地化 |
 
-## Next Steps
+## 后续步骤
 
-Browserbase MCP provides genuine browser automation capabilities, not just web search. This enables complex workflows like form filling, multi-site monitoring, and data extraction that would be impossible with traditional APIs.
+Browserbase MCP提供真实的浏览器自动化能力，而非简单的网页搜索。这使得复杂工作流成为可能，例如表单填写、多站点监控和数据提取，这些功能是传统API无法实现的。
 
-The cloud infrastructure handles browser complexity while Jan maintains conversational privacy. Just remember: with great browser power comes occasional parsing errors.
+云端基础设施处理了浏览器的复杂性，同时Jan保持对话隐私性。只需谨记：强大的浏览器能力偶尔会伴随解析错误。

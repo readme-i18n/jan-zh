@@ -1,6 +1,7 @@
 ---
-title: Local API Server
-description: Run Jan's OpenAI-compatible API server on your local machine for private, offline AI development.
+
+title: 本地 API 服务器
+description: 在本地机器上运行 Jan 的 OpenAI 兼容 API 服务器，用于私有化离线 AI 开发。
 keywords:
   [
     Jan,
@@ -17,26 +18,27 @@ keywords:
     API key
   ]
 ---
+
 import { Callout, Steps } from 'nextra/components'
 
-# Local API Server
+# 本地 API 服务器
 
-Jan provides a built-in, OpenAI-compatible API server that runs entirely on your computer, powered by `llama.cpp`. Use it as a drop-in replacement for cloud APIs to build private, offline-capable AI applications.
+Jan 内置了一个完全运行在您电脑上的 OpenAI 兼容 API 服务器，由 `llama.cpp` 驱动。可作为云端 API 的直接替代方案，用于构建私有化、支持离线运行的 AI 应用。
 
-![Jan's Local API Server Settings UI](./_assets/api-server-ui.png)
+![Jan 本地 API 服务器设置界面](./_assets/api-server-ui.png)
 
-## Quick Start
+## 快速开始
 
 <Steps>
-### Start the Server
-1.  Navigate to **Settings** > **Local API Server**.
-2.  Enter a custom **API Key** (e.g., `secret-key-123`). This is required for all requests.
-3.  Click **Start Server**.
+### 启动服务器
+1. 进入 **设置** > **本地 API 服务器**。
+2. 输入自定义 **API 密钥** (例如 `secret-key-123`)，所有请求都需要此密钥。
+3. 点击 **启动服务器**。
 
-The server is ready when the logs show `JAN API listening at http://127.0.0.1:1337`.
+当日志显示 `JAN API listening at http://127.0.0.1:1337` 时，服务器即准备就绪。
 
-### Test with cURL
-Open a terminal and make a request. Replace `YOUR_MODEL_ID` with the ID of an available model in Jan.
+### 使用 cURL 测试
+打开终端发起请求。将 `YOUR_MODEL_ID` 替换为 Jan 中可用模型的 ID。
 
 ```bash
 curl http://127.0.0.1:1337/v1/chat/completions \
@@ -49,52 +51,63 @@ curl http://127.0.0.1:1337/v1/chat/completions \
 ```
 </Steps>
 
-## Server Configuration
+## 服务器配置
 
-These settings control the network accessibility and basic behavior of your local server.
+这些设置控制本地服务器的网络访问权限和基本行为。
 
-### Server Host
-The network address the server listens on.
-- **`127.0.0.1`** (Default): The server is only accessible from your own computer. This is the most secure option for personal use.
-- **`0.0.0.0`**: The server is accessible from other devices on your local network (e.g., your phone or another computer). Use this with caution.
+### 服务器主机
 
-### Server Port
-The port number for the API server.
-- **`1337`** (Default): A common alternative port.
-- You can change this to any available port number (e.g., `8000`).
+服务器监听的网络地址。
 
-### API Prefix
-The base path for all API endpoints.
-- **`/v1`** (Default): Follows OpenAI's convention. The chat completions endpoint would be `http://127.0.0.1:1337/v1/chat/completions`.
-- You can change this or leave it empty if desired.
+- **`127.0.0.1`** (默认值)：仅允许本机访问。这是个人使用最安全的选项。
+- **`0.0.0.0`**：允许本地网络中的其他设备访问（例如手机或其他电脑）。使用时需谨慎。
 
-### API Key
-A mandatory secret key to authenticate requests.
-- You must set a key. It can be any string (e.g., `a-secure-password`).
-- All API requests must include this key in the `Authorization: Bearer YOUR_API_KEY` header.
+### 服务器端口
 
-### Trusted Hosts
-A comma-separated list of hostnames allowed to access the server. This provides an additional layer of security when the server is exposed on your network.
+API 服务运行的端口号。
 
-## Advanced Settings
+- **`1337`** (默认值)：常用替代端口。
+- 可更改为任意可用端口号（例如 `8000`）。
 
-### Cross-Origin Resource Sharing (CORS)
-- **(Enabled by default)** Allows web applications (like a custom web UI you are building) running on different domains to make requests to the API server.
-- **Disable this** if your API will only be accessed by non-browser-based applications (e.g., scripts, command-line tools) for slightly improved security.
+### API 前缀
 
-### Verbose Server Logs
-- **(Enabled by default)** Provides detailed, real-time logs of all incoming requests, responses, and server activity.
-- This is extremely useful for debugging application behavior and understanding exactly what is being sent to the models.
+所有 API 端点的基础路径。
 
-## Troubleshooting
+- **`/v1`** (默认值)：遵循 OpenAI 的惯例。聊天补全端点将形如 `http://127.0.0.1:1337/v1/chat/completions`。
+- 可根据需要修改或留空。
+
+### API 密钥
+
+用于请求鉴权的必填密钥。
+
+- 必须设置密钥，可为任意字符串（例如 `a-secure-password`）。
+- 所有 API 请求需在 `Authorization: Bearer YOUR_API_KEY` 请求头中包含该密钥。
+
+### 可信主机
+
+允许访问服务器的逗号分隔主机名列表。当服务器暴露在网络上时，这提供了额外的安全层。
+
+## 高级设置
+
+### 跨域资源共享 (CORS)
+
+- **(默认启用)** 允许运行在不同域上的 Web 应用程序（例如您正在构建的自定义 Web 界面）向 API 服务器发起请求。
+- 如果您的 API 仅会被非浏览器应用访问（例如脚本、命令行工具），可以**禁用此选项**以获得轻微的安全提升。
+
+### 详细服务器日志
+
+- **(默认启用)** 提供所有传入请求、响应及服务器活动的详细实时日志。
+- 这对调试应用程序行为及准确理解发送给模型的内容极为有用。
+
+## 故障排除
 
 <Callout>
-Ensure **Verbose Server Logs** are enabled to get detailed error messages in the "Server Logs" view.
+请确保启用**详细服务器日志**功能，以便在"服务器日志"视图中获取详细的错误信息。
 </Callout>
 
-- **Connection Refused:** The server is not running, or your application is pointing to the wrong host or port.
-- **401 Unauthorized:** Your API Key is missing from the `Authorization` header or is incorrect.
-- **404 Not Found:**
-    - The `model` ID in your request body does not match an available model in Jan.
-    - Your request URL is incorrect (check the API Prefix).
-- **CORS Error (in a web browser):** Ensure the CORS toggle is enabled in Jan's settings.
+- **连接被拒绝:** 服务器未运行，或您的应用程序指向了错误的主机或端口。
+- **401 未授权:** 请求头中缺少 `Authorization` 字段或 API 密钥错误。
+- **404 未找到:**
+    - 请求体中的 `model` ID 与 Jan 中可用模型不匹配。
+    - 请求 URL 错误（请检查 API 前缀）。
+- **CORS 错误（在浏览器中）:** 请确保 Jan 设置中已启用 CORS 开关。

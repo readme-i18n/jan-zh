@@ -1,6 +1,7 @@
 ---
+
 title: Tabby
-description: A step-by-step guide on integrating Jan with Tabby and VSCode, JetBrains, or other IDEs.
+description: 关于将 Jan 与 Tabby 及 VSCode、JetBrains 或其他 IDE 集成的分步指南
 keywords:
   [
     Jan,
@@ -22,48 +23,48 @@ import { Tabs, Steps } from 'nextra/components'
 
 # Tabby
 
-## Integrate Jan with Tabby and Your Favorite IDEs
+## 将 Jan 与 Tabby 及您喜爱的 IDE 集成
 
-[Tabby](https://www.tabbyml.com/) is an open-source, self-hosted AI coding assistant.
-With Tabby, teams can easily set up their own LLM-powered code completion server.
+[Tabby](https://www.tabbyml.com/) 是一个开源、自托管的 AI 编程助手。
+通过 Tabby，团队可以轻松搭建基于 LLM 的代码补全服务器。
 
-Tabby provides integrations with VSCode, JetBrains, and other IDEs to help developers code more efficiently,
-and it can be used with various LLM services, including Jan.
+Tabby 提供与 VSCode、JetBrains 等 IDE 的集成，帮助开发者更高效地编码，
+并能与包括 Jan 在内的多种 LLM 服务配合使用。
 
-To integrate Jan with Tabby, follow these steps:
+要将 Jan 与 Tabby 集成，请按照以下步骤操作：
 
 <Steps>
 
-### Step 1: Enable the Jan API Server
+### 步骤一：启用 Jan API 服务器
 
-To set up Tabby with Jan's Local Server, you must activate the Jan API Server with your chosen model.
+要将 Tabby 与 Jan 本地服务器集成，您需要先启动 Jan API 服务器并加载所选模型。
 
-1. Click the `Local API Server` (`<>`) button above the Settings. Jan will direct you to the **Local API Server** section.
-2. Configure the server, including the **IP Port**, **Cross-Origin Resource Sharing (CORS)**, and **Verbose Server Logs**.
-3. Press the **Start Server** button.
+1. 点击设置上方的 `Local API Server` (`<>`) 按钮，Jan 会引导您进入 **本地 API 服务器** 配置界面
+2. 配置服务器参数，包括 **IP 端口**、**跨域资源共享 (CORS)** 和 **详细服务器日志**
+3. 点击 **启动服务器** 按钮
 
-### Step 2: Find the Model ID and Ensure the Model is Activated
+### 步骤二：获取模型 ID 并确保模型已激活
 
-1. Go to `Settings` > `My Models`.
-2. Models are listed with their **Model ID** beneath their names.
-3. Click the **three dots (⋮)** button next to the model.
-4. Select **Start Model** to activate the model.
+1. 进入 `设置` > `我的模型`
+2. 模型名称下方会显示其对应的 **模型 ID**
+3. 点击模型旁的 **三点菜单 (⋮)** 按钮
+4. 选择 **启动模型** 来激活该模型
 
-### Step 3: Installing Tabby Server
+### 步骤三：安装 Tabby 服务器
 
-Use the following documentation to install the Tabby server:
+根据以下文档安装 Tabby 服务器：
 - [Docker](https://tabby.tabbyml.com/docs/quick-start/installation/docker/)
 - [Apple Silicon](https://tabby.tabbyml.com/docs/quick-start/installation/apple/)
 - [Linux](https://tabby.tabbyml.com/docs/quick-start/installation/linux/)
 - [Windows](https://tabby.tabbyml.com/docs/quick-start/installation/windows/)
 
-Then, follow the steps to connect Jan with the Tabby server:
-[Connect Jan with Tabby](https://tabby.tabbyml.com/docs/references/models-http-api/jan.ai/).
+然后按照指引将 Jan 与 Tabby 服务器连接：
+[连接 Jan 与 Tabby](https://tabby.tabbyml.com/docs/references/models-http-api/jan.ai/)
 
-For example, to connect Jan with Tabby, save the following configuration under `~/.tabby/config.toml`:
+例如，在 `~/.tabby/config.toml` 文件中保存以下配置：
 
 ```toml title="~/.tabby/config.toml"
-# Chat model
+# 聊天模型
 [model.chat.http]
 kind = "openai/chat"
 model_name = "model_id"
@@ -71,30 +72,30 @@ api_endpoint = "http://localhost:1337/v1"
 api_key = ""
 ```
 
-Currently, the Jan completion and embedding API is under construction.
-Once completed, you can also connect Jan with Tabby for completion and embedding tasks.
+当前 Jan 的补全和嵌入 API 仍在开发中。
+功能完成后，您也可以将 Jan 用于 Tabby 的代码补全和嵌入任务。
 
-### Step 4: Installing Tabby on Your Favorite IDEs
+### 步骤四：在 IDE 中安装 Tabby 插件
 
-Refer to the following documentation to install the Tabby extension on your favorite IDEs:
+参考以下文档在您常用的 IDE 中安装 Tabby 扩展：
 - [Visual Studio Code](https://tabby.tabbyml.com/docs/extensions/installation/vscode/)
-- [JetBrains IntelliJ Platform](https://tabby.tabbyml.com/docs/extensions/installation/intellij/)
+- [JetBrains IntelliJ 平台](https://tabby.tabbyml.com/docs/extensions/installation/intellij/)
 - [VIM / NeoVIM](https://tabby.tabbyml.com/docs/extensions/installation/vim/)
 
 </Steps>
 
-## How to Use Tabby with Jan Integration
+## 如何将 Tabby 与 Jan 集成使用
 
-### Answer Engine: Chat with Your Codes and Documentation
+### 问答引擎：与代码及文档对话
 
-Tabby offers an [Answer Engine](https://tabby.tabbyml.com/docs/administration/answer-engine/) on the homepage,
-which can leverage the Jan LLM and related contexts like code, documentation, and web pages to answer user questions.
+Tabby 在首页提供 [Answer Engine](https://tabby.tabbyml.com/docs/administration/answer-engine/) 功能，
+可利用 Jan 大语言模型及相关上下文（如代码、文档和网页内容）来回答用户问题。
 
-Simply open the Tabby homepage at [localhost:8080](http://localhost:8080) and ask your questions.
+只需访问 [localhost:8080](http://localhost:8080) 打开 Tabby 主页即可开始提问。
 
-### IDE Chat Sidebar
+### IDE 聊天侧边栏
 
-After installing the Tabby extension on your preferred IDEs, you can engage in a conversation with Jan to:
+在您常用的 IDE 中安装 Tabby 扩展后，可与 Jan 进行以下交互：
 
-1. Discuss your code, receive suggestions, and seek assistance.
-2. Request Jan to inline edit your code, and then review and accept the proposed changes.
+1. 讨论代码、获取建议并寻求帮助
+2. 请求 Jan 内联编辑代码，然后审阅并采纳修改建议

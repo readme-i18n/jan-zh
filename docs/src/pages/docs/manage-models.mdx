@@ -1,6 +1,7 @@
 ---
-title: Managing Models
-description: Manage your interaction with AI models locally.
+
+title: 模型管理
+description: 本地管理您与AI模型的交互
 keywords:
   [
     Jan,
@@ -17,100 +18,113 @@ keywords:
     thread history,
   ]
 ---
+
 import { Callout, Steps } from 'nextra/components'
 import { Settings, Trash2, EllipsisVertical, Plus, FolderOpen, Pencil } from 'lucide-react'
 
+# 模型管理
 
-# Model Management
+本指南将展示如何在Jan中添加、自定义和删除模型
 
-This guide shows you how to add, customize, and delete models within Jan.
+## 本地模型
 
-## Local Model
+本地模型通过[Llama.cpp](https://github.com/ggerganov/llama.cpp)进行管理，这些模型采用GGUF格式。当您在本地运行它们时，会占用计算机内存(RAM)和处理器资源，因此请确保下载与您操作系统硬件规格相匹配的模型：
 
-Local models are managed through [Llama.cpp](https://github.com/ggerganov/llama.cpp), and these models are in a
-format called GGUF. When you run them locally, they will use your computer's memory (RAM) and processing power, so
-please make sure that you download models that match the hardware specifications for your operating system:
 - [Mac](/docs/desktop/mac#compatibility)
 - [Windows](/docs/desktop/windows#compatibility)
-- [Linux](/docs/desktop/linux#compatibility).
+- [Linux](/docs/desktop/linux#compatibility)
 
-### Adding Models
+### 添加模型
 
-#### 1. Download from Jan Hub (Recommended)
+#### 1. 从Jan Hub下载（推荐）
 
-The easiest way to get started is using Jan's built-in model hub (which is connected to [HuggingFace's Model Hub](https://huggingface.co/models):
-1. Go to the **Hub** tab
-2. Browse available models and click on any model to see details about it
-3. Choose a model that fits your needs & hardware specifications
-4. Click **Download** on your chosen model
+最简单的方式是使用Jan内置的模型中心（该中心连接至[HuggingFace的模型库](https://huggingface.co/models)：
+
+1. 进入**Hub**标签页
+2. 浏览可用模型并点击任意模型查看详情
+3. 选择符合您需求及硬件规格的模型
+4. 在所选模型上点击**Download**按钮
 
 <Callout type="info">
-Jan will indicate if a model might be **Slow on your device** or **Not enough RAM** based on your system specifications.
+Jan 会根据您的系统配置，标注模型可能**在您的设备上运行缓慢**或**内存不足**的情况。
 </Callout>
 
 <br/>
-![Download Model](./_assets/model-management-01.png)
-<br/>
 
-#### 2. Import from [Hugging Face](https://huggingface.co/)
-
-You can download models with a direct link from Hugging Face:
-
-**Note:** Some models require a Hugging Face Access Token. Enter your token in **Settings > Model Providers > Hugging Face** before importing.
-
-1. Visit the [Hugging Face Models](https://huggingface.co/models) page.
-2. Find the model you want to use, make sure it is a GGUF file that fits in your computer.
-3. Copy the **model ID** (e.g., TheBloke/Mistral-7B-v0.1-GGUF)
-4. In Jan, paste the model ID to the **Search** bar in **Hub** page
-5. Select your preferred quantized version to download (if the option is available)
+![下载模型](./_assets/model-management-01.png)
 
 <br/>
-**Copy the model ID.**
-![Find HF Model](./_assets/hf-unsloth.png)
+
+#### 2. 从 [Hugging Face](https://huggingface.co/) 导入
+
+您可以通过 Hugging Face 的直接链接下载模型：
+
+**注意：** 部分模型需要 Hugging Face 访问令牌。导入前请前往**设置 > 模型供应商 > Hugging Face**输入您的令牌。
+
+1. 访问 [Hugging Face 模型库](https://huggingface.co/models)
+2. 找到目标模型，确保是适合您电脑的 GGUF 格式文件
+3. 复制**模型 ID**（例如 TheBloke/Mistral-7B-v0.1-GGUF）
+4. 在 Jan 的**Hub**页面搜索栏粘贴模型 ID
+5. 选择您偏好的量化版本下载（如可选）
 
 <br/>
-**Paste it in Jan's Hub Search Bar.**
-![Import Model](./_assets/model-management-02.png)
+
+**复制模型 ID。**
+![查找 HF 模型](./_assets/hf-unsloth.png)
+
 <br/>
 
-#### 3. Import Local Files
+**粘贴到 Jan 的 Hub 搜索栏。**
+![导入模型](./_assets/model-management-02.png)
 
-If you already have one or many GGUF model files on your computer:
-1. In Jan, go to **Settings > Model Providers > Llama.cpp**
-2. Click **Import** and select your GGUF file(s)
-3. Choose how you want to import:
-  - **Link Files:** Creates symbolic links to your model files (saves space)
-  - **Duplicate:** Makes a copy of model files in Jan's directory
-4. Click **Import** to complete (check the [Jan Data Folder](./data-folder) section for more info)
+<br/>
+
+#### 3. 导入本地文件
+
+如果您的电脑已存有 GGUF 模型文件：
+
+1. 在 Jan 中进入**设置 > 模型供应商 > Llama.cpp**
+2. 点击**导入**并选择 GGUF 文件
+3. 选择导入方式：
+
+- **链接文件：** 创建模型文件的符号链接（节省空间）
+  - **复制：** 在 Jan 目录生成文件副本
+
+4. 点击**导入**完成操作（更多信息请查看 [Jan 数据文件夹](./data-folder) 章节）
 
 <Callout type="warning">
-You need to own your **model configurations**, use at your own risk. Misconfigurations may result in lower
-quality or unexpected outputs. Learn about [model configurations here](./model-parameters).
+您需要自行管理**模型配置**，使用风险自负。配置错误可能导致输出质量下降或产生意外结果。了解[模型配置详情](./model-parameters)。
 </Callout>
 
 <br/>
-![Download Model](./_assets/model-management-04.png)
+
+![下载模型](./_assets/model-management-04.png)
+
 <br/>
 
 <br/>
-![Download Model](./_assets/model-import-04.png)
+
+![下载模型](./_assets/model-import-04.png)
+
 <br/>
 
 <br/>
-![Download Model](./_assets/model-import-05.png)
+
+![下载模型](./_assets/model-import-05.png)
+
 <br/>
 
-#### 4. Manual Setup
+#### 4. 手动设置
 
-For advanced users who want to add a specific model that is not available within the Jan **Hub**:
+适用于希望在 Jan **Hub** 之外添加特定模型的高级用户：
 
 <Steps>
-##### Step 1: Create Model File
-1. Navigate to the [Jan Data Folder](./data-folder)
-2. Open `models` folder
-3. Create a new **Folder** for your model
-4. Add your `model.gguf` file
-5. Add your `model.json` file with your configuration. Here's an example with "TinyLlama Chat 1.1B Q4":
+##### 第一步：创建模型文件
+1. 进入 [Jan 数据文件夹](./data-folder)
+2. 打开 `models` 文件夹
+3. 为您的模型创建一个新**文件夹**
+4. 添加您的 `model.gguf` 文件
+5. 添加包含配置的 `model.json` 文件。以下是 "TinyLlama Chat 1.1B Q4" 的示例：
 
 ```json
 {
@@ -151,14 +165,11 @@ For advanced users who want to add a specific model that is not available within
   "engine": "nitro"
 }
 ```
-##### Step 2: Modify Model Parameters
+##### 第二步：修改模型参数
 
-Key fields to configure:
-1. The **Settings** array is where you can set the path or location of your model in your computer, the context
-length allowed, and the chat template expected by your model.
-2. The [**Parameters**](/docs/model-parameters) are the adjustable settings that affect how your model operates or
-processes the data. The fields in the parameters array are typically general and can be used across different
-models. Here is an example of model parameters:
+关键配置字段：
+1. **Settings** 数组用于设置模型在计算机中的路径或位置、允许的上下文长度以及模型预期的聊天模板。
+2. [**Parameters**](/docs/model-parameters) 是可调整的设置，影响模型的运行方式或数据处理。参数数组中的字段通常是通用的，可以跨不同模型使用。以下是模型参数的示例：
 
 ```json
 "parameters":{
@@ -172,33 +183,38 @@ models. Here is an example of model parameters:
 ```
 </Steps>
 
-### Delete Models
-1. Go to **Settings > Model Providers > Llama.cpp**
-2. Find the model you want to remove
-3. Select the three dots <EllipsisVertical width={16} height={16} style={{display:"inline"}}/> icon next to it and select **Delete Model**
+### 删除模型
+
+1. 进入 **设置 > 模型供应商 > Llama.cpp**
+2. 找到需要移除的模型
+3. 点击模型旁的三个点 <EllipsisVertical width={16} height={16} style={{display:"inline"}}/> 图标并选择 **删除模型**
 
 <br/>
-![Delete Model](./_assets/model-management-05.png)
+
+![删除模型](./_assets/model-management-05.png)
+
 <br/>
 
-
-## Cloud Models
+## 云端模型
 
 <Callout type="info">
-When using cloud models, be aware of any associated costs and rate limits from the providers. See detailed guide for
-each cloud model provider [here](/docs/remote-models/anthropic).
+使用云端模型时请注意供应商相关的费用和速率限制。各云端模型供应商的详细指南请参见[此处](/docs/remote-models/anthropic)。
 </Callout>
 
-Jan supports connecting to various AI cloud providers that are OpenAI API-compatible, including: OpenAI (GPT-4o, o3,...),
-Anthropic (Claude), Groq, Mistral, and more.
-1. Navigate to **Settings** (<Settings width={16} height={16} style={{display:"inline"}}/>)
-2. Under **Model Providers** section in the left sidebar, choose your preferred provider (OpenAI, Anthropic, etc.)
-3. Enter your API key
-4. The activated cloud models will be available in your model selector inside the **Chat** panel
+Jan 支持连接多种兼容 OpenAI API 的云端 AI 供应商，包括：OpenAI (GPT-4o, o3,...)、Anthropic (Claude)、Groq、Mistral 等。
+
+1. 导航至 **设置** (<Settings width={16} height={16} style={{display:"inline"}}/>)
+2. 在左侧边栏的 **模型供应商** 部分选择目标供应商（OpenAI、Anthropic 等）
+3. 输入您的 API 密钥
+4. 激活的云端模型将出现在 **聊天** 面板的模型选择器中
 
 <br/>
-![Download Model](./_assets/model-management-06.png)
+
+![下载模型](./_assets/model-management-06.png)
+
 <br/>
-As soon as you add your key for a model provider like Anthropic or OpenAI, you will be able to pick one of their models to chat with.
-![Connect Remote APIs](./_assets/quick-start-03.png)
+
+当您为 Anthropic 或 OpenAI 等供应商添加密钥后，即可选择其模型进行对话。
+![连接远程API](./_assets/quick-start-03.png)
+
 <br/>

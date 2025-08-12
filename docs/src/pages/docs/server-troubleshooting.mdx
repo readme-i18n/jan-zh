@@ -1,6 +1,7 @@
 ---
-title: Troubleshooting
-description: Fix common issues and optimize Jan's performance with this comprehensive guide.
+
+title: 故障排除
+description: 通过本综合指南解决常见问题并优化 Jan 的性能。
 keywords:
   [
     Jan,
@@ -18,21 +19,23 @@ keywords:
 import { Tabs } from 'nextra/components'
 import { Callout, Steps } from 'nextra/components'
 
-# Troubleshooting
+# 故障排除
 
-## Getting Help: Error Logs
+## 获取帮助：错误日志
 
-When Jan isn't working properly, error logs help identify the problem. Here's how to get them:
+当 Jan 运行异常时，错误日志有助于定位问题。以下是获取日志的方法：
 
-### Quick Access to Logs
+### 快速访问日志
 
-**In Jan Interface:**
-1. Look for **System Monitor** in the footer
-2. Click **App Log**
+**在 Jan 界面中：**
 
-![App log](./_assets/trouble-shooting-02.png)
+1. 在页脚查找 **System Monitor**
+2. 点击 **App Log**
 
-**Via Terminal:**
+![应用日志](./_assets/trouble-shooting-02.png)
+
+**通过终端：**
+
 ```bash
 # macOS/Linux
 tail -n 50 ~/Library/Application\ Support/Jan/data/logs/app.log
@@ -42,14 +45,14 @@ type %APPDATA%\Jan\data\logs\app.log
 ```
 
 <Callout type="warning">
-Remove any personal information before sharing logs. We only keep logs for 24 hours.
+分享日志前请移除所有个人信息。我们仅保留24小时的日志记录。
 </Callout>
 
-## Common Issues & Solutions
+## 常见问题及解决方案
 
-### Jan Won't Start (Broken Installation)
+### Jan 无法启动（安装损坏）
 
-If Jan gets stuck after installation or won't start properly:
+如果安装后 Jan 卡住或无法正常启动：
 
 <Tabs items={['macOS', 'Windows', 'Linux']}>
 <Tabs.Tab>
@@ -129,112 +132,116 @@ kill -9 <PID>
 </Tabs>
 
 <Callout type="info">
-Make sure Jan is completely removed from all user accounts before reinstalling.
+重新安装前请确保已从所有用户账户中完全移除 Jan。
 </Callout>
 
-### NVIDIA GPU Not Working
+### NVIDIA GPU 无法工作
 
-If Jan isn't using your NVIDIA graphics card for acceleration:
+如果 Jan 未使用您的 NVIDIA 显卡进行加速：
 
 <Steps>
 
-### Step 1: Check Your Hardware Setup
+### 步骤 1：检查硬件配置
 
-**Verify GPU Detection:**
+**验证 GPU 识别情况：**
 
-*Windows:* Right-click desktop → NVIDIA Control Panel, or check Device Manager → Display Adapters
+*Windows:* 右键桌面 → NVIDIA 控制面板，或检查设备管理器 → 显示适配器
 
-*Linux:* Run `lspci | grep -i nvidia`
+*Linux:* 运行 `lspci | grep -i nvidia`
 
-**Install Required Software:**
+**安装必备软件：**
 
-**NVIDIA Driver (470.63.01 or newer):**
-1. Download from [nvidia.com/drivers](https://www.nvidia.com/drivers/)
-2. Test: Run `nvidia-smi` in terminal
+**NVIDIA 驱动程序 (470.63.01 或更新版本)：**
+1. 从 [nvidia.com/drivers](https://www.nvidia.com/drivers/) 下载
+2. 测试：在终端运行 `nvidia-smi`
 
-**CUDA Toolkit (11.7 or newer):**
-1. Download from [CUDA Downloads](https://developer.nvidia.com/cuda-downloads)
-2. Test: Run `nvcc --version`
+**CUDA 工具包 (11.7 或更新版本)：**
+1. 从 [CUDA Downloads](https://developer.nvidia.com/cuda-downloads) 下载
+2. 测试：运行 `nvcc --version`
 
-**Linux Additional Requirements:**
+**Linux 额外要求：**
 ```bash
-# Install required packages
+# 安装必备软件包
 sudo apt update && sudo apt install gcc-11 g++-11 cpp-11
 
-# Set CUDA environment
+# 设置 CUDA 环境
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
 ```
 
-### Step 2: Enable GPU Acceleration in Jan
+### 步骤 2：在 Jan 中启用 GPU 加速
 
-1. Open **Settings** > **Hardware**
-2. Turn on **GPU Acceleration**
-3. Check **System Monitor** (footer) to verify GPU is detected
+1. 打开 **设置** > **硬件**
+2. 开启 **GPU 加速**
+3. 检查 **系统监视器** (底部状态栏) 确认 GPU 已被识别
 
-![Hardware](./_assets/trouble-shooting-01.png)
+![硬件](./_assets/trouble-shooting-01.png)
 
-### Step 3: Verify Configuration
+### 步骤 3：验证配置
 
-1. Go to **Settings** > **Advanced Settings** > **Data Folder**
-2. Open `settings.json` file
-3. Check these settings:
+1. 进入 **设置** > **高级设置** > **数据文件夹**
+2. 打开 `settings.json` 文件
+3. 检查以下设置：
 
 ```json
 {
-  "run_mode": "gpu",          // Should be "gpu"
+  "run_mode": "gpu",          // 应为 "gpu"
   "nvidia_driver": {
-    "exist": true,            // Should be true
+    "exist": true,            // 应为 true
     "version": "531.18"
   },
   "cuda": {
-    "exist": true,            // Should be true
+    "exist": true,            // 应为 true
     "version": "12"
   },
   "gpus": [
     {
       "id": "0",
-      "vram": "12282"         // Your GPU memory in MB
+      "vram": "12282"         // 显存容量 (单位 MB)
     }
   ]
 }
 ```
 
-### Step 4: Restart Jan
+### 步骤 4：重启 Jan
 
-Close and restart Jan to apply changes.
+关闭并重新启动 Jan 以应用更改。
 
 </Steps>
 
-#### Tested Working Configurations
+#### 已验证可用的配置方案
 
-**Desktop Systems:**
-- Windows 11 + RTX 4070Ti + CUDA 12.2 + Driver 531.18
-- Ubuntu 22.04 + RTX 4070Ti + CUDA 12.2 + Driver 545
+**桌面系统：**
 
-**Virtual Machines:**
-- Ubuntu on Proxmox + GTX 1660Ti + CUDA 12.1 + Driver 535
+- Windows 11 + RTX 4070Ti + CUDA 12.2 + 驱动 531.18
+- Ubuntu 22.04 + RTX 4070Ti + CUDA 12.2 + 驱动 545
+
+**虚拟机环境：**
+
+- Proxmox 上的 Ubuntu + GTX 1660Ti + CUDA 12.1 + 驱动 535
 
 <Callout type="info">
-Desktop installations perform better than virtual machines. VMs need proper GPU passthrough setup.
+桌面安装方案性能优于虚拟机。虚拟机需正确配置 GPU 直通功能。
 </Callout>
 
-### "Failed to Fetch" or "Something's Amiss" Errors
+### "获取失败"或"出现异常"错误处理
 
-When models won't respond or show these errors:
+当模型无响应或显示以下错误时：
 
-**1. Check System Requirements**
-- **RAM:** Use models under 80% of available memory
-  - 8GB system: Use models under 6GB
-  - 16GB system: Use models under 13GB
-- **Hardware:** Verify your system meets [minimum requirements](/docs/troubleshooting#step-1-verify-hardware-and-system-requirements)
+**1. 检查系统要求**
 
-**2. Adjust Model Settings**
-- Open model settings in the chat sidebar
-- Lower the **GPU Layers (ngl)** setting
-- Start low and increase gradually
+- **内存：** 使用不超过可用内存80%的模型
+  - 8GB系统：使用小于6GB的模型
+  - 16GB系统：使用小于13GB的模型
+- **硬件：** 确认系统符合[最低要求](/docs/troubleshooting#step-1-verify-hardware-and-system-requirements)
 
-**3. Check Port Conflicts**
-If logs show "Bind address failed":
+**2. 调整模型设置**
+
+- 在聊天侧边栏打开模型设置
+- 降低 **GPU层数(ngl)** 参数
+- 从较低值开始逐步增加
+
+**3. 检查端口冲突**
+若日志显示"绑定地址失败"：
 
 ```bash
 # Check if ports are in use
@@ -245,24 +252,26 @@ netstat -an | grep 1337
 netstat -ano | find "1337"
 ```
 
-**Default Jan ports:**
-- API Server: `1337`
-- Documentation: `3001`
+**Jan默认端口：**
 
-**4. Try Factory Reset**
-1. **Settings** > **Advanced Settings**
-2. Click **Reset** under "Reset To Factory Settings"
+- API服务端：`1337`
+- 文档服务：`3001`
+
+**4. 尝试恢复出厂设置**
+
+1. 进入**设置** > **高级设置**
+2. 点击"恢复出厂设置"下的**重置**按钮
 
 <Callout type="warning">
-This deletes all chat history, models, and settings.
+此操作将删除所有聊天记录、模型及设置。
 </Callout>
 
-**5. Clean Reinstall**
-If problems persist, do a complete clean installation (see "Jan Won't Start" section above).
+**5. 完全重新安装**
+如果问题仍然存在，请执行完全干净的安装（参考上文"Jan无法启动"部分）。
 
-### Permission Denied Errors
+### 权限拒绝错误
 
-If you see permission errors during installation:
+如果安装过程中出现权限错误：
 
 ```bash
 # Fix npm permissions (macOS/Linux)
@@ -271,57 +280,65 @@ sudo chown -R $(whoami) ~/.npm
 # Windows - run as administrator
 ```
 
-### OpenAI API Issues ("Unexpected Token")
+### OpenAI API问题（"意外令牌"错误）
 
-For OpenAI connection problems:
+针对OpenAI连接问题：
 
-**1. Verify API Key**
-- Get valid key from [OpenAI Platform](https://platform.openai.com/)
-- Ensure sufficient credits and permissions
+**1. 验证API密钥**
 
-**2. Check Regional Access**
-- Some regions have API restrictions
-- Try using a VPN from a supported region
-- Test network connectivity to OpenAI endpoints
+- 从[OpenAI平台](https://platform.openai.com/)获取有效密钥
+- 确保账户有足够余额和权限
 
-### Performance Issues
+**2. 检查地区访问限制**
 
-**Models Running Slowly:**
-- Enable GPU acceleration (see NVIDIA section)
-- Use appropriate model size for your hardware
-- Close other memory-intensive applications
-- Check Task Manager/Activity Monitor for resource usage
+- 某些地区存在API限制
+- 尝试使用支持地区的VPN连接
+- 测试到OpenAI端点的网络连通性
 
-**High Memory Usage:**
-- Switch to smaller model variants
-- Reduce context length in model settings
-- Enable model offloading in engine settings
+### 性能问题
 
-**Frequent Crashes:**
-- Update graphics drivers
-- Check system temperature
-- Reduce GPU layers if using GPU acceleration
-- Verify adequate power supply (desktop systems)
+**模型运行缓慢：**
 
-## Need More Help?
+- 启用GPU加速（参考NVIDIA部分）
+- 根据硬件选择适当规模的模型
+- 关闭其他内存密集型应用
+- 通过任务管理器/活动监视器检查资源占用
 
-If these solutions don't work:
+**内存占用过高：**
 
-**1. Gather Information:**
-- Copy your error logs (see top of this page)
-- Note your system specifications
-- Describe what you were trying to do when the problem occurred
+- 切换至更小的模型变体
+- 在模型设置中减少上下文长度
+- 在引擎设置中启用模型卸载
 
-**2. Get Community Support:**
-- Join our [Discord](https://discord.com/invite/FTk2MvZwJH)
-- Post in the **#🆘|jan-help** channel
-- Include your logs and system info
+**频繁崩溃：**
 
-**3. Check Resources:**
-- [System requirements](/docs/troubleshooting#step-1-verify-hardware-and-system-requirements)
-- [Model compatibility guides](/docs/manage-models)
-- [Hardware setup guides](/docs/desktop/)
+- 更新显卡驱动
+- 检查系统温度
+- 如果使用GPU加速，减少GPU层数
+- 确保电源供应充足（台式机系统）
+
+## 需要更多帮助？
+
+如果以上方案无效：
+
+**1. 收集信息：**
+
+- 复制错误日志（参见本页顶部）
+- 记录您的系统配置
+- 描述问题发生时您正在执行的操作
+
+**2. 获取社区支持：**
+
+- 加入我们的 [Discord](https://discord.com/invite/FTk2MvZwJH)  
+- 在 **#🆘|jan-help** 频道发帖  
+- 附上您的日志和系统信息
+
+**3. 查阅资源：**
+
+- [系统要求](/docs/troubleshooting#step-1-verify-hardware-and-system-requirements)  
+- [模型兼容性指南](/docs/manage-models)  
+- [硬件设置指南](/docs/desktop/)
 
 <Callout type="info">
-When sharing logs, remove personal information first. We only keep logs for 24 hours, so report issues promptly.
+分享日志前请先移除个人信息。我们仅保留日志24小时，请及时报告问题。
 </Callout>

@@ -1,6 +1,7 @@
 ---
+
 title: Jan Nano 32k
-description: Jan-Nano-Gguf Model
+description: Jan-Nano-Gguf 模型
 keywords:
   [
     Jan,
@@ -22,115 +23,105 @@ import { Callout } from 'nextra/components'
 
 ![Jan Nano](../_assets/jan-nano0.png)
 
-## Why Jan Nano?
+## 为什么选择 Jan Nano？
 
-Most language models face a fundamental tradeoff where powerful capabilities require a lot of computational resources. Jan 
-Nano breaks this constraint through a focused design philosophy where instead of trying to know everything, it excels at 
-knowing how to find anything.
+大多数语言模型都面临一个根本性的权衡：强大的能力需要大量计算资源。Jan Nano 通过专注的设计理念打破了这一限制——它不追求无所不知，而是擅长于知晓如何找到任何信息。
 
+## 什么是 Jan Nano？
 
-## What is Jan Nano?
+Jan Nano 是一个紧凑的 40 亿参数语言模型，专为深度研究任务设计和训练。该模型已优化以与模型上下文协议（MCP）服务器无缝协作，实现与各类研究工具和数据源的高效集成。
 
-Jan Nano is a compact 4-billion parameter language model specifically designed and trained for deep research tasks. 
-This model has been optimized to work seamlessly with Model Context Protocol (MCP) servers, enabling efficient integration 
-with various research tools and data sources.
-
-The model and its different model variants are fully supported by Jan.
+该模型及其不同变体版本均得到 Jan 的完整支持。
 
 <Callout type="info">
-  To use Jan-Nano, you will need to use a search engine via MCP. You can enable MCP in the **Settings** 
-  tab under **Advanced Settings**.
+  使用 Jan-Nano 需要通过 MCP 连接搜索引擎。您可在**设置**选项卡的**高级设置**中启用 MCP 功能。
 </Callout>
 
+## 系统要求
 
-## System Requirements
+- 最低要求：
+  - 8GB 内存（使用 iQ4_XS 量化版本）
+  - 12GB 显存（用于 Q8 量化版本）
+  - 兼容 CUDA 的 GPU
+- 推荐配置：
+  - 16GB 以上内存
+  - 16GB 以上显存
+  - 最新 CUDA 驱动
+  - RTX 30/40 系列或更新显卡
 
-- Minimum Requirements:
-  - 8GB RAM (with iQ4_XS quantization)
-  - 12GB VRAM (for Q8 quantization)
-  - CUDA-compatible GPU
-- Recommended Setup:
-  - 16GB+ RAM
-  - 16GB+ VRAM
-  - Latest CUDA drivers
-  - RTX 30/40 series or newer
+## 使用 Jan-Nano-32k
 
+**第一步**  
+从[这里](https://jan.ai/docs/desktop/)下载Jan应用。
 
-## Using Jan-Nano-32k
-
-**Step 1**
-Download Jan from [here](https://jan.ai/docs/desktop/).
-
-**Step 2**
-Go to the Hub Tab, search for Jan-Nano-Gguf, and click on the download button to the best model size for your system.
+**第二步**  
+进入Hub标签页，搜索Jan-Nano-Gguf，点击下载按钮选择最适合您系统配置的模型尺寸。
 
 ![Jan Nano](../_assets/jan-nano1.png)
 
-**Step 3**
-Go to **Settings** > **Model Providers** > **Llama.cpp** click on the pencil icon and enable tool use for Jan-Nano-Gguf.
+**第三步**  
+前往**设置** > **模型提供商** > **Llama.cpp**，点击铅笔图标并为Jan-Nano-Gguf启用工具使用功能。
 
-**Step 4**
-To take advantage of Jan-Nano's full capabilities, you need to enable MCP support. We're going to use it with Serper's 
-API. You can get a free API key from [here](https://serper.dev/). Sign up and they will immediately generate one for you.
+**第四步**  
+要充分发挥Jan-Nano的全部功能，需启用MCP支持。我们将结合Serper的API使用。您可以从[这里](https://serper.dev/)获取免费API密钥，注册后系统会立即生成密钥。
 
-**Step 5**
-Add the serper MCP to Jan via the **Settings** > **MCP Servers** tab.
+**第五步**  
+通过**设置** > **MCP服务器**标签页将Serper MCP添加到Jan中。
 
 ![Serper MCP](../_assets/serper-mcp.png)
 
-**Step 6**
-Open up a new chat and ask Jan-Nano to search the web for you.
+**第六步**  
+新建聊天会话，让Jan-Nano为您执行网络搜索。
 
 ![Jan Nano](../_assets/jan-nano-demo.gif)
 
-## Queries to Try
+## 尝试查询
 
-Here are some example queries to showcase Jan-Nano's web search capabilities:
+以下示例查询可展示Jan-Nano的网络搜索能力：
 
-1. **Current Events**: What are the latest developments in renewable energy adoption in Germany and Denmark?
-2. **International Business**: What is the current status of Tesla's Gigafactory in Berlin and how has it impacted the local economy?
-3. **Technology Trends**: What are the newest AI developments from Google, Microsoft, and Meta that were announced this week?
-4. **Global Weather**: What's the current weather forecast for Tokyo, Japan for the next 5 days?
-5. **Stock Market**: What are the current stock prices for Apple, Samsung, and Huawei, and how have they performed this month?
-6. **Sports Updates**: What are the latest results from the Premier League matches played this weekend?
-7. **Scientific Research**: What are the most recent findings about climate change impacts in the Arctic region?
-8. **Cultural Events**: What major music festivals are happening in Europe this summer and who are the headliners?
-9. **Health & Medicine**: What are the latest developments in mRNA vaccine technology and its applications beyond COVID-19?
-10. **Space Exploration**: What are the current missions being conducted by NASA, ESA, and China's space program?
+1. **时事动态**: 德国与丹麦在可再生能源应用领域有哪些最新进展？
+2. **国际商业**: 特斯拉柏林超级工厂目前建设情况如何？对当地经济产生了哪些影响？
+3. **科技趋势**: 谷歌、微软和Meta本周公布了哪些人工智能领域的最新发展？
+4. **全球天气**: 日本东京未来5天的天气预报如何？
+5. **股市行情**: 苹果、三星和华为的当前股价是多少？本月表现如何？
+6. **体育快讯**: 本周末英超联赛的最新赛果有哪些？
+7. **科学研究**: 关于北极地区气候变化影响的最新研究发现是什么？
+8. **文化活动**: 今年夏季欧洲有哪些大型音乐节？主要参演艺人是谁？
+9. **健康医疗**: mRNA疫苗技术除COVID-19外还有哪些最新应用进展？
+10. **太空探索**: 美国宇航局、欧洲航天局和中国航天计划当前正在执行哪些任务？
 
+## 常见问题
 
-## FAQ
+- 推荐的 GGUF 量化版本有哪些？
+  - 追求最佳性能推荐使用 Q8 GGUF
+  - 显存严重受限时建议选择 iQ4_XS GGUF
+  - 应避免使用 Q4_0 和 Q4_K_M，因其存在显著性能下降
 
-- What are the recommended GGUF quantizations?
-  - Q8 GGUF is recommended for best performance
-  - iQ4_XS GGUF for very limited VRAM setups
-  - Avoid Q4_0 and Q4_K_M as they show significant performance degradation
+- 8GB 内存的笔记本电脑能否运行？
+  - 可以，但需选用推荐量化版本（iQ4_XS）
+  - 注意 Q4 量化版本可能限制性能表现
 
-- Can I run this on a laptop with 8GB RAM?
-  - Yes, but use the recommended quantizations (iQ4_XS)
-  - Note that performance may be limited with Q4 quantizations
+- 训练成本是多少？
+  - 训练在内部 A6000 集群完成
+  - 使用 H200 在 RunPod 上预估成本低于 100 美元
+  - 硬件配置：
+    - 训练代码使用 8 块 A6000
+    - 推理服务使用 4 块 A6000 (vllm 服务器)
 
-- How much did the training cost?
-  - Training was done on internal A6000 clusters
-  - Estimated cost on RunPod would be under $100 using H200
-  - Hardware used:
-    - 8xA6000 for training code
-    - 4xA6000 for vllm server (inferencing)
+- 推荐使用什么前端界面？
+  - Jan Beta（推荐）- 极简且精致的界面
+  - 下载链接：https://jan.ai/docs/desktop/beta
 
-- What frontend should I use?
-  - Jan Beta (recommended) - Minimalistic and polished interface
-  - Download link: https://jan.ai/docs/desktop/beta
+- 在 LM Studio 遇到 Jinja 错误？
+  - 改用其他 LM Studio 兼容模型的 Qwen3 模板
+  - 禁用"thinking"功能并添加必需的系统提示
+  - 后续 GGUF 版本将修复此问题
+- Jan 出现模型加载问题？
+  - 使用最新测试版：Jan-beta_0.5.18-rc6-beta
+  - 确保 GPU 具备正确的 CUDA 支持
+  - 检查显存是否符合所选量化版本要求
 
-- Getting Jinja errors in LM Studio?
-  - Use Qwen3 template from other LM Studio compatible models
-  - Disable “thinking” and add the required system prompt
-  - Fix coming soon in future GGUF releases
-- Having model loading issues in Jan?
-  - Use latest beta version: Jan-beta_0.5.18-rc6-beta
-  - Ensure proper CUDA support for your GPU
-  - Check VRAM requirements match your quantization choice
+## 相关资源
 
-## Resources
-
-- [Jan-Nano Model on Hugging Face](https://huggingface.co/Menlo/Jan-nano)
-- [Jan-Nano GGUF on Hugging Face](https://huggingface.co/Menlo/Jan-nano-gguf)
+- [Jan-Nano 模型在 Hugging Face](https://huggingface.co/Menlo/Jan-nano)
+- [Jan-Nano GGUF 在 Hugging Face](https://huggingface.co/Menlo/Jan-nano-gguf)

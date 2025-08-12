@@ -1,6 +1,7 @@
 ---
+
 title: Mac
-description: Get started quickly with Jan - a local AI that runs on your computer. Install Jan and pick your model to start chatting.
+description: 快速开始使用 Jan - 一款运行在您电脑上的本地 AI。安装 Jan 并选择模型即可开始对话。
 keywords:
   [
     Jan,
@@ -24,120 +25,125 @@ import { Tabs } from 'nextra/components'
 import FAQBox from '@/components/FaqBox'
 import { Callout, Steps } from 'nextra/components'
 
+# Mac 安装指南
 
+Jan 原生支持 Apple Silicon 和 Intel 芯片的 Mac 设备。
 
-# Mac Installation
-Jan runs natively on both Apple Silicon and Intel-based Macs.
+## 兼容性要求
 
-## Compatibility
-### Minimum Requirements
-Your Mac needs:
-- **Operating System:** MacOSX 13.6 or higher
-- **Memory:**
-  - 8GB → up to 3B parameter models
-  - 16GB → up to 7B parameter models
-  - 32GB → up to 13B parameter models
-- **Storage:** 10GB+ free space
+### 最低配置
 
-### Mac Performance Guide
+您的 Mac 需要满足：
+
+- **操作系统:** MacOSX 13.6 或更高版本
+- **内存:**
+  - 8GB → 可运行最高 30 亿参数模型
+  - 16GB → 可运行最高 70 亿参数模型
+  - 32GB → 可运行最高 130 亿参数模型
+- **存储空间:** 10GB 以上可用空间
+
+### Mac 性能指南
+
 <Callout type="info">
-**Apple Silicon Macs** use Metal for GPU acceleration, making them faster than **Apple Intel Macs**, which operate on CPU only.
+**Apple Silicon 芯片 Mac** 默认启用 Metal GPU 加速，性能优于仅支持 CPU 运算的 **Intel 芯片 Mac**。
 </Callout>
+
 **Apple Silicon (M1, M2, M3)**
-- Metal acceleration enabled by default
-- GPU-accelerated processing
 
-**Intel-based Mac**
-- CPU processing only
-- Standard performance
+- 默认启用 Metal 加速
+- 支持 GPU 加速运算
 
-_Check your Mac's processor: Apple menu → About This Mac_
+**Intel 芯片 Mac**
 
-## Install Jan
+- 仅支持 CPU 运算
+- 标准性能表现
 
-Installation steps:
+_查看处理器信息：点击左上角苹果菜单 → 关于本机_
+
+## 安装 Jan
+
+安装步骤：
 
 <Steps>
 
-### Step 1: Download Application
+### 第一步：下载应用程序
 
-Select version:
-<Tabs items={['Stable Release', 'Beta Release', 'Nightly Release']}>
+选择版本：
+<Tabs items={['稳定版', '测试版', '每日构建版']}>
 <Tabs.Tab>
-Get Jan from here:
+从这里获取 Jan：
 
-- [Download Jan's Stable Version](https://app.jan.ai/download/latest/mac-universal)
-- Official Website: https://jan.ai/download
+- [下载 Jan 稳定版](https://app.jan.ai/download/latest/mac-universal)
+- 官方网站：https://jan.ai/download
 
 </Tabs.Tab>
 <Tabs.Tab>
 
-Beta: New features with potential instability.
+测试版：包含新功能但可能存在不稳定因素。
 
-[Download Jan's Beta Version](https://app.jan.ai/download/beta/mac-universal)
+[下载 Jan 测试版](https://app.jan.ai/download/beta/mac-universal)
 
 <Callout type="warning">
-May contain bugs.
+可能包含程序错误。
 </Callout>
 </Tabs.Tab>
 <Tabs.Tab>
 
-Nightly: Latest features, less stable.
+每日构建版：最新功能，稳定性较低。
 
-[Download Jan's Nightly Version](https://app.jan.ai/download/nightly/mac-universal)
+[下载 Jan 每日构建版](https://app.jan.ai/download/nightly/mac-universal)
 
 <Callout type="info">
-Expect potential instability.
+预期可能存在不稳定情况。
 </Callout>
 </Tabs.Tab>
 </Tabs>
 
 
-### Step 2: Install Application
+### 第二步：安装应用程序
 
-1. Open the Jan installer (`.dmg` file)
-2. Drag Jan to **Applications**
-3. Wait a moment
-4. Launch Jan
+1. 打开 Jan 安装程序（`.dmg` 文件）
+2. 将 Jan 拖拽至 **应用程序** 文件夹
+3. 稍等片刻
+4. 启动 Jan
 
 </Steps>
 
+## Jan 数据文件夹
 
-## Jan Data Folder
-
-Default location:
+默认位置：
 
 ```sh
 # Default installation directory
 ~/Library/Application\ Support/Jan/data
 ```
-See [Jan Data Folder](/docs/data-folder) for details.
 
+详情请参阅 [Jan 数据文件夹](/docs/data-folder)。
 
-## Uninstall Jan
+## 卸载 Jan
 
 <Steps>
 
-### Step 1: Remove Application
-1. Close Jan if it's running
-2. Open **Finder**
-3. Go to **Applications**
-4. Find Jan
-5. Pick your removal method:
-  - Drag to **Trash**
-  - Right-click → **Move to Trash**
-  - **Command-Delete**
+### 第一步：移除应用程序
+1. 如果 Jan 正在运行，请先关闭
+2. 打开 **访达**
+3. 进入 **应用程序** 文件夹
+4. 找到 Jan
+5. 选择移除方式：
+  - 拖拽至 **废纸篓**
+  - 右键点击 → **移到废纸篓**
+  - **Command-Delete** 快捷键
 
-### Step 2: Clean Up Data (Optional)
+### 第二步：清理数据（可选）
 
-Run this in **Terminal** to remove all data:
+在 **终端** 中运行以下命令以删除所有数据：
 ```bash
 rm -rf ~/Library/Application\ Support/Jan/data
 ```
 </Steps>
 
 <Callout type="warning">
-This permanently deletes all data. Create backups if needed.
+此操作将永久删除所有数据。如有需要，请提前创建备份。
 </Callout>
 
 {/* ## FAQs

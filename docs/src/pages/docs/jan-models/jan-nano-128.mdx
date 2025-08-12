@@ -1,6 +1,7 @@
 ---
+
 title: Jan Nano 128k
-description: Jan Models
+description: Jan 模型
 keywords:
   [
     Jan,
@@ -20,87 +21,75 @@ import { Callout } from 'nextra/components'
 
 # Jan-Nano-128k
 
-> Enabling deeper research through extended context understanding.
+> 通过扩展上下文理解能力推动深度研究
 
-Jan-Nano-128k represents a notable advancement in compact language models for different applications. Building upon the 
-success of Jan-Nano-32k, this enhanced version features a native 128k context window that enables deeper, more comprehensive 
-research capabilities without the performance degradation typically associated with context extension methods.
+Jan-Nano-128k 在紧凑型语言模型领域实现了显著突破。基于 Jan-Nano-32k 的成功基础，该增强版本具备原生 128k 上下文窗口，可在不损失性能的前提下实现更深层次、更全面的研究能力，避免了传统上下文扩展方法常见的性能下降问题。
 
-You can have a look at all of our models, and download them from the HuggingFace [Menlo Models page](https://huggingface.co/Menlo).
+您可以通过 [Menlo Models 页面](https://huggingface.co/Menlo)查看并下载我们所有的模型。
 
-**Key Improvements:**
+**核心改进：**
 
-- 🔍 Deeper Research: Extended context allows for processing entire research papers, lengthy documents, and complex multi-turn conversations
-- ⚡ Native 128k Window: Built to handle long contexts efficiently, maintaining performance across the full context range
-- 📈 Enhanced Performance: Unlike traditional context extension methods, Jan-Nano-128k's performance remains consistent with longer contexts
+- 🔍 深度研究：扩展的上下文窗口可处理完整的研究论文、长篇文档和复杂的多轮对话
+- ⚡ 原生 128k 窗口：专为高效处理长上下文设计，在整个上下文范围内保持性能稳定
+- 📈 性能提升：与传统上下文扩展方法不同，Jan-Nano-128k 在长上下文场景下仍能保持一致的性能表现
 
-This model maintains full compatibility with Model Context Protocol (MCP) servers while dramatically expanding the scope of research 
-tasks it can handle in a single session.
+该模型完全兼容模型上下文协议 (MCP) 服务器，同时显著扩展了单次会话中可处理的研究任务范围。
 
+## 为什么选择 Jan-Nano-128k？
 
-## Why Jan-Nano-128k?
+大多数小型模型在8-32k tokens时会遇到性能瓶颈。而Jan-Nano-128k通过原生支持的128k上下文窗口突破了这一限制——相当于能同时处理约300页文本或一整部小说的信息量。
 
-Most small models hit a wall at 8-32k tokens. Jan-Nano-128k goes beyond this limitation with a native 128k context window—that's roughly 
-300 pages of text or an entire novel's worth of information processed simultaneously.
-
-Unlike YaRN or PI methods that retrofit models beyond their limits and degrade performance, Jan-Nano-128k was architecturally rewired for 
-128k contexts from the ground up. The result: an inverse scaling behavior where performance actually improves with longer contexts, 
-maintaining consistent accuracy from 1k to 128k tokens as the model leverages more information for synthesis.
-
+与YaRN或PI等方法通过改造模型强行突破限制导致性能下降不同，Jan-Nano-128k是从底层架构上为128k上下文重新设计的。其结果是展现出逆向缩放特性：随着上下文增长性能反而提升，在1k到128k tokens范围内保持稳定的准确性，因为模型能利用更多信息进行综合推理。
 
 <Callout type="info">
-**Position Interpolation (PI):** A method that extends a model's context by scaling down position indices to fit within the original context 
-window. For example, to extend a 4k model to 32k, PI compresses the 32k positions into the original 4k range by dividing each position by 8.
+**位置插值法(PI):** 通过缩放位置索引使其适配原始上下文窗口来扩展模型上下文的方法。例如要将4k模型扩展到32k，PI会将32k位置压缩至原始4k范围，具体做法是将每个位置除以8。
 
-**YaRN (Yet another RoPE extensioN method):** A more sophisticated context extension method that preserves frequently occurring tokens while 
-selectively scaling others. YaRN divides position embeddings into frequency groups and applies different scaling factors to each, resulting 
-in more efficient training and better performance than PI.
+**YaRN(另一种RoPE扩展方法):** 更复杂的上下文扩展方法，能保留高频出现的token同时选择性缩放其他token。YaRN将位置嵌入划分为不同频率组并对每组应用不同缩放因子，相比PI能实现更高效的训练和更优的性能。
 
-The key difference is that PI applies uniform scaling across all dimensions, while YaRN uses targeted interpolation based on frequency analysis—preserving 
-high-frequency information that's crucial for distinguishing nearby tokens while interpolating lower frequencies more aggressively.
+关键区别在于：PI对所有维度应用统一缩放，而YaRN基于频率分析进行针对性插值——保留对区分邻近token至关重要的高频信息，同时对低频信息进行更激进的插值处理。
 </Callout>
 
-**Applications unlocked:**
-- **Academic**: Extract key findings from 50+ papers simultaneously
-- **Legal**: Pinpoint relevant clauses across thousand-page contracts
-- **Code**: Trace specific functions through massive codebases
-- **Business**: Distill insights from quarters of financial data
-- **Content**: Maintain narrative coherence across book-length outputs
+**解锁的应用场景:**
 
-**MCP Usage:** Jan-Nano-128k doesn't memorize, it orchestrates. With MCP integration, it becomes a research conductor that fetches dozens 
-of sources, holds everything in active memory, extracts precisely what's needed, and synthesizes findings across a marathon research session. It's 
-not about understanding every word; it's about finding the needle in a haystack of haystacks.
+- **学术研究**: 同时从50+篇论文中提取关键发现  
+- **法律领域**: 在千页合同中精确定位相关条款
+- **代码分析**: 在大型代码库中追踪特定函数
+- **商业智能**: 从季度财务数据中提炼洞察
+- **内容创作**: 保持书籍长度输出的叙事连贯性
 
-## Evaluation
+**MCP 使用说明：** Jan-Nano-128k 不进行记忆存储，而是执行智能编排。通过 MCP 集成，它化身为研究指挥家——能同时调取数十个数据源，将所有内容保持在活跃内存中，精准提取所需信息，并在马拉松式研究会话中完成成果合成。其核心价值不在于逐字理解，而在于实现海量数据中的精准定位。
 
-Jan-Nano-128k has been rigorously evaluated on the SimpleQA benchmark using our MCP-based methodology, demonstrating superior performance compared to its predecessor:
+## 性能评估
 
-![Jan-Nano-128k Performance](../_assets/jan-nano-bench.png)
+基于我们的 MCP 方法论，Jan-Nano-128k 已在 SimpleQA 基准测试中经过严格验证，相较前代模型展现出显著优势：
 
-**Key findings:**
-- 15% improvement over Jan-Nano-32k on complex multi-document tasks
-- Consistent performance across all context lengths (no cliff at 64k like other extended models)
-- Superior citation accuracy when handling 10+ sources simultaneously
+![Jan-Nano-128k 性能表现](../_assets/jan-nano-bench.png)
 
-## 🖥️ How to Run Locally
+**核心发现：**
 
-### Demo
+- 复杂多文档任务处理能力较 Jan-Nano-32k 提升 15%
+- 全上下文长度下表现稳定（无其他扩展模型在 64k 处的性能断崖）
+- 同步处理 10+ 数据源时具有卓越的引用准确性
+
+## 🖥️ 本地运行指南
+
+### 演示
 
 <video width="100%" controls>
   <source src="/assets/videos/jan-nano-demo.mp4" type="video/mp4" />
   Your browser does not support the video tag.
 </video>
 
-### Quick Start Guide
+### 快速入门
 
-1. **Download Jan**
-2. **Download Jan-Nano-128k**
-3. **Enable MCP**, the serper or the exa MCPs work very well with Jan-Nano-128k
-4. **Start researching**
+1. **下载 Jan 框架**
+2. **获取 Jan-Nano-128k 模型**
+3. **启用 MCP**（serper 或 exa MCP 与 Jan-Nano-128k 适配性最佳）
+4. **开始研究**
 
-### Usage
+### 使用方法
 
-Deploy using VLLM:
+通过 VLLM 部署：
 
 ```bash
 vllm serve Menlo/Jan-nano-128k \
@@ -111,15 +100,15 @@ vllm serve Menlo/Jan-nano-128k \
  --rope-scaling '{"rope_type":"yarn","factor":3.2,"original_max_position_embeddings":40960}' --max-model-len 131072
 ```
 
-Or with `llama-server` from `llama.cpp`:
+或使用 `llama.cpp` 的 `llama-server`：
 
 ```bash
 llama-server ... --rope-scaling yarn --rope-scale 3.2 --yarn-orig-ctx 40960
 ```
 
-**Note:** The chat template is included in the tokenizer. For troubleshooting, download the [Non-think chat template](https://qwen.readthedocs.io/en/latest/_downloads/c101120b5bebcc2f12ec504fc93a965e/qwen3_nonthinking.jinja).
+**注意：** 聊天模板已集成在分词器中。故障排查请下载 [Non-think 聊天模板](https://qwen.readthedocs.io/en/latest/_downloads/c101120b5bebcc2f12ec504fc93a965e/qwen3_nonthinking.jinja)。
 
-### Recommended Sampling Parameters
+### 推荐采样参数
 
 ```yaml
 Temperature: 0.7
@@ -128,12 +117,14 @@ Top-k: 20
 Min-p: 0.0
 ```
 
-### Hardware Requirements
-- **Minimum**: 16GB RAM for Q4 quantization
-- **Recommended**: 24GB RAM for Q8 quantization
-- **Optimal**: 32GB+ RAM for full precision
+### 硬件要求
 
-## 🤝 Community & Support
-- **Discussions**: [HuggingFace Community](https://huggingface.co/Menlo/Jan-nano-128k/discussions)
-- **Issues**: [GitHub Repository](https://github.com/menloresearch/deep-research/issues)
-- **Discord**: Join our research community for tips and best practices
+- **最低配置**: 16GB 内存（适用于 Q4 量化）
+- **推荐配置**: 24GB 内存（适用于 Q8 量化）
+- **最佳配置**: 32GB+ 内存（适用于全精度模式）
+
+## 🤝 社区与支持
+
+- **讨论区**: [HuggingFace 社区](https://huggingface.co/Menlo/Jan-nano-128k/discussions)
+- **问题反馈**: [GitHub 仓库](https://github.com/menloresearch/deep-research/issues)
+- **Discord**: 加入我们的研究社区获取技巧与最佳实践

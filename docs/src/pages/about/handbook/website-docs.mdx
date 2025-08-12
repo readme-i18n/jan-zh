@@ -1,6 +1,7 @@
 ---
-title: Website & Docs
-description: Information about the Jan website and documentation.
+
+title: 网站与文档
+description: 关于Jan网站及文档的相关信息
 keywords:
   [
     Jan,
@@ -17,34 +18,34 @@ keywords:
   ]
 ---
 
-# Website & Docs
+# 网站与文档
 
-This website is built using [Docusaurus 3.0](https://docusaurus.io/), a modern static website generator.
+本网站使用现代静态网站生成器 [Docusaurus 3.0](https://docusaurus.io/) 构建
 
-## Information Architecture
+## 信息架构
 
-We try to **keep routes consistent** to maintain SEO.
+我们努力**保持路由一致性**以维护SEO效果
 
-- **`/guides/`**: Guides on how to use the Jan application. For end users who are directly using Jan.
+- **`/guides/`**: Jan应用程序使用指南，面向直接使用Jan的终端用户
 
-- **`/developer/`**: Developer docs on how to extend Jan. These pages are about what people can build with our software.
+- **`/developer/`**: 关于如何扩展Jan的开发者文档，这些页面介绍用户能基于我们的软件构建什么
 
-- **`/api-reference/`**: Reference documentation for the Jan API server, written in Swagger/OpenAPI format.
+- **`/api-reference/`**: Jan API服务器的参考文档，采用Swagger/OpenAPI格式编写
 
-- **`/changelog/`**: A list of changes made to the Jan application with each release.
+- **`/changelog/`**: Jan应用程序各版本的变更记录
 
-- **`/blog/`**: A blog for the Jan application.
+- **`/blog/`**: Jan应用程序的官方博客
 
-## How to Contribute
+## 如何贡献
 
-Refer to the [Contributing Guide](https://github.com/menloresearch/jan/blob/dev/CONTRIBUTING.md) for more comprehensive information on how to contribute to the Jan project.
+请参阅[贡献指南](https://github.com/menloresearch/jan/blob/dev/CONTRIBUTING.md)获取关于如何参与Jan项目开发的完整信息
 
-## Pre-requisites and Installation
+## 环境要求与安装
 
-- [Node.js](https://nodejs.org/en/) (version 20.0.0 or higher)
-- [yarn](https://yarnpkg.com/) (version 1.22.0 or higher)
+- [Node.js](https://nodejs.org/en/) (20.0.0或更高版本)
+- [yarn](https://yarnpkg.com/) (1.22.0或更高版本)
 
-### Installation
+### 安装
 
 ```bash
 cd jan/docs
@@ -54,36 +55,36 @@ cd jan/docs
 yarn install && yarn start
 ```
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+该命令会启动本地开发服务器并自动打开浏览器窗口。大多数更改都能实时反映，无需重启服务器。
 
-### Build
+### 构建
 
 ```bash
 yarn build
 ```
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+此命令将静态内容生成到 `build` 目录中，可通过任何静态内容托管服务进行部署。
 
-### Deployment
+### 部署指南
 
-Using SSH:
+使用 SSH：
 
 ```bash
 USE_SSH=true yarn deploy
 ```
 
-Not using SSH:
+不使用 SSH：
 
 ```bash
 GIT_USER=<Your GitHub username> yarn deploy
 ```
 
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+若使用 GitHub Pages 进行托管，该命令可便捷地构建网站并推送至 `gh-pages` 分支。
 
-### Preview URL, Pre-release and Publishing Documentation
+### 预览链接、预发布与文档发布
 
-- When a pull request is created, the preview URL will be automatically commented on the pull request.
+- 创建拉取请求时，系统会自动在请求中评论预览链接
 
-- The documentation will then be published to [https://dev.jan.ai/](https://dev.jan.ai/) when the pull request is merged to `main`.
+- 当拉取请求合并至 `main` 分支后，文档将发布至 [https://dev.jan.ai/](https://dev.jan.ai/)
 
-- Our open-source maintainers will sync the updated content from `main` to `release` branch, which will then be published to [https://jan.ai/](https://jan.ai/).
+- 我们的开源维护者会将 `main` 分支的更新内容同步至 `release` 分支，随后发布至 [https://jan.ai/](https://jan.ai/)

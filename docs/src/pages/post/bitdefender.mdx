@@ -1,6 +1,7 @@
 ---
-title: 'Bitdefender False Positive Flag'
-description: "10th January 2024, Jan's 0.4.4 Release on Windows triggered Bitdefender to incorrectly flag it as infected with Gen:Variant.Tedy.258323, leading to automatic quarantine warnings on users' computers."
+
+title: 'Bitdefender 误报事件'
+description: "2024年1月10日，Jan 0.4.4版本在Windows平台发布时触发Bitdefender错误标记为感染Gen:Variant.Tedy.258323病毒，导致用户计算机出现自动隔离警告。"
 date: 2024-01-10
 tags: postmortem, bitdefender
 categories: building-jan
@@ -27,73 +28,74 @@ keywords:
 
 import CTABlog from '@/components/Blog/CTA'
 
-# Bitdefender False Positive Flag
+# Bitdefender 误报事件
 
-Following the recent incident related to Jan version 0.4.4 triggering Bitdefender on Windows with Gen:Variant.Tedy.258323 on January 10, 2024, we wanted to provide a comprehensive postmortem and outline the necessary follow-up actions.
+针对2024年1月10日Jan 0.4.4版本在Windows平台触发Bitdefender误报Gen:Variant.Tedy.258323病毒的事件，我们现提供完整的事后分析报告并概述后续应对措施。
 
-## Incident Overview
+## 事件概述
 
-### Bug Description
+### 问题描述
 
-Jan 0.4.4 installation on Windows triggered Bitdefender to flag it as infected with Gen:Variant.Tedy.258323, leading to automatic quarantine.
+Jan 0.4.4在Windows平台安装时触发Bitdefender将其误判为感染Gen:Variant.Tedy.258323病毒，导致程序被自动隔离。
 
-### Affected Antivirus
+### 受影响的杀毒软件
 
-- McAfee / Microsoft Defender was unaffected
-- Bitdefender consistently flagged the issue.
+- McAfee / Microsoft Defender 未受影响
+- Bitdefender 持续触发误报
 
-### Incident Timeline
+### 事件时间线
 
-- _10 Jan, 2:18 am SGT:_ Hawke flags up Malware antivirus errors for 0.4.4 installation on Windows computers.
-- _10 Jan, 2:21 am SGT:_ @0xSage responds in Discord.
-- _10 Jan, 2:35 am SGT:_ Hawke confirms multiple people have experienced this error on fresh installs.
-- _10 Jan, 2:41 am SGT:_ @louis-jan and @dan-jan revert 0.4.4 out of an abundance of caution.
-- _Incident ongoing:_ To triage and investigate the next day.
-- _10 Jan, 11:36 am SGT:_ @Hien has investigated all versions of Nitro and conducted scans using Bitdefender. Only the 2 latest versions raised warnings (0.2.7, 0.2.8).
-- _10 Jan, 12:44 pm SGT:_ @Hien tested again for the 0.2.6 and suggested using 0.2.6 for now, the 2 remaining Nitro version (0.2.7, 0.2.8) will under further investigation.
-- The team started testing on the fixed build.
-- _10 Jan, 3:22 pm SGT:_ Diagnosis found that it's most likely a false positive. @Hien has only found a solution by attempting to build Nitro Windows CPU on a GitHub-hosted runner and hasn't identified the root cause yet.
-- _10 Jan, 5:24 pm SGT:_ @Hien testing two scenarios and still trying to understand the workings of Bitdefender.
-- _11 Jan, 5:46 pm SGT:_ Postmortem meeting
+- _1月10日 凌晨2:18 新加坡时间:_ Hawke报告Windows电脑安装0.4.4版本时触发恶意软件杀毒软件报错
+- _1月10日 凌晨2:21 新加坡时间:_ @0xSage在Discord作出回应
+- _1月10日 凌晨2:35 新加坡时间:_ Hawke确认多人在全新安装时遭遇此错误
+- _1月10日 凌晨2:41 新加坡时间:_ @louis-jan和@dan-jan出于谨慎考虑回退0.4.4版本
+- _事件持续中:_ 次日将进行问题分类调查
+- _1月10日 上午11:36 新加坡时间:_ @Hien检查了所有Nitro版本并使用Bitdefender扫描。仅最近两个版本触发警告(0.2.7, 0.2.8)
+- _1月10日 中午12:44 新加坡时间:_ @Hien重新测试0.2.6版本，建议暂时使用0.2.6，剩余两个Nitro版本(0.2.7, 0.2.8)将进行深入调查
+- 团队开始测试修复后的构建版本
+- _1月10日 下午3:22 新加坡时间:_ 诊断发现很可能是误报。@Hien仅通过在GitHub托管运行器上构建Nitro Windows CPU找到解决方案，尚未确定根本原因
+- _1月10日 下午5:24 新加坡时间:_ @Hien正在测试两种场景，仍试图理解Bitdefender的工作原理
+- _1月11日 下午5:46 新加坡时间:_ 召开事后分析会议
 
-## Investigation Update
+## 调查更新
 
-- @Hien has investigated all versions of Nitro and conducted scans using Bitdefender. and only the 2 latest versions raised warnings from Bitdefender. Nitro 0.2.6, which is the highest version without the issue, was tested again, and it no longer triggers a warning from Bitdefender.
-- We have observed that Nitro versions up to 0.2.6 remain unaffected. However, Bitdefender flags versions 0.2.7 and 0.2.8 as infected, leading to the deletion. In order to proceed with the current release, Hien suggests downgrading Nitro to version 0.2.6 and conducting tests with this version. Simultaneously, he will investigate why Bitdefender is flagging versions 0.2.7 and 0.2.8.
-- It's essential to note that between versions 0.2.6, 0.2.7, and 0.2.8, only minor changes were made, which should not trigger a malicious code warning. We can refer to the changelog between 0.2.7 and 0.2.8 to pinpoint these changes.
-- Our primary message is to convey that we did not introduce malicious code into Jan (indicating a false positive), and the investigation aims to understand the root cause behind Bitdefender flagging versions 0.2.7 and 0.2.8.
-- The current diagnosis looks like a false positive but it's still under investigation. Reference link: [here](https://stackoverflow.com/questions/75886428/fake-positive-bit-defender-problem-genvariant-tedy-304469), [here](https://stackoverflow.com/questions/58010466/bitdefender-detects-my-console-application-as-genvariant-ursu-56053), and [here](https://www.cisa.gov/sites/default/files/2023-06/mar-10365227.r1.v1.clear_.pdf).
-- @Hien testing two scenarios and still trying to understand the workings of Bitdefender. Still under investigation: is the issue with the code or the CI?
-  - In Case 1, using the same CI agent for tags 0.2.6 and 0.2.8, after PRs by Alan and myself, Bitdefender flagged the Nitro CPU binary build. Naturally, one would conclude this is due to the code.
-  - However, I proceeded with a further experiment: for the 0.2.8 code, instead of using our CI agent, I used a GitHub hosted agent. This time, Bitdefender did not flag our binary build.
-- We've identified the Bitdefender warning was not an attack. There is no malicious code
-- We've isolated the event to originate from a CI agent, which resulted in a BitDefender false positive alert.
+- @Hien 已调查所有 Nitro 版本并使用 Bitdefender 进行扫描，仅最新的两个版本触发了 Bitdefender 警告。重新测试了无此问题的最高版本 Nitro 0.2.6，确认不再触发 Bitdefender 警告。
+- 我们观察到 Nitro 0.2.6 及以下版本不受影响，但 Bitdefender 将 0.2.7 和 0.2.8 版本标记为感染并删除。为推进当前发布，Hien 建议降级至 Nitro 0.2.6 版本进行测试，同时他将调查 Bitdefender 标记 0.2.7 和 0.2.8 版本的原因。
+- 需要强调的是，0.2.6、0.2.7 和 0.2.8 版本间仅进行了微小改动，这些变更不应触发恶意代码警告。我们可以参考 0.2.7 和 0.2.8 版本的变更日志来定位具体改动。
+- 核心信息是：我们未在 Jan 中引入恶意代码（属误报），调查旨在查明 Bitdefender 标记 0.2.7 和 0.2.8 版本的根本原因。
+- 当前诊断显示为误报，但仍在调查中。参考链接：[此处](https://stackoverflow.com/questions/75886428/fake-positive-bit-defender-problem-genvariant-tedy-304469)、[此处](https://stackoverflow.com/questions/58010466/bitdefender-detects-my-console-application-as-genvariant-ursu-56053) 及 [此处](https://www.cisa.gov/sites/default/files/2023-06/mar-10365227.r1.v1.clear_.pdf)。
+- @Hien 正在测试两种场景以理解 Bitdefender 工作机制，调查仍在进行：问题出在代码还是 CI？
+  - 场景1：对 0.2.6 和 0.2.8 标签使用相同 CI 代理，在 Alan 和我的 PR 后，Bitdefender 标记了 Nitro CPU 二进制构建。表面看似乎是代码问题。
+  - 但进一步实验发现：对 0.2.8 代码改用 GitHub 托管代理时，Bitdefender 未标记我们的二进制构建。
+- 现已确认 Bitdefender 警告并非攻击事件，不存在恶意代码。
+- 我们已定位事件源于某个 CI 代理，导致 BitDefender 误报警报。
 
-## Follow-ups and Action Items
+## 后续跟进与行动项
 
-1. **Reproduce Bitdefender Flag in Controlled Environment [Done]:**
+1. **在受控环境中复现 Bitdefender 标记问题 [已完成]:**
 
-  - _Objective:_ To replicate the issue in a controlled environment to understand the triggers and specifics of Bitdefender's detection.
+- _目标:_ 在受控环境中重现该问题，以理解 Bitdefender 检测的具体触发条件。
 
-2. **Investigate Malicious Code or False Positive:**
+2. **调查恶意代码或误报情况:**
 
-  - _Objective:_ Determine whether the flagged issue is a result of actual malicious code or a false positive. If it's a false positive, work towards resolution while communicating with Bitdefender.
+- _目标:_ 确定被标记问题是由真实恶意代码还是误报引起。若为误报，在与 Bitdefender 沟通的同时推进解决方案。
 
-3. **Supply Chain Attack Assessment:**
+3. **供应链攻击评估:**
 
-  - _Objective:_ Evaluate the possibility of a supply chain attack. Investigate whether the Nitro 0.4.4 distribution was compromised or tampered with during the release process.
+- _目标:_ 评估供应链攻击的可能性。调查 Nitro 0.4.4 版本在发布过程中是否遭到篡改或破坏。
 
-4. **Testing after the Hotfix:**
+4. **热修复后测试:**
 
-  - _Objective:_ In addition to verifying the issue after the fix, it is essential to conduct comprehensive testing across related areas, ensuring compatibility across different operating systems and antivirus software (latest version / free version only).
+- _目标:_ 除验证修复后问题是否解决外，还需对相关领域进行全面测试，确保跨操作系统和杀毒软件（仅限最新版本/免费版本）的兼容性。
 
-5. **Process Improvement for Future Releases:**
+5. **未来发布的流程改进:**
 
-  - _Objective:_ Identify and implement improvements to our release process to prevent similar incidents in the future. This may include enhanced testing procedures, code analysis, and collaboration with antivirus software providers during the pre-release phase. Additionally, we should add verifying the latest antivirus software in the release checklist.
+- _目标:_ 识别并实施发布流程改进措施，防止未来发生类似事件。包括增强测试流程、代码分析，以及在预发布阶段与杀毒软件供应商协作。此外，应在发布检查清单中增加验证最新杀毒软件的环节。
 
-6. **Documentation of Tested Antivirus Versions:**
-  - _Objective:_ Create a document that outlines the testing conducted, including a matrix that correlates Jan versions with the tested antivirus versions.
-  - _Sample list:_ for consideration purpose
+6. **已测试杀毒软件版本文档记录:**
+
+- _目标:_ 创建一份记录测试过程的文档，包含 Jan 版本与对应测试杀毒软件版本的对照矩阵。
+  - _示例清单:_ 供参考用途
     - Bitdefender
     - McAfee
     - Avira
@@ -103,46 +105,47 @@ Jan 0.4.4 installation on Windows triggered Bitdefender to flag it as infected w
     - AVG
     - TotalAV
 
-## Next Steps
+## 后续步骤
 
-- The team should follow up on each action item with clear ownership priority, and deadlines.
-- Communicate progress transparently with the community and clients through appropriate channels. If any insights or suggestions, share them within the dedicated channels.
-- Update internal documentation and procedures based on the lessons learned from this incident.
+- 团队应对每项行动条目明确责任人、优先级和截止期限进行跟进。
+- 通过适当渠道向社区和客户透明沟通进展。如有任何见解或建议，请在专用渠道内分享。
+- 根据本次事件的经验教训更新内部文档和流程。
 
-## Lessons Learned
+## 经验总结
 
-1. **Antivirus Compatibility Awareness:**
+1. **杀毒软件兼容性认知:**
 
-  - _Observation:_ The incident underscored the significance of recognizing and testing for antivirus compatibility, particularly with widely-used solutions like Bitdefender.
-  - _Lesson Learned:_ In the future, we will integrate comprehensive checks for compatibility with various antivirus software, including both antivirus and "Malicious Code Detection," into our CI or QA checklist. This proactive measure aims to minimize false positive detections during the release and testing processes.
+- _现象:_ 本次事件突显了识别和测试杀毒软件兼容性的重要性，特别是与 Bitdefender 等广泛使用的解决方案。
+  - _经验总结:_ 未来我们将把各类杀毒软件（包括杀毒和"恶意代码检测"功能）的兼容性检查整合到 CI 或 QA 检查清单中。这项预防性措施旨在最小化发布和测试过程中的误报检测。
 
-2. **Cross-Platform Testing:**
+2. **跨平台测试:**
 
-  - _Observation:_ The problem did not occur on MacOS and Linux systems, implying a potential oversight in cross-platform testing during our release procedures.
-  - _Lesson Learned:_ Clarification — This observation is not directly related to antivirus testing. Instead, it underscores the necessity to improve our testing protocols, encompassing multiple operating systems. This ensures a thorough evaluation of potential issues on diverse platforms, considering the various antivirus software and differences in architectures on Mac and Linux systems.
+- **观察现象**：该问题未在 MacOS 和 Linux 系统上出现，表明我们在发布流程中的跨平台测试可能存在疏漏。
+  - **经验总结**：需要澄清的是，这一现象与杀毒软件测试无直接关联。它更凸显了改进测试规程的必要性，需涵盖多操作系统环境。通过全面评估不同平台（考虑各类杀毒软件及 Mac/Linux 系统架构差异）的潜在问题，实现更完善的测试覆盖。
 
-3. **User Communication and Documentation:**
+3. **用户沟通与文档记录**：
 
-  - _Observation:_ Due to the timely response from Nicole, who was still active on Discord and Github at 2 am, this quick response facilitated our ability to assess the impact accurately.
-  - _Lesson Learned:_ While our communication with users was effective in this instance, it was mainly due to Nicole's presence during the incident. To improve our overall response capability, we should prioritize "24/7 rapid triage and response." This involves ensuring continuous availability or establishing a reliable rotation of team members for swift user communication and issue documentation, further enhancing our incident response efficiency.
+- **观察现象**：由于 Nicole 在凌晨 2 点仍活跃于 Discord 和 Github 并及时响应，这种快速反馈使我们能够准确评估影响范围。
+  - **经验总结**：虽然本次用户沟通效果良好，但这主要依赖于 Nicole 在事件期间的实时响应。为提升整体响应能力，我们应优先建立"7×24 小时快速分类响应"机制，通过确保持续在岗或建立可靠的团队成员轮值制度，实现更迅捷的用户沟通与问题记录，从而进一步提升事件响应效率。
 
-4. **Proactive Incident Response:**
+4. **主动式事件响应**：
 
-  - _Observation:_ The incident response, while involving a prompt version rollback, experienced a slight delay due to the release occurring at midnight. This delay postponed the initiation of the investigation until the next working hours.
-  - _Lesson Learned:_ Recognizing the importance of swift incident response, particularly in time-sensitive situations, we acknowledge that releasing updates during off-hours can impact the immediacy of our actions. Moving forward, we will strive to optimize our release schedules to minimize delays and ensure that investigations can commence promptly regardless of the time of day. This may involve considering alternative release windows or implementing automated responses to critical incidents, ensuring a more proactive and timely resolution.
+- **观察发现**：虽然事件响应及时进行了版本回滚，但由于发布时间在午夜，导致响应略有延迟。这一延迟使得调查工作推迟至次日工作时间才开始。
+  - **经验总结**：我们认识到快速事件响应在时效性场景中的重要性，特别是在非工作时间发布更新会影响响应速度。未来我们将优化发布时间安排，尽可能减少延迟，确保无论何时都能立即启动调查。这可能包括考虑调整发布时间窗口，或针对关键事件实施自动化响应机制，以实现更主动及时的解决方案。
 
-5. **Supply Chain Security Measures:**
+5. **供应链安全措施：**
 
-  - _Observation:_ While the incident prompted consideration of a potential supply chain attack, it's crucial to emphasize that this was not the case. Nonetheless, the incident underscored the importance of reviewing our supply chain security measures.
-  - _Lesson Learned:_ Going forward, we should strengthen supply chain security by introducing additional verification steps to uphold the integrity of our release process. Collaborating with distribution channels is essential for enhancing security checks and ensuring a robust supply chain.
-  - _Longer-term:_ Exploring options for checking Jan for malicious code and incorporating antivirus as part of our CI/CD pipeline should be considered for a more comprehensive and proactive approach.
+- **观察发现**：虽然该事件引发了我们对潜在供应链攻击的考量，但必须明确指出实际情况并非如此。不过，此次事件凸显了重新审视供应链安全措施的重要性。
+  - **经验总结**：未来我们应通过引入额外的验证步骤来强化供应链安全，以保障发布流程的完整性。与分发渠道合作对于加强安全检查、构建更健壮的供应链至关重要。
+  - **长期规划**：应考虑探索检测Jan恶意代码的方案，并将杀毒扫描纳入CI/CD流水线，以采取更全面、更主动的安全防护措施。
 
-6. **User Education on False Positives:**
-  - _Observation:_ Users reported Bitdefender automatically "disinfecting" the flagged Nitro version without allowing any user actions.
-  - _Lesson Learned:_ Educate users about the possibility of false positives and guide them on how to whitelist or report such incidents to their antivirus provider (if possible). Provide clear communication on steps users can take in such situations.
+6. **用户误报教育**：
 
-These lessons learned will serve as a foundation for refining our processes and ensuring a more resilient release and incident response framework in the future. Continuous improvement is key to maintaining the reliability and security of our software.
+- **观察发现**：用户反馈Bitdefender会自动"清除"被标记的Nitro版本，未提供任何用户操作选项。
+  - **经验总结**：需教育用户了解误报可能性，并指导他们如何将此类文件加入白名单或向杀毒软件供应商报告（如可行）。应明确告知用户在此类情况下的应对步骤。
 
-Thank you for your dedication and cooperation in resolving this matter promptly.
+这些经验教训将成为我们优化流程的基础，助力构建更具韧性的版本发布与事件响应机制。持续改进是维护软件可靠性与安全性的关键。
+
+感谢您对此事的及时解决所付出的努力与合作。
 
 <CTABlog />

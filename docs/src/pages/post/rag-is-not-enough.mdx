@@ -1,6 +1,7 @@
 ---
-title: "RAG is not enough: Lessons from Beating GPT-3.5 on Specialized Tasks with Mistral 7B"
-description: We present a straightforward approach to customizing small, open-source models using fine-tuning and RAG that outperforms GPT-3.5 for specialized use cases. 
+
+title: "RAG 还不够：用 Mistral 7B 在专业任务上超越 GPT-3.5 的经验总结"
+description: 我们提出了一种结合微调与 RAG 的简单方法，用于定制小型开源模型，在专业用例中表现优于 GPT-3.5。
 tags: RAG, opensource chatgpt alternative, outperform ChatGPT, Mistral
 date: 2024-03-25
 unlisted: true
@@ -9,128 +10,125 @@ categories: research
 
 import CTABlog from '@/components/Blog/CTA'
 
-# RAG is not enough: Lessons from Beating GPT-3.5 on Specialized Tasks with Mistral 7B
+# RAG 还不够：用 Mistral 7B 在专业任务上超越 GPT-3.5 的经验总结
 
-## Abstract
+## 摘要
 
-We present a straightforward approach to customizing small, open-source models using fine-tuning and RAG that outperforms GPT-3.5 for specialized use cases. With it, we achieved superior Q&A results of [technical documentation](https://nitro.jan.ai/docs) for a small codebase [codebase](https://github.com/menloresearch/nitro).
+我们提出了一种结合微调与 RAG 的简单方法，用于定制小型开源模型，在专业用例中表现优于 GPT-3.5。通过该方法，我们在小型代码库 [codebase](https://github.com/menloresearch/nitro) 的[技术文档](https://nitro.jan.ai/docs)问答任务中取得了更优结果。
 
-In short, (1) extending a general foundation model like [Mistral](https://huggingface.co/mistralai/Mistral-7B-v0.1) with strong math and coding, and (2) training it over a high-quality, synthetic dataset generated from the intended corpus, and (3) adding RAG capabilities, can lead to significant accuracy improvements.
+简而言之：(1) 扩展具备强大数学与编码能力的通用基础模型如 [Mistral](https://huggingface.co/mistralai/Mistral-7B-v0.1)，(2) 使用目标语料生成的高质量合成数据集进行训练，(3) 添加 RAG 能力，可显著提升准确率。
 
-Problems still arise with catastrophic forgetting in general tasks, commonly observed during specilizied domain fine-tuning. In our case, this is likely exacerbated by our lack of access to Mistral’s original training dataset and various compression techniques used in our approach to keep the model small.
+在通用任务中仍会出现灾难性遗忘问题，这在专业领域微调过程中十分常见。就我们的案例而言，由于无法获取 Mistral 原始训练数据集，以及为保持模型小型化采用的各种压缩技术，可能加剧了这一问题。
 
-## Selecting a strong foundation model
+## 选择强大的基础模型
 
-[Mistral 7B](https://huggingface.co/mistralai/Mistral-7B-v0.1) outshines both [Meta's Llama-2 7B](https://huggingface.co/meta-llama/Llama-2-7b) and [Google's Gemma 7B](https://huggingface.co/google/gemma-7b) in key benchmarks, making it our choice for a base model. Starting with a strong foundation like Mistral allowed us to achieve greater accuracy in our specialized adaptations.
+[Mistral 7B](https://huggingface.co/mistralai/Mistral-7B-v0.1) 在关键基准测试中表现优于 [Meta 的 Llama-2 7B](https://huggingface.co/meta-llama/Llama-2-7b) 和 [Google 的 Gemma 7B](https://huggingface.co/google/gemma-7b)，因此我们选择它作为基础模型。从 Mistral 这样强大的基础出发，使我们能够在专业适配中获得更高的准确性。
 
 ![image](https://hackmd.io/_uploads/S1TN64kTa.png)
 
-*Figure 1. Mistral 7B excels in benchmarks, ranking among the top foundational models.*
+*图 1. Mistral 7B 在基准测试中表现优异，位列顶级基础模型之一。*
 
-*Note: We are not sponsored by the Mistral team, though lots of folks like to run Mistral locally using [Jan](https://jan.ai/)., our desktop client.*
+*注：我们并未获得 Mistral 团队的赞助，不过许多用户喜欢通过我们的桌面客户端 [Jan](https://jan.ai/) 在本地运行 Mistral。*
 
-## Cost effectively improving the base model
+## 经济高效地改进基础模型
 
-Our technical use case required excellent math capabilities, an area where Mistral can underperform. Thus, we tested a number of Mistral model variants, from foundation models to finetunes to model merges, to find a stronger base model before proceeding to finetuning.
+我们的技术用例需要出色的数学能力，而 Mistral 在这方面可能表现不足。因此，我们测试了多个 Mistral 模型变体，从基础模型到微调版本再到模型合并，以在进行微调前找到更强大的基础模型。
 
 ![image](https://hackmd.io/_uploads/SkYBaVk6a.png)
 
+*图 2：合并后的模型 Stealth 在保持其他任务性能的同时，数学能力是其基础模型的两倍。*
 
-*Figure 2: The merged model, Stealth, doubles the mathematical capabilities of its foundational model while retaining the performance in other tasks.*
+我们发现模型合并方法快速且经济高效，能够根据每次迭代的结果快速调整。
 
-We found merging models is quick and cost-effective, enabling fast adjustments based on the result of each iteration.
+我们最终得到了 [Stealth 7B v1.1](https://huggingface.co/jan-hq/stealth-v1.1)，这是 Mistral 与以下模型通过 [SLERP](https://github.com/Digitous/LLM-SLERP-Merge) 融合的结果：
 
-We ended up with [Stealth 7B v1.1](https://huggingface.co/jan-hq/stealth-v1.1), a [SLERP](https://github.com/Digitous/LLM-SLERP-Merge) merge of Mistral with the following:
+- [WizardMath](https://huggingface.co/WizardLM/WizardMath-7B-V1.1) 提供数学能力
+- [WizardCoder](https://huggingface.co/WizardLM/WizardCoder-Python-7B-V1.0) 提供编程能力
+- 我们自研的 [Trinity](https://huggingface.co/jan-hq/trinity-v1.2) 模型确保通用任务的广泛适应性
 
-- [WizardMath](https://huggingface.co/WizardLM/WizardMath-7B-V1.1) for its math capabilities.
-- [WizardCoder](https://huggingface.co/WizardLM/WizardCoder-Python-7B-V1.0) for its coding capabilities.
-- Our own [Trinity](https://huggingface.co/jan-hq/trinity-v1.2) model for its versatility across general tasks.
+这种特殊组合在数学与技术推理能力之间取得了最佳平衡，同时最大程度保留了融合前的通用任务性能。
 
-This particular combination yielded the best tradeoff across mathematical & technical reasoning while retaining the most pre-merge performance on general tasks.
+## **DPO 微调**
 
-## **DPO finetuning**
+融合不同的大语言模型可能导致回答风格混杂，因为每个模型最初训练的数据类型不同。
 
-Merging different LLMs can lead to a mixed answering style because each model was originally trained on different types of data.
+为此，我们采用直接偏好优化（[DPO](https://arxiv.org/abs/2305.18290)）技术，使用 [Intel's Orca DPO pairs](https://huggingface.co/datasets/Intel/orca_dpo_pairs) 数据集进行微调，该数据集因其在通用场景、数学和编程领域的优质回答风格而被选中。
 
-Thus, we applied Direct Preference Optimization ([DPO](https://arxiv.org/abs/2305.18290)) using the [Intel's Orca DPO pairs](https://huggingface.co/datasets/Intel/orca_dpo_pairs) dataset, chosen for its helpful answering style in general, math and coding concentration.
+该方法最终产出了 [Stealth 7B v1.2](https://huggingface.co/jan-hq/stealth-v1.2) 模型，其表现符合我们的技术偏好且性能损失极小。
 
-This approach produced a final model - [Stealth 7B v1.2](https://huggingface.co/jan-hq/stealth-v1.2), aligned to our technical preferences and demonstrating minimal loss.
+## **使用自有技术文档**
 
-## **Using our own technical documentation**
+基础模型准备就绪后，我们开始针对特定用例进行优化。
 
-With the base model ready, we started on our specific use case.
+Jan 是一个快速发展的开源项目，但曾一度我们每分钟都会收到新的技术支持工单，这很快超出了我们自筹资源的处理能力。
 
-Jan is an open-source project enjoying strong growth, but at one point we began receiving a new support ticket every minute, which quickly overwhelmed our bootstrapped resources.
+因此，我们将精力转向训练一个能基于现有技术文档回答用户问题的模型。
 
-So, we directed our efforts toward training a model to answer user questions based on existing technical documentation.  
+具体而言，我们使用 [Nitro 文档](https://nitro.jan.ai/docs)作为训练素材。需要说明的是，Nitro 是 Jan 的默认推理引擎，这是一个企业级、基于 C++ 开发的 LlamaCPP 服务端实现，具备多模态支持、任务队列等生产级服务能力。
 
-Specifically, we trained it on on the [Nitro documentation](https://nitro.jan.ai/docs). For context, Nitro is the default inference engine for Jan. It’s a enterprise-ready server implementation of LlamaCPP, written in C++, with multimodal, queues, and other production-level server capabilities. 
+选择该文档作为语料库颇具意义，因其包含大量 2023 年后的技术术语、边缘案例以及欠优化的信息布局。
 
-It made an interesting corpus because it was rife with post-2023 technical jargon, edge cases, and poor informational layout.
+## 生成训练数据
 
-## Generating training data
+第一步是将 Nitro 的非结构化文档转换为适用于 [指令微调](https://arxiv.org/pdf/2109.01652.pdf) 的合成问答数据集。
 
-The first step was to transform Nitro’s unstructured format into a synthetic Q&A dataset designed for [instruction tuning](https://arxiv.org/pdf/2109.01652.pdf). 
+我们将文本分割为 300 token 的片段，并设置 30 token 的重叠区间。这有助于避免 [中间信息丢失](https://arxiv.org/abs/2307.03172) 问题——即大语言模型无法有效利用上下文回答给定问题。
 
-The text was split into chunks of 300-token segments with 30-token overlaps. This helped to avoid a [lost-in-the-middle](https://arxiv.org/abs/2307.03172) problem where LLM can’t use context efficiently to answer given questions.
+随后将这些文本块输入支持 8k 上下文的 GPT-4，最终生成 3800 组问答对。完整 [训练数据集](https://huggingface.co/datasets/jan-hq/nitro_binarized_v2) 已发布于 HuggingFace。
 
-The chunks were then given to GPT-4 with 8k context length to generate 3800 Q&A pairs. The [training dataset](https://huggingface.co/datasets/jan-hq/nitro_binarized_v2) is available on HuggingFace.
+## **训练过程**
 
-## **Training**
+训练过程基于 [Hugging Face 的 alignment-handbook](https://github.com/huggingface/alignment-handbook)，按照 [Huggingface 的 Zephyr Beta](https://github.com/huggingface/alignment-handbook/tree/main/recipes/zephyr-7b-beta) 指南进行了监督微调（SFT）。
 
-Training was done with supervised finetuning (SFT) from the [Hugging Face's alignment-handbook](https://github.com/huggingface/alignment-handbook), per [Huggingface's Zephyr Beta](https://github.com/huggingface/alignment-handbook/tree/main/recipes/zephyr-7b-beta) guidelines. 
+我们使用消费级双 Nvidia RTX 4090 显卡进行训练，端到端训练耗时 18 分钟。针对该特定任务，我们发现 LoRA 的最佳超参数为 `r = 256` 和 `alpha = 512`。
 
-We used consumer-grade, dual Nvidia RTX 4090s for the training. The end-to-end training took 18 minutes. We found optimal hyperparameters in LoRA for this specific task to be `r = 256` and `alpha = 512`.
-
-This final model can be found [here on Huggingface](https://huggingface.co/jan-hq/nitro-v1.2-e3).
+最终模型可在 [Huggingface 此处](https://huggingface.co/jan-hq/nitro-v1.2-e3) 获取。
 
 ![image](https://hackmd.io/_uploads/SJyDTVk6p.png)
 
+*图 3. 在 [Jan](https://jan.ai/) 中使用新微调模型*
 
-*Figure 3. Using the new finetuned model in [Jan](https://jan.ai/)*
+## 通过 RAG 提升效果
 
-## Improving results with RAG
+作为附加步骤，我们还实验性地加入了 [检索增强生成（RAG）](https://blogs.nvidia.com/blog/what-is-retrieval-augmented-generation/) 参数。
 
-As an additional step, we also added [Retrieval Augmented Generation (RAG)](https://blogs.nvidia.com/blog/what-is-retrieval-augmented-generation/) as an experiment parameter.
+我们使用 **[Llamaindex](https://www.llamaindex.ai/)** 和 **[bge-en-base-v1.5 嵌入模型](https://huggingface.co/BAAI/bge-base-en-v1.5)** 搭建了简易 RAG 系统，用于高效文档检索与问答。RAG 实现代码可参见 [此处](https://github.com/menloresearch/open-foundry/blob/main/rag-is-not-enough/rag/nitro_rag.ipynb)。
 
-A simple RAG setup was done using **[Llamaindex](https://www.llamaindex.ai/)** and the **[bge-en-base-v1.5 embedding](https://huggingface.co/BAAI/bge-base-en-v1.5)** model for efficient documentation retrieval and question-answering. You can find the RAG implementation [here](https://github.com/menloresearch/open-foundry/blob/main/rag-is-not-enough/rag/nitro_rag.ipynb).
+## 结果基准测试
 
-## Benchmarking the Results
-
-We curated a new set of [50 multiple-choice questions](https://github.com/menloresearch/open-foundry/blob/main/rag-is-not-enough/rag/mcq_nitro.csv) (MCQ) based on the Nitro docs. The questions had varying levels of difficulty and had trick components that challenged the model's ability to discern misleading information.
+我们基于 Nitro 文档精心整理了一套包含[50道选择题](https://github.com/menloresearch/open-foundry/blob/main/rag-is-not-enough/rag/mcq_nitro.csv)的测试集。这些问题难度层次分明，并设置了干扰项以检验模型识别误导信息的能力。
 
 ![image](https://hackmd.io/_uploads/By9vaE1Ta.png)
 
+*图4. 微调模型与OpenAI GPT的对比*
 
-*Figure 4. Comparation between finetuned model and OpenAI's GPT*
+**测试结果**
 
-**Results**
+- GPT-3.5 + RAG: 56.7%
+- GPT-4 + RAG: 64.3%
+- 融合7B模型([Stealth 7B](https://huggingface.co/jan-hq/stealth-v1.3)) + RAG: 47.7%
+- 微调7B模型(Nitro 7B) + RAG: 57.8%
 
-- GPT-3.5 with RAG: 56.7%
-- GPT-4 with RAG: 64.3%
-- Merged 7B Model ([Stealth 7B](https://huggingface.co/jan-hq/stealth-v1.3)) with RAG: 47.7%
-- Finetuned 7B Model (Nitro 7B) with RAG: 57.8%
+这表明通过任务专项训练，我们可以将开源小语言模型在领域知识上的表现提升至GPT-3.5级别。
 
-This indicates that with task-specific training, we can improve an open-source, Small Language Model to the level of GPT-3.5 on domain knowledge. 
+值得注意的是，微调+RAG方案在基准测试中表现出更高的稳定性，其标准差更低。
 
-Notably, the finetuned + RAG approach also demonstrated more consistency across benchmarking, as indicated by its lower standard deviation.
+## 结语
 
-## Conclusion
+我们认为模型融合+微调+RAG的组合具有发展潜力。这一发现对需要专用技术型小语言模型的团队或个人尤为重要，特别是在资源受限或高安全要求的场景中，GPT可能并非可行选择。
 
-We conclude that this combination of model merging + finetuning + RAG yields promise. This finding is relevant for teams and individuals that need specialized, technical small language models that need to run in resource-constrained or highly secured environments, where GPT may not be an option.
+实践中，我们已成功运用该模型帮助新成员快速熟悉Nitro代码库。
 
-Anecdotally, we’ve had some success using this model in practice to onboard new team members to the Nitro codebase.
+完整的研究报告及更多统计数据可查阅[此处](https://github.com/menloresearch/open-foundry/blob/main/rag-is-not-enough/README.md)。
 
-A full research report with more statistics can be found [here](https://github.com/menloresearch/open-foundry/blob/main/rag-is-not-enough/README.md).
+# 参考文献
 
-# References
-
-- [Catastrophic forgetting](https://arxiv.org/abs/2308.08747)
-- [Math specialization](https://arxiv.org/abs/2308.09583)
-- [Code specialization](https://arxiv.org/abs/2306.08568)
-- [Search specialization](https://github.com/SciPhi-AI/agent-search)
-- [Evol Instruct](https://github.com/nlpxucan/WizardLM)
-- [Lost in the middle](https://arxiv.org/abs/2307.03172)
-- [Instruction tuning](https://arxiv.org/pdf/2109.01652.pdf)
+- [灾难性遗忘](https://arxiv.org/abs/2308.08747)
+- [数学专项优化](https://arxiv.org/abs/2308.09583)
+- [代码专项优化](https://arxiv.org/abs/2306.08568)
+- [搜索专项优化](https://github.com/SciPhi-AI/agent-search)
+- [进化指令](https://github.com/nlpxucan/WizardLM)
+- [迷失在中部](https://arxiv.org/abs/2307.03172)
+- [指令调优](https://arxiv.org/pdf/2109.01652.pdf)
 
 <CTABlog />

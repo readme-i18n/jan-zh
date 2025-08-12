@@ -1,108 +1,111 @@
 ---
-title: "Run OpenAI's gpt-oss locally in 5 mins (Beginner Guide)"
-description: "Complete 5-minute beginner guide to running OpenAI's gpt-oss locally. Step-by-step setup with Jan AI for private, offline AI conversations."
-tags: OpenAI, gpt-oss, local AI, Jan, privacy, Apache-2.0, llama.cpp, Ollama, LM Studio
+
+title: "5分钟本地运行OpenAI的gpt-oss（新手指南）"
+description: "完整5分钟新手指南，教你如何在本地运行OpenAI的gpt-oss。通过Jan AI实现逐步设置，进行私密离线的AI对话。"
+tags: OpenAI, gpt-oss, 本地AI, Jan, 隐私, Apache-2.0, llama.cpp, Ollama, LM Studio
 categories: guides
 date: 2025-08-06
 ogImage: assets/gpt-oss%20locally.jpeg   
 twitter:
   card: summary_large_image
   site: "@jandotai"
-  title: "Run OpenAI's gpt-oss Locally in 5 Minutes (Beginner Guide)"
-  description: "Complete 5-minute beginner guide to running OpenAI's gpt-oss locally with Jan AI for private, offline conversations."
+  title: "5分钟本地运行OpenAI的gpt-oss（新手指南）"
+  description: "完整5分钟新手指南，使用Jan AI在本地运行OpenAI的gpt-oss，实现私密离线的AI对话。"
   image: assets/gpt-oss%20locally.jpeg
 ---
+
 import { Callout } from 'nextra/components'
 import CTABlog from '@/components/Blog/CTA'
 
-# Run OpenAI's gpt-oss Locally in 5 mins
+# 5分钟本地运行OpenAI的gpt-oss
 
-![gpt-oss running locally in Jan interface](./_assets/gpt-oss%20locally.jpeg)
+![Jan界面中本地运行的gpt-oss](./_assets/gpt-oss%20locally.jpeg)
 
-OpenAI launched [gpt-oss](https://openai.com/index/introducing-gpt-oss/), marking their return to open-source AI after GPT-2. This model is designed to run locally on consumer hardware. This guide shows you how to install and run gpt-oss on your computer for private, offline AI conversations.
+OpenAI发布了[gpt-oss](https://openai.com/index/introducing-gpt-oss/)，标志着继GPT-2之后他们重返开源AI领域。该模型专为在消费级硬件上本地运行而设计。本指南将展示如何在您的计算机上安装并运行gpt-oss，实现私密离线的AI对话。
 
-## What is gpt-oss?
+## 什么是gpt-oss？
 
-gpt-oss is OpenAI's open-source large language model, released under the Apache-2.0 license. Unlike ChatGPT, gpt-oss:
+gpt-oss是OpenAI开源的的大型语言模型，基于Apache-2.0许可证发布。与ChatGPT不同，gpt-oss具有以下特点：
 
-- Runs completely offline - No internet required after setup
-- 100% private - Your conversations never leave your device  
-- Unlimited usage - No token limits or rate limiting
-- Free forever - No subscription fees
-- Commercial use allowed - Apache-2.0 license permits business use
+- 完全离线运行 - 安装后无需联网
+- 100% 隐私保护 - 对话内容永不离开您的设备  
+- 无限使用 - 无令牌限制或速率限制
+- 永久免费 - 无订阅费用
+- 允许商业用途 - Apache-2.0 许可证支持商业使用
 
-Running AI models locally means everything happens on your own hardware, giving you complete control over your data and conversations.
+本地运行 AI 模型意味着所有计算都在您的硬件上完成，让您完全掌控数据和对话内容。
 
-## gpt-oss System Requirements
+## gpt-oss 系统要求
 
-| Component | Minimum | Recommended |
+| 组件 | 最低配置 | 推荐配置 |
 |-----------|---------|-------------|
-| **RAM** | 16 GB | 32 GB+ |
-| **Storage** | 11+ GB free | 25 GB+ free |
-| **CPU** | 4 cores | 8+ cores |
-| **GPU** | Optional | Modern GPU with 6GB+ VRAM recommended |
-| **OS** | Windows 10+, macOS 11+, Linux | Latest versions |
+| **内存** | 16 GB | 32 GB 以上 |
+| **存储空间** | 11+ GB 可用 | 25 GB 以上可用 |
+| **CPU** | 4 核 | 8 核以上 |
+| **GPU** | 可选 | 建议配备 6GB 以上显存的现代 GPU |
+| **操作系统** | Windows 10+/macOS 11+/Linux | 最新版本 |
 
-**Installation apps available:**
-- **Jan** (Recommended - easiest setup) 
-- **llama.cpp** (Command line)
-- **Ollama** (Docker-based)
-- **LM Studio** (GUI alternative)
+**可用安装应用：**
 
-## How to install gpt-oss locally with Jan (5 mins)
+- **Jan** (推荐 - 最简单的安装方式) 
+- **llama.cpp** (命令行工具)
+- **Ollama** (基于 Docker)
+- **LM Studio** (图形界面替代方案)
 
-### Step 1: Download Jan
+## 如何使用 Jan 本地安装 gpt-oss (5 分钟)
 
-First download Jan to run gpt-oss locally: [Download Jan AI](https://jan.ai/)
+### 步骤 1：下载 Jan
+
+首先下载 Jan 以本地运行 gpt-oss：[下载 Jan AI](https://jan.ai/)
 
 <Callout type="info">
-Jan is the simplest way to run AI models locally. It automatically handles CPU/GPU optimization, provides a clean chat interface, and requires zero technical knowledge.
+Jan 是本地运行 AI 模型最简单的方式。它能自动优化 CPU/GPU 性能，提供简洁的聊天界面，且无需任何技术知识。
 </Callout>
 
-### Step 2: Install gpt-oss Model (2-3 minutes)
+### 步骤 2：安装 gpt-oss 模型 (2-3 分钟)
 
-![Jan Hub showing gpt-oss model in the hub](./_assets/jan%20hub%20gpt-oss%20locally.jpeg)
+![Jan Hub 中展示的 gpt-oss 模型](./_assets/jan%20hub%20gpt-oss%20locally.jpeg)
 
-1. Open Jan Hub -> search "gpt-oss" (it appears at the top)
-2. Click Download and wait for completion (~11GB download)
-3. Installation is automatic - Jan handles everything
+1. 打开 Jan Hub → 搜索 "gpt-oss"（会出现在顶部结果）
+2. 点击下载并等待完成（约 11GB 下载量）
+3. 安装自动完成 - Jan 会处理所有配置
 
-### Step 3: Start using gpt-oss offline (30 seconds)
+### 步骤 3：开始离线使用 gpt-oss（30 秒完成）
 
-![Jan interface with gpt-oss model selected and ready to chat](./_assets/jan%20gpt-oss.jpeg)
+![Jan 界面中已选择 gpt-oss 模型并准备聊天](./_assets/jan%20gpt-oss.jpeg)
 
-1. Go to New Chat → select gpt-oss-20b from model picker
-2. Start chatting - Jan automatically optimizes for your hardware
-3. You're done! Your AI conversations now stay completely private
+1. 进入新建聊天 → 从模型选择器选取 gpt-oss-20b
+2. 开始对话 - Jan 会自动针对您的硬件进行优化
+3. 大功告成！所有 AI 对话将保持完全私密
 
-Success: Your gpt-oss setup is complete. No internet required for chatting, unlimited usage, zero subscription fees.
+成功：您的 gpt-oss 设置已完成。聊天无需联网，使用次数无限，零订阅费用。
 
-## Jan with gpt-oss vs ChatGPT vs other Local AI Models
+## Jan 搭载 gpt-oss 对比 ChatGPT 与其他本地 AI 模型
 
-| Feature | gpt-oss (Local) | ChatGPT Plus | Claude Pro | Other Local Models |
+| 功能特性 | gpt-oss (本地) | ChatGPT Plus | Claude Pro | 其他本地模型 |
 |---------|----------------|--------------|------------|-------------------|
-| Cost | Free forever | $20/month | $20/month | Free |
-| Privacy | 100% private | Data sent to OpenAI | Data sent to Anthropic | 100% private |
-| Internet | Offline after setup | Requires internet | Requires internet | Offline |
-| Usage limits | Unlimited | Rate limited | Rate limited | Unlimited |
-| Performance | Good (hardware dependent) | Excellent | Excellent | Varies |
-| Setup difficulty | Easy with Jan | None | None | Varies |
+| 成本 | 永久免费 | 20 美元/月 | 20 美元/月 | 免费 |
+| 隐私性 | 100% 私有 | 数据发送至 OpenAI | 数据发送至 Anthropic | 100% 私有 |
+| 网络需求 | 安装后离线 | 需要联网 | 需要联网 | 离线 |
+| 使用限制 | 无限制 | 速率限制 | 速率限制 | 无限制 |
+| 性能表现 | 良好（取决于硬件） | 优秀 | 优秀 | 参差不齐 |
+| 安装难度 | 通过 Jan 简易安装 | 无需安装 | 无需安装 | 各不相同 |
 
-## Alternative Installation Methods
+## 替代安装方案
 
-### Option 1: Jan (Recommended)
+### 选项1：Jan（推荐）
 
-- Best for: Complete beginners, users wanting GUI interface
-- Setup time: 5 minutes
-- Difficulty: Very Easy
+- 最适合：完全初学者、需要图形界面的用户  
+- 设置时间：5分钟  
+- 难度：非常简单
 
-Already covered above - [Download Jan](https://jan.ai/)
+上文已涵盖 - [下载Jan](https://jan.ai/)
 
-### Option 2: llama.cpp (Command Line)
+### 选项2：llama.cpp（命令行）
 
-- Best for: Developers, terminal users, custom integrations  
-- Setup time: 10-15 minutes  
-- Difficulty: Intermediate
+- 最适合：开发者、终端用户、需要自定义集成的场景  
+- 设置时间：10-15分钟  
+- 难度：中等
 
 ```bash
 # macOS
@@ -116,96 +119,108 @@ curl -L -o gpt-oss-20b.gguf https://huggingface.co/openai/gpt-oss-20b-gguf/resol
 ./main -m gpt-oss-20b.gguf --chat-simple -ngl 20
 ```
 
-### Option 3: Ollama (Docker-Based)
+### 选项3：Ollama（基于Docker）
 
-Best for: Docker users, server deployments  
-Setup time: 5-10 minutes  
-Difficulty: Intermediate
+最适合：Docker用户、服务器部署  
+设置时间：5-10分钟  
+难度：中等
 
 ```bash
 # Install from https://ollama.com
 ollama run gpt-oss:20b
 ```
 
-### Option 4: LM Studio (GUI Alternative)
+### 选项4：LM Studio（图形界面替代方案）
 
-Best for: Users wanting GUI but not Jan  
-Setup time: 10 minutes  
-Difficulty: Easy
+最适合：需要图形界面但不想使用Jan的用户  
+设置时间：10分钟  
+难度：简单
 
-1. Download LM Studio from official website
-2. Go to Models → search "gpt-oss-20b (GGUF)"
-3. Download the model (wait for completion)
-4. Go to Chat tab → select the model and start chatting
+1. 从官网下载LM Studio  
+2. 进入Models → 搜索"gpt-oss-20b (GGUF)"  
+3. 下载模型（等待完成）  
+4. 进入Chat标签 → 选择模型开始对话
 
-## gpt-oss Performance & Troubleshooting
+## gpt-oss性能与故障排除
 
-### Expected Performance Benchmarks
+### 预期性能基准
 
-| Hardware Setup | First Response | Subsequent Responses | Tokens/Second |
+| 硬件配置 | 首次响应 | 后续响应 | 令牌/秒 |
 |---------------|---------------|---------------------|---------------|
-| **16GB RAM + CPU only** | 30-45 seconds | 3-6 seconds | 3-8 tokens/sec |
-| **32GB RAM + RTX 3060** | 15-25 seconds | 1-3 seconds | 15-25 tokens/sec |
-| **32GB RAM + RTX 4080+** | 8-15 seconds | 1-2 seconds | 25-45 tokens/sec |
+| **16GB内存 + 仅CPU** | 30-45秒 | 3-6秒 | 3-8令牌/秒 |
+| **32GB内存 + RTX 3060** | 15-25秒 | 1-3秒 | 15-25令牌/秒 |
+| **32GB内存 + RTX 4080+** | 8-15秒 | 1-2秒 | 25-45令牌/秒 |
 
-### Common Issues & Solutions
+### 常见问题与解决方案
 
-Performance optimization tips:
-- First response is slow: Normal - kernels compile once, then speed up dramatically
-- Out of VRAM error: Reduce context length in settings or switch to CPU mode
-- Out of memory: Close memory-heavy apps (Chrome, games, video editors)
-- Slow responses: Check if other apps are using GPU/CPU heavily
+性能优化提示：
 
-Quick fixes:
-1. Restart Jan if responses become slow
-2. Lower context window from 4096 to 2048 tokens
-3. Enable CPU mode if GPU issues persist
-4. Free up RAM by closing unused applications
+- 首次响应较慢：正常现象 - 内核编译完成后速度会显著提升
+- VRAM不足错误：请在设置中减少上下文长度或切换至CPU模式
+- 内存不足：关闭高内存占用的应用（Chrome、游戏、视频编辑软件）
+- 响应缓慢：检查是否有其他应用在大量占用GPU/CPU资源
 
-## Frequently Asked Questions (FAQ)
+快速解决方案：
 
-### Is gpt-oss completely free?
-Yes! gpt-oss is 100% free under Apache-2.0 license. No subscription fees, no token limits, no hidden costs.
+1. 若响应变慢请重启Jan
+2. 将上下文窗口从4096个token降至2048
+3. 若GPU问题持续请启用CPU模式
+4. 关闭未使用的应用以释放RAM
 
-### How much internet data does gpt-oss use?
-Only for the initial 11GB download. After installation, gpt-oss works completely offline with zero internet usage.
+## 常见问题解答（FAQ）
 
-### Can I use gpt-oss for commercial projects?
-Absolutely! The Apache-2.0 license permits commercial use, modification, and distribution.
+### gpt-oss是完全免费的吗？
 
-### Is gpt-oss better than ChatGPT?
-gpt-oss offers different advantages: complete privacy, unlimited usage, offline capability, and no costs. ChatGPT may have better performance but requires internet and subscriptions.
+是的！gpt-oss基于Apache-2.0许可证100%免费。无订阅费用、无token限制、无隐藏成本。
 
-### What happens to my conversations with gpt-oss?
-Your conversations stay 100% on your device. Nothing is sent to OpenAI, Jan, or any external servers.
+### gpt-oss会消耗多少网络流量？
 
-### Can I run gpt-oss on a Mac with 8GB RAM?
-No, gpt-oss requires minimum 16GB RAM. Consider upgrading your RAM or using cloud-based alternatives.
+仅初始下载需要11GB流量。安装完成后可完全离线运行，零网络消耗。
 
-### How do I update gpt-oss to newer versions?
-Jan automatically notifies you of updates. Simply click update in Jan Hub when new versions are available.
+### 能否将gpt-oss用于商业项目？
 
-## Why Choose gpt-oss Over ChatGPT Plus?
+完全可以！Apache-2.0许可证允许商业用途、修改和分发。
 
-gpt-oss advantages:
-- $0/month vs $20/month for ChatGPT Plus
-- 100% private - no data leaves your device  
-- Unlimited usage - no rate limits or restrictions
-- Works offline - no internet required after setup
-- Commercial use allowed - build businesses with it
+### gpt-oss比ChatGPT更好吗？
 
-When to choose ChatGPT Plus instead:
-- You need the absolute best performance
-- You don't want to manage local installation
-- You have less than 16GB RAM
+gpt-oss具备独特优势：完全隐私保护、无限使用、离线能力且无需费用。ChatGPT可能性能更强但需要联网和订阅。
 
-## Get started with gpt-oss today
+### 与gpt-oss的对话数据如何处理？
 
-![gpt-oss running locally with complete privacy](./_assets/run%20gpt-oss%20locally%20in%20jan.jpeg)
+所有对话数据100%保存在您的设备上。不会发送至OpenAI、Jan或任何外部服务器。
 
-Ready to try gpt-oss?
-- Download Jan: [https://jan.ai/](https://jan.ai/)
-- View source code: [https://github.com/menloresearch/jan](https://github.com/menloresearch/jan)
-- Need help? Check our [local AI guide](/post/run-ai-models-locally) for beginners
+### 能在8GB内存的Mac上运行gpt-oss吗？
+
+不，gpt-oss 最低需要 16GB 内存。建议升级您的内存配置或使用云端替代方案。
+
+### 如何将 gpt-oss 更新到新版本？
+
+Jan 会自动通知您更新。当有新版本可用时，只需在 Jan Hub 中点击更新即可。
+
+## 为什么选择 gpt-oss 而非 ChatGPT Plus？
+
+gpt-oss 的优势：
+
+- 0 美元/月 vs ChatGPT Plus 的 20 美元/月  
+- 100% 私有化 - 数据不会离开您的设备
+- 无限使用 - 没有速率限制或约束
+- 支持离线运行 - 设置完成后无需联网
+- 允许商业用途 - 可用于构建商业产品
+
+以下情况建议选择 ChatGPT Plus：
+
+- 您需要最佳性能表现
+- 您不想管理本地安装
+- 您的内存不足 16GB
+
+## 立即开始使用 gpt-oss
+
+![gpt-oss 在本地运行并保持完全隐私](./_assets/run%20gpt-oss%20locally%20in%20jan.jpeg)
+
+准备好试用 gpt-oss 了吗？
+
+- 下载 Jan: [https://jan.ai/](https://jan.ai/)
+- 查看源代码: [https://github.com/menloresearch/jan](https://github.com/menloresearch/jan)
+- 需要帮助？请查阅我们的 [本地 AI 入门指南](/post/run-ai-models-locally)
 
 <CTABlog />

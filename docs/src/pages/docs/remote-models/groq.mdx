@@ -1,6 +1,7 @@
 ---
+
 title: Groq API
-description: Learn how to integrate Groq API with Jan for enhanced functionality.
+description: 了解如何将 Groq API 与 Jan 集成以实现增强功能
 keywords:
   [
     Groq API,
@@ -20,61 +21,64 @@ import { Settings, Plus } from 'lucide-react'
 
 # Groq
 
-Jan supports [Groq](https://groq.com/) API integration, allowing you to use Groq's high-performance LLM models (LLaMA 2, Mixtral and more) through Jan's interface.
+Jan 支持 [Groq](https://groq.com/) API 集成，允许您通过 Jan 的界面使用 Groq 的高性能 LLM 模型（包括 LLaMA 2、Mixtral 等）。
 
-## Integrate Groq API with Jan
+## 将 Groq API 集成到 Jan
 
 <Steps>
-### Step 1: Get Your API Key
-1. Visit [Groq Console](https://console.groq.com/keys) and sign in
-2. Create & copy a new API key or copy your existing one
+### 步骤 1：获取 API 密钥
+1. 访问 [Groq 控制台](https://console.groq.com/keys) 并登录
+2. 创建并复制新的 API 密钥，或复制现有密钥
 
 <Callout type='info'>
-Ensure your API key has sufficient credits
+请确保您的 API 密钥有足够的额度
 </Callout>
 
-### Step 2: Configure Jan
+### 步骤 2：配置 Jan
 
-1. Navigate to the **Settings** (<Settings width={16} height={16} style={{display:"inline"}}/>)
-2. Under **Model Providers**, select **Groq**
-3. Insert your **API Key**
+1. 进入 **设置** (<Settings width={16} height={16} style={{display:"inline"}}/>)
+2. 在 **模型提供商** 下选择 **Groq**
+3. 输入您的 **API 密钥**
 
 <br/>
 ![Groq](../_assets/groq.png)
 <br/>
 
 
-### Step 3: Start Using Groq's Models
+### 步骤 3：开始使用 Groq 模型
 
-1. Jump into any existing **Chat** or create a new one
-2. Select a Groq model from **model selector**
-3. Start chatting
+1. 进入任意现有 **聊天** 或创建新聊天
+2. 从 **模型选择器** 中选择 Groq 模型
+3. 开始对话
 </Steps>
 
-## Available Models Through Groq
+## 通过 Groq 可用的模型
 
-Jan automatically includes Groq's available models. In case you want to use a specific Groq model that
-you cannot find in **Jan**, follow the instructions in the [Add Cloud Models](/docs/manage-models#add-models-1):
-- See list of available models in [Groq Documentation](https://console.groq.com/docs/models).
-- The `id` property must match the model name in the list. For example, if you want to use Llama3.3 70B, you must set the `id` property to `llama-3.3-70b-versatile`.
+Jan 会自动包含 Groq 的可用模型。如果您想使用某个特定的 Groq 模型但在 **Jan** 中找不到，请按照 [添加云端模型](/docs/manage-models#add-models-1) 中的说明操作：
 
-## Troubleshooting
+- 可用的模型列表请参阅 [Groq Documentation](https://console.groq.com/docs/models)
+- `id` 属性必须与列表中的模型名称匹配。例如，若要使用 Llama3.3 70B，必须将 `id` 属性设为 `llama-3.3-70b-versatile`
 
-Common issues and solutions:
+## 故障排除
 
-**1. API Key Issues**
-- Verify your API key is correct and not expired
-- Check if you have billing set up on your Groq account
-- Ensure you have access to the model you're trying to use
+常见问题及解决方案：
 
-**2. Connection Problems**
-- Check your internet connection
-- Verify Groq's system status
-- Look for error messages in [Jan's logs](/docs/troubleshooting#how-to-get-error-logs)
+**1. API 密钥问题**
 
-**3. Model Unavailable**
-- Confirm your API key has access to the model
-- Check if you're using the correct model ID
-- Verify your Groq account has the necessary permissions
+- 确认您的 API 密钥正确且未过期
+- 检查 Groq 账户是否已设置账单信息
+- 确保您有权访问尝试使用的模型
 
-Need more help? Join our [Discord community](https://discord.gg/FTk2MvZwJH) or check the [Groq documentation](https://console.groq.com/docs).
+**2. 连接问题**
+
+- 检查网络连接状态
+- 查看 Groq 系统状态是否正常
+- 在 [Jan 的日志](/docs/troubleshooting#how-to-get-error-logs) 中查找错误信息
+
+**3. 模型不可用**
+
+- 确认您的 API 密钥具有模型访问权限
+- 检查是否使用了正确的模型 ID
+- 验证您的 Groq 账户具备必要权限
+
+需要更多帮助？加入我们的 [Discord 社区](https://discord.gg/FTk2MvZwJH) 或查阅 [Groq 文档](https://console.groq.com/docs)
